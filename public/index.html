@@ -126,132 +126,6 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 .ticker-sep{color:var(--line);margin:0 4px;}
 .ttag{font-size:8px;padding:1px 5px;border:1px solid var(--line);color:var(--text-2);}
 
-/* ══════════════════════════════════════════════
-   MOBILE RESPONSIVE
-══════════════════════════════════════════════ */
-
-/* ── MOBILE BOTTOM NAV ── */
-.mobile-nav{display:none;}
-
-@media (max-width: 768px) {
-  html,body{font-size:13px;overflow:auto;}
-
-  /* Full-page scrolling instead of fixed panels */
-  .app{
-    display:flex;flex-direction:column;
-    height:auto;min-height:100vh;
-    grid-template-columns:unset;grid-template-rows:unset;
-  }
-
-  /* Topbar */
-  .topbar{
-    position:sticky;top:0;z-index:50;
-    padding:0 10px;gap:6px;
-    flex-wrap:nowrap;height:48px;
-  }
-  .brand-text{font-size:10px;letter-spacing:2px;}
-  .brand-sub{display:none;}
-  .zulu{display:none;}
-  .btn{font-size:9px;padding:5px 8px;letter-spacing:.8px;}
-  #btnExport{display:none;}
-
-  /* Hide desktop sidebar, use bottom sheet pattern */
-  .sidebar{
-    display:none;
-    position:fixed;bottom:0;left:0;right:0;z-index:200;
-    max-height:80vh;overflow-y:auto;
-    border-top:2px solid var(--line);
-    border-right:none;
-    background:var(--bg-1);
-    flex-direction:column;
-  }
-  .sidebar.mobile-open{display:flex;}
-
-  /* Center becomes the main scroll */
-  .center{
-    grid-column:unset;
-    flex:1;overflow-y:visible;
-    padding-bottom:60px; /* space for bottom nav */
-  }
-
-  /* Toolbar — horizontal scroll for chips */
-  .toolbar{
-    padding:8px 10px;gap:6px;
-    flex-wrap:nowrap;overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
-  .toolbar::-webkit-scrollbar{display:none;}
-  .search-wrap{min-width:140px;flex-shrink:0;}
-  .search-input{font-size:12px;padding:6px 8px 6px 26px;}
-  .chip{font-size:8px;padding:4px 8px;white-space:nowrap;flex-shrink:0;}
-  .meta-count{display:none;}
-
-  /* Cards — single column */
-  .cards-grid{grid-template-columns:1fr;}
-  .card{padding:10px;}
-  .card-title{font-size:12px;}
-  .card-desc{font-size:11px;}
-
-  /* France banner */
-  .france-banner{margin-bottom:8px;}
-  .fc{max-width:280px;}
-
-  /* Statusbar */
-  .statusbar{
-    position:fixed;bottom:48px;left:0;right:0;z-index:40;
-    height:24px;font-size:8px;
-    padding:0 10px;
-  }
-
-  /* Ticker — hide on mobile (too small) */
-  .ticker{display:none;}
-
-  /* Modal */
-  .modal{max-width:100%;max-height:92vh;margin:auto;}
-  .modal-grid{grid-template-columns:1fr 1fr;}
-  .modal-overlay{padding:8px;}
-
-  /* Toast */
-  .toast{bottom:60px;right:8px;left:8px;right:8px;text-align:center;}
-
-  /* ── MOBILE BOTTOM NAV ── */
-  .mobile-nav{
-    display:flex;
-    position:fixed;bottom:0;left:0;right:0;z-index:300;
-    height:48px;
-    background:var(--bg-1);
-    border-top:1px solid var(--line);
-  }
-  .mob-btn{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:none;border:none;color:var(--text-2);cursor:pointer;
-    font-family:var(--mono);font-size:8px;letter-spacing:.5px;gap:2px;
-    transition:.12s;padding:0;
-  }
-  .mob-btn:active{background:var(--bg-2);}
-  .mob-btn.active{color:var(--cyan);}
-  .mob-btn svg,.mob-icon{font-size:16px;line-height:1;}
-
-  /* Sidebar close button for mobile */
-  .sidebar-mobile-close{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:10px 14px 6px;border-bottom:1px solid var(--line);
-    font-size:9px;color:var(--text-2);letter-spacing:1.5px;
-  }
-  .sidebar-mobile-close button{
-    background:none;border:1px solid var(--line);color:var(--text-2);
-    cursor:pointer;font-family:var(--mono);font-size:9px;padding:3px 8px;
-  }
-
-  /* Feed area */
-  .feed-area{padding:8px 10px;}
-
-  /* Critical banner */
-  .critical-banner-head{font-size:9px;padding:6px 10px;}
-}
-
-
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,7,10,.85);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.show{display:flex;}
@@ -338,6 +212,164 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
   color:var(--violet);padding:2px 8px;cursor:pointer;font-family:var(--mono);transition:.12s;}
 .fb-toggle:hover{background:var(--violet-dim);}
 
+/* ══════════════════════════════════════════════
+   ONGLET SOCIAL
+══════════════════════════════════════════════ */
+
+/* Tab switcher dans la topbar */
+.tab-switcher{display:flex;gap:1px;margin-left:10px;flex-shrink:0;}
+.tab-btn{
+  font-family:var(--mono);font-size:9px;padding:5px 14px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);
+  letter-spacing:1.2px;font-weight:700;transition:.12s;
+}
+.tab-btn:hover{border-color:var(--text-1);color:var(--text-1);}
+.tab-btn.active{background:var(--cyan-dim);border-color:var(--cyan);color:var(--cyan);}
+.tab-btn.social.active{background:var(--violet-dim);border-color:var(--violet);color:var(--violet);}
+
+/* Social panel — same slot as .center */
+.social-panel{
+  grid-column:2;background:var(--bg-0);
+  display:none;flex-direction:column;overflow-y:auto;
+}
+.social-panel.visible{display:flex;}
+.center.hidden{display:none;}
+
+/* Social toolbar */
+.social-toolbar{
+  display:flex;align-items:center;gap:8px;padding:10px 16px;
+  border-bottom:1px solid var(--line);flex-shrink:0;flex-wrap:wrap;
+}
+.social-toolbar .search-wrap{flex:1;min-width:140px;}
+.plat-chip{
+  font-family:var(--mono);font-size:9px;padding:4px 10px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);
+  letter-spacing:.8px;transition:.12s;display:inline-flex;align-items:center;gap:5px;
+}
+.plat-chip:hover{border-color:var(--text-1);color:var(--text-1);}
+.plat-chip.active{border-color:var(--violet);color:var(--violet);background:var(--violet-dim);}
+.plat-icon{font-size:11px;}
+
+/* Social source manager */
+.social-config{
+  display:flex;gap:0;height:100%;flex:1;overflow:hidden;
+}
+.social-sources-panel{
+  width:300px;flex-shrink:0;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--bg-1);
+}
+.social-feed-area{
+  flex:1;overflow-y:auto;padding:12px 16px;
+}
+
+/* Add social source form */
+.social-add-form{padding:10px 12px;border-bottom:1px solid var(--line-soft);}
+.social-add-form input,.social-add-form select{
+  width:100%;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);
+  font-family:var(--mono);font-size:10px;padding:5px 8px;outline:none;margin-bottom:5px;
+}
+.social-add-form input:focus,.social-add-form select:focus{border-color:var(--violet);}
+.social-add-form input::placeholder{color:var(--text-2);}
+
+/* Source list */
+.social-source-list{flex:1;overflow-y:auto;padding:4px 0;}
+.social-source-row{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-left:2px solid transparent;transition:.12s;cursor:pointer;
+}
+.social-source-row:hover{background:var(--bg-2);}
+.social-source-row.active{border-left-color:var(--violet);background:var(--bg-2);}
+.src-plat-badge{
+  font-size:7px;padding:1px 5px;border:1px solid transparent;flex-shrink:0;
+  letter-spacing:.5px;font-weight:700;
+}
+.src-handle{font-size:10px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.src-status{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--text-2);}
+.src-status.ok{background:var(--green);}
+.src-status.err{background:var(--red);}
+.src-status.loading{background:var(--amber);animation:pulse 1s infinite;}
+.src-count{font-size:9px;color:var(--text-2);}
+
+/* Hashtag manager */
+.hashtag-panel{padding:8px 12px;border-bottom:1px solid var(--line-soft);}
+.ht-cloud{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+.ht-chip{
+  display:inline-flex;align-items:center;gap:4px;padding:2px 8px;
+  border:1px solid var(--violet-dim);background:rgba(200,127,255,.08);
+  font-size:9px;color:var(--violet);cursor:default;
+}
+.ht-chip .hrem{background:none;border:none;color:var(--text-2);cursor:pointer;font-size:10px;padding:0;}
+.ht-chip .hrem:hover{color:var(--red);}
+
+/* Social cards */
+.social-card{
+  background:var(--bg-1);border:1px solid var(--line-soft);
+  padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:.12s;
+}
+.social-card:hover{border-color:var(--line);background:var(--bg-2);}
+.social-card.viral{border-color:var(--amber-dim);}
+.social-card.critical{border-color:var(--red);background:#160a09;}
+.sc-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.sc-plat{font-size:8px;padding:1px 6px;border:1px solid;letter-spacing:.5px;font-weight:700;flex-shrink:0;}
+.sc-handle{font-size:9px;color:var(--text-2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sc-time{font-size:9px;color:var(--text-2);}
+.sc-title{font-size:11px;line-height:1.5;color:var(--text-0);margin-bottom:6px;}
+.sc-hashtags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.sc-ht{font-size:8px;color:var(--violet);border:1px solid var(--violet-dim);padding:1px 5px;}
+.sc-stats{display:flex;gap:12px;font-size:9px;color:var(--text-2);}
+.sc-stat{display:flex;align-items:center;gap:3px;}
+
+/* Platform color map (used via JS) */
+/* twitter:#1DA1F2  telegram:#2CA5E0  youtube:#FF0000
+   mastodon:#6364FF  bluesky:#0085FF  reddit:#FF4500 */
+
+/* Narrative cluster widget */
+.cluster-area{margin-bottom:16px;}
+.cluster-head{font-size:9px;color:var(--amber);letter-spacing:1.5px;
+  padding:6px 0;border-bottom:1px solid var(--amber-dim);margin-bottom:8px;}
+.cluster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;}
+.cluster-card{
+  background:rgba(255,184,0,.05);border:1px solid var(--amber-dim);
+  padding:8px 10px;cursor:pointer;transition:.12s;
+}
+.cluster-card:hover{border-color:var(--amber);background:rgba(255,184,0,.1);}
+.cc-label{font-size:9px;color:var(--amber);letter-spacing:1px;margin-bottom:4px;}
+.cc-count{font-size:18px;font-weight:700;color:var(--text-0);}
+.cc-terms{font-size:9px;color:var(--text-2);margin-top:3px;line-height:1.4;}
+
+/* IO detection panel */
+.io-panel{
+  background:rgba(255,58,46,.04);border:1px solid var(--red-dim);
+  padding:10px 12px;margin-bottom:12px;
+}
+.io-panel-head{font-size:9px;color:var(--red);letter-spacing:1.5px;margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;}
+.io-signal{
+  display:flex;align-items:flex-start;gap:8px;padding:5px 0;
+  border-bottom:1px solid var(--bg-3);
+}
+.io-signal:last-child{border-bottom:none;}
+.io-ico{font-size:14px;flex-shrink:0;margin-top:1px;}
+.io-txt{font-size:10px;color:var(--text-1);line-height:1.4;}
+.io-score{font-size:8px;color:var(--red);margin-top:2px;}
+
+/* Social stats bar */
+.social-stats-bar{
+  display:flex;gap:16px;padding:8px 16px;border-bottom:1px solid var(--line-soft);
+  background:var(--bg-1);flex-shrink:0;flex-wrap:wrap;
+}
+.ss-stat{display:flex;flex-direction:column;align-items:center;}
+.ss-val{font-size:16px;font-weight:700;}
+.ss-lbl{font-size:8px;color:var(--text-2);letter-spacing:1px;}
+
+/* Mobile social */
+@media(max-width:768px){
+  .social-config{flex-direction:column;}
+  .social-sources-panel{width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);}
+  .social-feed-area{padding:8px 10px;}
+  .cluster-grid{grid-template-columns:1fr 1fr;}
+}
 </style>
 </head>
 <body>
@@ -353,6 +385,10 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
   </div>
   <button class="btn btn-ghost" id="btnRefresh" style="margin-left:16px;">⟳ ACTUALISER</button>
   <button class="btn btn-ghost" id="btnExport">⬇ EXPORTER CSV</button>
+  <div class="tab-switcher">
+    <button class="tab-btn active" id="tabRss" onclick="switchTab('rss')">◈ VEILLE RSS</button>
+    <button class="tab-btn social" id="tabSocial" onclick="switchTab('social')">⬡ SOCIAL</button>
+  </div>
   <div class="zulu">
     <div class="zulu-time" id="zuluTime">--:--:--Z</div>
     <div class="zulu-sub" id="zuluDate">-- --- ----</div>
@@ -360,13 +396,7 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 </div>
 
 <!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-
-  <!-- Mobile close -->
-  <div class="sidebar-mobile-close" id="sidebarMobileBar">
-    <span>⚙ CONFIGURATION</span>
-    <button onclick="closeSidebar()">✕ FERMER</button>
-  </div>
+<div class="sidebar">
 
   <!-- Add feed -->
   <div class="add-feed-form">
@@ -492,6 +522,100 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 
 </div><!-- /center -->
 
+<!-- ══════════════════════════════════════════════
+     ONGLET SOCIAL
+══════════════════════════════════════════════ -->
+<div class="social-panel" id="socialPanel">
+
+  <!-- Stats bar -->
+  <div class="social-stats-bar" id="socialStatsBar">
+    <div class="ss-stat"><span class="ss-val" id="ss-total">0</span><span class="ss-lbl">SIGNAUX</span></div>
+    <div class="ss-stat"><span class="ss-val" id="ss-sources">0</span><span class="ss-lbl">SOURCES</span></div>
+    <div class="ss-stat"><span class="ss-val" id="ss-hashtags">0</span><span class="ss-lbl">HASHTAGS</span></div>
+    <div class="ss-stat"><span class="ss-val" id="ss-io">0</span><span class="ss-lbl" style="color:var(--red);">ALERTES IO</span></div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-ghost" style="font-size:9px;padding:4px 10px;" id="btnSocialRefresh">⟳ FETCH</button>
+      <span style="font-size:9px;color:var(--text-2);" id="socialLastUpdate">jamais mis à jour</span>
+    </div>
+  </div>
+
+  <!-- Platform filter chips -->
+  <div class="social-toolbar">
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input class="search-input" type="text" id="socialSearch" placeholder="Rechercher dans les signaux sociaux...">
+    </div>
+    <button class="plat-chip active" data-plat="all"><span class="plat-icon">◈</span>TOUT <span id="sc-all">0</span></button>
+    <button class="plat-chip" data-plat="twitter" style="--pc:#1DA1F2"><span class="plat-icon">𝕏</span>TWITTER <span id="sc-twitter">0</span></button>
+    <button class="plat-chip" data-plat="telegram" style="--pc:#2CA5E0"><span class="plat-icon">✈</span>TELEGRAM <span id="sc-telegram">0</span></button>
+    <button class="plat-chip" data-plat="youtube" style="--pc:#FF0000"><span class="plat-icon">▶</span>YOUTUBE <span id="sc-youtube">0</span></button>
+    <button class="plat-chip" data-plat="mastodon" style="--pc:#6364FF"><span class="plat-icon">⬡</span>MASTODON <span id="sc-mastodon">0</span></button>
+    <button class="plat-chip" data-plat="bluesky" style="--pc:#0085FF"><span class="plat-icon">☁</span>BLUESKY <span id="sc-bluesky">0</span></button>
+    <button class="plat-chip" data-plat="reddit" style="--pc:#FF4500"><span class="plat-icon">◉</span>REDDIT <span id="sc-reddit">0</span></button>
+    <button class="chip" data-social-sort="time" style="margin-left:8px;" id="ssort-time">⏱ DATE</button>
+    <button class="chip" data-social-sort="viral">🔥 VIRAL</button>
+    <button class="chip" data-social-sort="io">⚠ IO</button>
+  </div>
+
+  <div class="social-config">
+
+    <!-- LEFT: Source manager -->
+    <div class="social-sources-panel">
+
+      <!-- Add source form -->
+      <div class="social-add-form">
+        <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:7px;">+ SOURCE SOCIALE</div>
+        <select id="sInPlatform" style="margin-bottom:5px;">
+          <option value="twitter">Twitter/X — compte</option>
+          <option value="twitter-ht">Twitter/X — hashtag</option>
+          <option value="telegram">Telegram — canal</option>
+          <option value="youtube">YouTube — chaîne</option>
+          <option value="mastodon">Mastodon — compte</option>
+          <option value="mastodon-ht">Mastodon — hashtag</option>
+          <option value="bluesky">Bluesky — compte</option>
+          <option value="reddit">Reddit — subreddit</option>
+        </select>
+        <input type="text" id="sInHandle" placeholder="@handle / #hashtag / subreddit">
+        <input type="text" id="sInLabel" placeholder="Étiquette (ex: Pro-RU, VIGINUM...)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:2px;">
+          <button class="btn-sm btn-sm-blue" id="btnSocialAdd">+ AJOUTER</button>
+          <button class="btn-sm btn-sm-ghost" id="btnSocialTest">TEST</button>
+        </div>
+      </div>
+
+      <!-- Hashtag tracker -->
+      <div class="hashtag-panel">
+        <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:5px;"># HASHTAGS SURVEILLÉS</div>
+        <div style="display:flex;gap:5px;">
+          <input type="text" id="htInput" placeholder="#doppelganger" style="flex:1;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);font-family:var(--mono);font-size:10px;padding:4px 7px;outline:none;">
+          <button class="btn-sm btn-sm-blue" id="btnAddHt" style="white-space:nowrap;padding:4px 8px;">+</button>
+        </div>
+        <div class="ht-cloud" id="htCloud"></div>
+      </div>
+
+      <!-- Packs prédéfinis -->
+      <div style="padding:8px 12px;border-bottom:1px solid var(--line-soft);">
+        <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:5px;">PACKS</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;" id="socialPacksArea"></div>
+      </div>
+
+      <!-- Source list -->
+      <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;padding:8px 14px 4px;">
+        SOURCES (<span id="socialSrcTotal">0</span>)
+      </div>
+      <div class="social-source-list" id="socialSourceList"></div>
+
+    </div><!-- /social-sources-panel -->
+
+    <!-- RIGHT: Social feed -->
+    <div class="social-feed-area" id="socialFeedArea">
+      <div class="empty-state">Ajoute des sources sociales à gauche,<br>puis clique sur <strong>⟳ FETCH</strong>.</div>
+    </div>
+
+  </div><!-- /social-config -->
+
+</div><!-- /social-panel -->
+
 <!-- STATUSBAR -->
 <div class="statusbar" id="statusbar">
   <div class="dot-pulse"></div>
@@ -510,17 +634,17 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 
 <!-- MOBILE BOTTOM NAV -->
 <nav class="mobile-nav" id="mobileNav">
-  <button class="mob-btn active" id="mobFeed" onclick="mobileTab('feed')">
+  <button class="mob-btn active" id="mobFeed" onclick="mobileTab('Feed');switchTab('rss')">
     <span class="mob-icon">📡</span>SIGNAUX
   </button>
-  <button class="mob-btn" id="mobRefresh" onclick="fetchAllFeeds();toast('Actualisation…','info')">
+  <button class="mob-btn" id="mobSocial" onclick="mobileTab('Social');switchTab('social')">
+    <span class="mob-icon">⬡</span>SOCIAL
+  </button>
+  <button class="mob-btn" id="mobRefresh" onclick="activeTab==='social'?fetchSocialSources():fetchAllFeeds();toast('Actualisation…','info')">
     <span class="mob-icon">⟳</span>REFRESH
   </button>
   <button class="mob-btn" id="mobConfig" onclick="toggleSidebar()">
     <span class="mob-icon">⚙</span>CONFIG
-  </button>
-  <button class="mob-btn" id="mobExport" onclick="document.getElementById('btnExport').click()">
-    <span class="mob-icon">⬇</span>CSV
   </button>
 </nav>
 
@@ -1109,42 +1233,12 @@ function renderFranceBanner(items) {
 function renderTicker(items) {
   const track = document.getElementById('tickerTrack');
   if(items.length === 0) return;
-  // Build single copy of ticker items (animation handles loop via translate)
   const html = items.slice(0,15).map(it => {
     const m = tagMeta(it.tag);
     return `<span class="ticker-item"><span class="ttag" style="color:${m.color};border-color:${m.color}44;">${m.label.slice(0,5).toUpperCase()}</span>${esc(it.title)}<span class="ticker-sep">//</span></span>`;
   }).join('');
-  // Duplicate only for seamless scroll loop (not shown as separate content)
   track.innerHTML = html + html;
-  // Reset animation
-  track.style.animation = 'none';
-  track.offsetHeight; // reflow
-  track.style.animation = '';
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   MOBILE NAV
-═══════════════════════════════════════════════════════════════ */
-function toggleSidebar() {
-  const sb = document.getElementById('sidebar');
-  sb.classList.toggle('mobile-open');
-  document.getElementById('mobConfig').classList.toggle('active', sb.classList.contains('mobile-open'));
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('mobile-open');
-  document.getElementById('mobConfig').classList.remove('active');
-}
-function mobileTab(tab) {
-  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('mob' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-}
-// Close sidebar when tapping outside
-document.addEventListener('click', e => {
-  const sb = document.getElementById('sidebar');
-  if(sb.classList.contains('mobile-open') && !sb.contains(e.target) && e.target.id !== 'mobConfig') {
-    closeSidebar();
-  }
-});
 
 /* ═══════════════════════════════════════════════════════════════
    MODAL
@@ -1222,8 +1316,570 @@ document.getElementById('btnExport').addEventListener('click', () => {
    REFRESH BUTTON & AUTO-REFRESH
 ═══════════════════════════════════════════════════════════════ */
 document.getElementById('btnRefresh').addEventListener('click', fetchAllFeeds);
-// Auto-refresh every 10 minutes
 setInterval(fetchAllFeeds, 10 * 60 * 1000);
+
+/* ═══════════════════════════════════════════════════════════════
+   TAB SWITCHER
+═══════════════════════════════════════════════════════════════ */
+let activeTab = 'rss';
+function switchTab(tab) {
+  activeTab = tab;
+  const center = document.querySelector('.center');
+  const social = document.getElementById('socialPanel');
+  document.getElementById('tabRss').classList.toggle('active', tab === 'rss');
+  document.getElementById('tabSocial').classList.toggle('active', tab === 'social');
+  if(tab === 'rss') {
+    center.classList.remove('hidden');
+    social.classList.remove('visible');
+  } else {
+    center.classList.add('hidden');
+    social.classList.add('visible');
+    renderSocialFeed();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════════════════════════════ */
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  sb.classList.toggle('mobile-open');
+  document.getElementById('mobConfig').classList.toggle('active', sb.classList.contains('mobile-open'));
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('mobConfig').classList.remove('active');
+}
+function mobileTab(tab) {
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('mob' + tab);
+  if(el) el.classList.add('active');
+}
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if(sb && sb.classList.contains('mobile-open') && !sb.contains(e.target) && e.target.id !== 'mobConfig') {
+    closeSidebar();
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — ÉTAT
+═══════════════════════════════════════════════════════════════ */
+const PLATFORM_META = {
+  twitter:  { label:'TWITTER',  color:'#1DA1F2', icon:'𝕏' },
+  telegram: { label:'TELEGRAM', color:'#2CA5E0', icon:'✈' },
+  youtube:  { label:'YOUTUBE',  color:'#FF0000', icon:'▶' },
+  mastodon: { label:'MASTODON', color:'#6364FF', icon:'⬡' },
+  bluesky:  { label:'BLUESKY',  color:'#0085FF', icon:'☁' },
+  reddit:   { label:'REDDIT',   color:'#FF4500', icon:'◉' },
+};
+
+const SOCIAL_PACKS = {
+  'IO Russe': [
+    { platform:'telegram', handle:'readovkanews',     label:'Readovka (pro-RU)' },
+    { platform:'telegram', handle:'rybar',            label:'Rybar (pro-RU)' },
+    { platform:'telegram', handle:'grey_zone',        label:'Grey Zone' },
+    { platform:'telegram', handle:'Wargonzo',         label:'Wargonzo' },
+    { platform:'twitter',  handle:'EUvsDisinfo',      label:'EUvsDisinfo' },
+  ],
+  'Fact-check': [
+    { platform:'twitter',  handle:'EUvsDisinfo',      label:'EUvsDisinfo' },
+    { platform:'twitter',  handle:'DFRLab',           label:'DFRLab' },
+    { platform:'twitter',  handle:'bellingcat',       label:'Bellingcat' },
+    { platform:'mastodon', handle:'bellingcat@mastodon.social', label:'Bellingcat Mastodon' },
+  ],
+  'OSINT Ukraine': [
+    { platform:'twitter',  handle:'KyivIndependent',  label:'Kyiv Independent' },
+    { platform:'twitter',  handle:'IAPonomarenko',    label:'Illia Ponomarenko' },
+    { platform:'telegram', handle:'UkraineNow',       label:'Ukraine Now' },
+    { platform:'youtube',  handle:'TheKyivIndependent', label:'Kyiv Ind. YT' },
+  ],
+  'Sahel / Afrique': [
+    { platform:'twitter',  handle:'RFI_Afrique',      label:'RFI Afrique' },
+    { platform:'twitter',  handle:'jeune_afrique',    label:'Jeune Afrique' },
+    { platform:'telegram', handle:'AfricaIntelligence', label:'Africa Intel' },
+  ],
+  'Hashtags IO': [
+    { platform:'twitter-ht', handle:'Doppelganger',   label:'#Doppelganger' },
+    { platform:'twitter-ht', handle:'DesinfoFrance',  label:'#DesinfoFrance' },
+    { platform:'twitter-ht', handle:'ProRU',          label:'#ProRU' },
+    { platform:'twitter-ht', handle:'Ukraine',        label:'#Ukraine' },
+  ],
+};
+
+// IO detection patterns
+const IO_PATTERNS = [
+  { id:'coord_timing',  label:'Timing coordonné',     test: items => detectCoordTiming(items) },
+  { id:'narrative_amp', label:'Amplification narrative', test: items => detectNarrativeAmp(items) },
+  { id:'account_farm',  label:'Compte ferme potentiel', test: items => detectAccountFarm(items) },
+];
+
+// Termes narratifs adverses
+const NARRATIVE_CLUSTERS = [
+  { id:'anti_fr',   label:'Anti-France',        terms:['anti-france','antifrench','france quit','france out','francafrique','abandon','base française'] },
+  { id:'nato_weak', label:'OTAN affaiblie',      terms:['nato weak','otan faillit','alliance crack','nato collapse','nato divided'] },
+  { id:'wagnerize', label:'Wagner / Légitim.',   terms:['wagner','africa corps','pmc','mercenaire','mali security','security partner'] },
+  { id:'deepfake',  label:'Deepfake / Synthèse', terms:['deepfake','fake video','manipulated','synthétique','generated image','ai generated'] },
+  { id:'doppelg',   label:'Doppelgänger',        terms:['doppelganger','fake site','copie site','domain spoof','clone officiel','fake government'] },
+];
+
+let socialState = {
+  sources:    JSON.parse(localStorage.getItem('sib_social_sources') || '[]'),
+  hashtags:   JSON.parse(localStorage.getItem('sib_hashtags') || '[]'),
+  items:      [],
+  srcStatus:  {},
+  activePlat: 'all',
+  sortMode:   'time',
+  searchQuery:'',
+  loading:    false,
+};
+
+function saveSocialPersist() {
+  localStorage.setItem('sib_social_sources', JSON.stringify(socialState.sources));
+  localStorage.setItem('sib_hashtags', JSON.stringify(socialState.hashtags));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — IO DETECTION ALGORITHMS
+═══════════════════════════════════════════════════════════════ */
+function detectCoordTiming(items) {
+  // Détecte des posts quasi-simultanés (< 5 min) sur le même sujet
+  if(items.length < 3) return { detected: false, score: 0 };
+  const sorted = [...items].sort((a,b) => new Date(a.pubDate) - new Date(b.pubDate));
+  let bursts = 0;
+  for(let i = 1; i < sorted.length; i++) {
+    const delta = (new Date(sorted[i].pubDate) - new Date(sorted[i-1].pubDate)) / 1000 / 60;
+    if(delta < 5) bursts++;
+  }
+  const score = Math.min(10, bursts * 2);
+  return { detected: score >= 4, score, detail: `${bursts} posts en rafale (< 5 min)` };
+}
+
+function detectNarrativeAmp(items) {
+  // Détecte la répétition de termes narratifs identiques
+  const wordFreq = {};
+  items.forEach(it => {
+    const words = (it.title + ' ' + it.desc).toLowerCase().split(/\s+/);
+    words.forEach(w => { if(w.length > 5) wordFreq[w] = (wordFreq[w]||0) + 1; });
+  });
+  const topWords = Object.entries(wordFreq).filter(([,c]) => c >= 3).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const score    = Math.min(10, topWords.reduce((s,[,c]) => s + c, 0) / items.length * 3);
+  return {
+    detected: score >= 4,
+    score: Math.round(score),
+    detail: topWords.map(([w,c]) => `"${w}" ×${c}`).join(', ')
+  };
+}
+
+function detectAccountFarm(items) {
+  // Détecte des comptes avec patterns similaires (handle court, ratio posts/follows)
+  const handles   = items.map(it => it.handle || it.source);
+  const dupes     = handles.filter((h,i) => handles.indexOf(h) !== i).length;
+  const shortH    = handles.filter(h => h && h.replace('@','').length <= 8).length;
+  const score     = Math.min(10, (dupes + shortH * 0.5));
+  return { detected: score >= 3, score: Math.round(score), detail: `${dupes} doublons, ${shortH} handles courts` };
+}
+
+function computeIOScore(items) {
+  const results = IO_PATTERNS.map(p => ({ ...p, result: p.test(items) }));
+  const maxScore = Math.max(...results.map(r => r.result.score));
+  return { results, maxScore, detected: results.filter(r => r.result.detected).length };
+}
+
+function computeViralScore(item) {
+  const eng = (item.likes||0) + (item.reposts||0)*2 + (item.replies||0)*1.5 + (item.views||0)*0.01;
+  return Math.min(10, Math.max(1, Math.log10(eng + 1) * 2.5));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — FETCH
+═══════════════════════════════════════════════════════════════ */
+async function fetchSocialSources() {
+  if(socialState.loading) return;
+  if(socialState.sources.length === 0 && socialState.hashtags.length === 0) {
+    toast('Aucune source sociale configurée', 'info');
+    return;
+  }
+  socialState.loading = true;
+  document.getElementById('btnSocialRefresh').textContent = '⟳ …';
+  document.getElementById('socialLastUpdate').textContent = 'chargement…';
+
+  // Build batch payload
+  const batchSources = [
+    ...socialState.sources.map(s => ({
+      platform: s.platform.replace('-ht',''),
+      handle:   s.handle,
+      type:     s.platform.endsWith('-ht') ? 'hashtag' : 'user',
+      label:    s.label,
+      hashtag:  s.platform.endsWith('-ht') ? s.handle.replace('#','') : undefined,
+      subreddit:s.platform === 'reddit' ? s.handle : undefined,
+    })),
+    ...socialState.hashtags.map(ht => ({
+      platform: 'twitter',
+      handle:   ht,
+      type:     'hashtag',
+      label:    '#' + ht,
+    })),
+  ];
+
+  try {
+    // 1. Batch RSS-based fetch
+    const res  = await fetch('/api/social/batch', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ sources: batchSources })
+    });
+    const data = await res.json();
+
+    socialState.items = [];
+    data.results.forEach((r, i) => {
+      const src = batchSources[i];
+      socialState.srcStatus[src.handle] = { ok: r.ok, count: r.count||0, error: r.error };
+      if(r.ok) {
+        r.items.forEach(item => {
+          const viralScore = computeViralScore(item);
+          socialState.items.push({
+            ...item,
+            id:        Math.random().toString(36).slice(2),
+            viralite:  Math.round(viralScore),
+            ioScore:   0, // calculé globalement après
+          });
+        });
+      }
+    });
+
+    // 2. Hashtag scraping via endpoint dédié (async, non-bloquant)
+    socialState.hashtags.forEach(ht => {
+      fetch(`/api/scrape/twitter-hashtag?hashtag=${encodeURIComponent(ht)}`)
+        .then(r => r.json())
+        .then(d => {
+          if(d.ok && d.items.length > 0) {
+            const newItems = d.items.filter(ni => !socialState.items.find(ei => ei.link === ni.link));
+            newItems.forEach(item => socialState.items.push({
+              ...item, id: Math.random().toString(36).slice(2),
+              viralite: Math.round(computeViralScore(item)), ioScore: 0,
+            }));
+            renderSocialFeed();
+          }
+        }).catch(() => {});
+    });
+
+    // 3. IO global score
+    const ioAnalysis = computeIOScore(socialState.items);
+    document.getElementById('ss-io').textContent = ioAnalysis.detected;
+
+    document.getElementById('ss-total').textContent  = socialState.items.length;
+    document.getElementById('ss-sources').textContent = socialState.sources.length;
+    document.getElementById('ss-hashtags').textContent = socialState.hashtags.length;
+    document.getElementById('socialLastUpdate').textContent = 'MAJ ' + new Date().toLocaleTimeString('fr-FR');
+
+    renderSocialSourceList();
+    renderSocialFeed();
+    toast(`Social : ${socialState.items.length} signaux`, 'ok');
+  } catch(e) {
+    toast('Erreur réseau social : ' + e.message, 'err');
+    document.getElementById('socialLastUpdate').textContent = 'ERREUR';
+  }
+  socialState.loading = false;
+  document.getElementById('btnSocialRefresh').textContent = '⟳ FETCH';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — RENDER FEED
+═══════════════════════════════════════════════════════════════ */
+function getSocialFiltered() {
+  let items = socialState.items;
+  if(socialState.activePlat !== 'all') items = items.filter(it => it.platform === socialState.activePlat);
+  if(socialState.searchQuery) {
+    const q = socialState.searchQuery.toLowerCase();
+    items = items.filter(it =>
+      (it.title||'').toLowerCase().includes(q) ||
+      (it.desc||'').toLowerCase().includes(q)  ||
+      (it.handle||'').toLowerCase().includes(q) ||
+      (it.hashtags||[]).some(h => h.includes(q))
+    );
+  }
+  if(socialState.sortMode === 'time')  items = [...items].sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+  if(socialState.sortMode === 'viral') items = [...items].sort((a,b) => b.viralite - a.viralite);
+  if(socialState.sortMode === 'io')    items = [...items].sort((a,b) => b.ioScore - a.ioScore);
+  return items;
+}
+
+function renderSocialCard(it) {
+  const pm  = PLATFORM_META[it.platform] || { label: it.platform, color:'#888', icon:'?' };
+  const viral = it.viralite >= 7 ? 'viral' : '';
+  const ht  = (it.hashtags||[]).slice(0,5).map(h => `<span class="sc-ht">${esc(h)}</span>`).join('');
+  return `<div class="social-card ${viral}" data-sid="${it.id}">
+    <div class="sc-top">
+      <span class="sc-plat" style="color:${pm.color};border-color:${pm.color}55;background:${pm.color}15;">${pm.icon} ${pm.label}</span>
+      <span class="sc-handle">${esc(it.handle || it.source)}</span>
+      <span class="sc-time">${timeAgo(it.pubDate)}</span>
+    </div>
+    <div class="sc-title">${esc(it.title || it.desc || '').slice(0, 180)}</div>
+    ${ht ? `<div class="sc-hashtags">${ht}</div>` : ''}
+    <div class="sc-stats">
+      ${it.likes    ? `<span class="sc-stat">♥ ${it.likes}</span>` : ''}
+      ${it.reposts  ? `<span class="sc-stat">↻ ${it.reposts}</span>` : ''}
+      ${it.replies  ? `<span class="sc-stat">💬 ${it.replies}</span>` : ''}
+      ${it.views    ? `<span class="sc-stat">👁 ${it.views}</span>` : ''}
+      ${it.viralite >= 5 ? `<span class="sc-stat" style="color:var(--amber);margin-left:auto;">🔥 VIRAL ${it.viralite}/10</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderNarrativeClusters(items) {
+  if(items.length === 0) return '';
+  const clusters = NARRATIVE_CLUSTERS.map(cl => {
+    const matches = items.filter(it => {
+      const txt = ((it.title||'') + ' ' + (it.desc||'')).toLowerCase();
+      return cl.terms.some(t => txt.includes(t));
+    });
+    return { ...cl, count: matches.length };
+  }).filter(cl => cl.count > 0).sort((a,b) => b.count - a.count);
+
+  if(clusters.length === 0) return '';
+  return `<div class="cluster-area">
+    <div class="cluster-head">⚠ CLUSTERS NARRATIFS DÉTECTÉS</div>
+    <div class="cluster-grid">
+      ${clusters.map(cl => `
+        <div class="cluster-card">
+          <div class="cc-label">${esc(cl.label)}</div>
+          <div class="cc-count">${cl.count}</div>
+          <div class="cc-terms">${cl.terms.slice(0,3).join(' · ')}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderIOPanel(items) {
+  if(items.length < 3) return '';
+  const analysis = computeIOScore(items);
+  if(analysis.detected === 0) return '';
+  return `<div class="io-panel">
+    <div class="io-panel-head"><span class="dot-pulse" style="background:var(--red);box-shadow:0 0 6px var(--red);"></span>SIGNAUX IO DÉTECTÉS — ${analysis.detected} indicateur${analysis.detected>1?'s':''}</div>
+    ${analysis.results.filter(r=>r.result.detected).map(r => `
+      <div class="io-signal">
+        <span class="io-ico">⚠</span>
+        <div>
+          <div class="io-txt">${esc(r.label)}</div>
+          <div class="io-score">Score ${r.result.score}/10 — ${esc(r.result.detail||'')}</div>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function renderSocialFeed() {
+  // Update platform counts
+  const all = socialState.items;
+  document.getElementById('sc-all').textContent = all.length;
+  Object.keys(PLATFORM_META).forEach(p => {
+    const el = document.getElementById('sc-'+p);
+    if(el) el.textContent = all.filter(it => it.platform === p).length;
+  });
+
+  const filtered = getSocialFiltered();
+  const area     = document.getElementById('socialFeedArea');
+
+  if(filtered.length === 0) {
+    area.innerHTML = socialState.items.length === 0
+      ? '<div class="empty-state">Ajoute des sources sociales à gauche, puis clique sur ⟳ FETCH.</div>'
+      : '<div class="empty-state">Aucun signal ne correspond aux filtres.</div>';
+    return;
+  }
+
+  const io       = renderIOPanel(filtered);
+  const clusters = renderNarrativeClusters(filtered);
+  const cards    = filtered.map(renderSocialCard).join('');
+  area.innerHTML = io + clusters + `<div class="cards-grid">${cards}</div>`;
+
+  area.querySelectorAll('.social-card').forEach(c => {
+    c.addEventListener('click', () => {
+      const item = socialState.items.find(it => it.id === c.dataset.sid);
+      if(item) openSocialModal(item);
+    });
+  });
+}
+
+function openSocialModal(item) {
+  const pm = PLATFORM_META[item.platform] || { label: item.platform, color:'#888', icon:'?' };
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-head">
+      <span class="modal-title" style="color:${pm.color};">${pm.icon} ${pm.label} — ANALYSE</span>
+      <button class="modal-close" id="mClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-item-title">${esc(item.title || item.desc || '')}</div>
+      <div class="modal-grid">
+        <div class="modal-stat"><div class="modal-stat-lbl">SOURCE</div><div class="modal-stat-val" style="font-size:10px;">${esc(item.handle||item.source)}</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">PLATEFORME</div><div class="modal-stat-val" style="color:${pm.color};">${pm.label}</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">VIRALITÉ</div><div class="modal-stat-val" style="color:${item.viralite>=7?'var(--amber)':'var(--text-0)'}">${item.viralite}/10</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">PUBLIÉ</div><div class="modal-stat-val" style="font-size:10px;">${new Date(item.pubDate).toLocaleString('fr-FR')}</div></div>
+      </div>
+      ${item.desc ? `<div class="modal-desc">${esc(item.desc)}</div>` : ''}
+      ${(item.hashtags||[]).length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;">${item.hashtags.map(h=>`<span class="sc-ht">${esc(h)}</span>`).join('')}</div>` : ''}
+      <div style="display:flex;gap:10px;margin-bottom:12px;font-size:10px;color:var(--text-2);">
+        ${item.likes   ? `<span>♥ ${item.likes} likes</span>` : ''}
+        ${item.reposts ? `<span>↻ ${item.reposts} reposts</span>` : ''}
+        ${item.replies ? `<span>💬 ${item.replies} réponses</span>` : ''}
+        ${item.views   ? `<span>👁 ${item.views} vues</span>` : ''}
+      </div>
+      <a class="modal-link" href="${esc(item.link)}" target="_blank" rel="noopener">→ Voir le post original</a>
+    </div>`;
+  document.getElementById('mClose').addEventListener('click', () => document.getElementById('modalOverlay').classList.remove('show'));
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — SOURCE LIST & HASHTAG MANAGER
+═══════════════════════════════════════════════════════════════ */
+function renderSocialSourceList() {
+  const list = document.getElementById('socialSourceList');
+  document.getElementById('socialSrcTotal').textContent = socialState.sources.length;
+  if(socialState.sources.length === 0) {
+    list.innerHTML = '<div style="padding:12px 14px;font-size:10px;color:var(--text-2);">Aucune source.</div>';
+    return;
+  }
+  list.innerHTML = socialState.sources.map((s, i) => {
+    const pm  = PLATFORM_META[s.platform.replace('-ht','')] || { label: s.platform, color:'#888' };
+    const st  = socialState.srcStatus[s.handle];
+    const dotCls = st ? (st.ok ? 'ok' : 'err') : '';
+    return `<div class="social-source-row">
+      <span class="src-status ${dotCls}"></span>
+      <span class="src-plat-badge" style="color:${pm.color};border-color:${pm.color}44;">${pm.label.slice(0,4)}</span>
+      <span class="src-handle" title="${esc(s.handle)}">${esc(s.label || s.handle)}</span>
+      <span class="src-count">${st ? (st.ok ? st.count : '✕') : '…'}</span>
+      <button onclick="removeSocialSource(${i})" style="background:none;border:none;color:var(--text-2);cursor:pointer;font-size:11px;padding:0 2px;" title="Supprimer">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function removeSocialSource(i) {
+  const s = socialState.sources.splice(i, 1)[0];
+  socialState.items = socialState.items.filter(it => it.handle !== s.handle);
+  saveSocialPersist();
+  renderSocialSourceList();
+  renderSocialFeed();
+  toast(`Source supprimée : ${s.handle}`, 'info');
+}
+
+function renderHashtagCloud() {
+  document.getElementById('htCloud').innerHTML = socialState.hashtags.map((ht, i) =>
+    `<span class="ht-chip">#${esc(ht)}<button class="hrem" onclick="removeHashtag(${i})">✕</button></span>`
+  ).join('');
+}
+
+function removeHashtag(i) {
+  socialState.hashtags.splice(i, 1);
+  saveSocialPersist();
+  renderHashtagCloud();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — PACKS
+═══════════════════════════════════════════════════════════════ */
+const socialPacksArea = document.getElementById('socialPacksArea');
+Object.entries(SOCIAL_PACKS).forEach(([name, srcs]) => {
+  const btn = document.createElement('button');
+  btn.className = 'pack-btn';
+  btn.textContent = '+ ' + name;
+  btn.addEventListener('click', () => {
+    let added = 0;
+    srcs.forEach(s => {
+      if(!socialState.sources.find(x => x.handle === s.handle && x.platform === s.platform)) {
+        socialState.sources.push(s);
+        added++;
+      }
+    });
+    saveSocialPersist();
+    renderSocialSourceList();
+    if(added > 0) { toast(`Pack "${name}" : ${added} sources ajoutées`, 'ok'); }
+    else toast('Toutes ces sources sont déjà présentes', 'info');
+  });
+  socialPacksArea.appendChild(btn);
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — EVENT LISTENERS
+═══════════════════════════════════════════════════════════════ */
+document.getElementById('btnSocialRefresh').addEventListener('click', fetchSocialSources);
+setInterval(() => { if(activeTab === 'social') fetchSocialSources(); }, 10 * 60 * 1000);
+
+document.getElementById('btnSocialAdd').addEventListener('click', () => {
+  const platform = document.getElementById('sInPlatform').value;
+  const handle   = document.getElementById('sInHandle').value.trim();
+  const label    = document.getElementById('sInLabel').value.trim();
+  if(!handle) { toast('Handle requis', 'err'); return; }
+  if(socialState.sources.find(s => s.handle === handle && s.platform === platform)) { toast('Source déjà présente', 'err'); return; }
+  socialState.sources.push({ platform, handle, label: label || handle });
+  document.getElementById('sInHandle').value = '';
+  document.getElementById('sInLabel').value  = '';
+  saveSocialPersist();
+  renderSocialSourceList();
+  toast('Source ajoutée', 'ok');
+});
+
+document.getElementById('btnSocialTest').addEventListener('click', async () => {
+  const platform = document.getElementById('sInPlatform').value;
+  const handle   = document.getElementById('sInHandle').value.trim();
+  if(!handle) { toast('Handle requis', 'err'); return; }
+  document.getElementById('btnSocialTest').textContent = '…';
+  try {
+    let url;
+    const p = platform.replace('-ht','');
+    if(p === 'twitter')  url = `/api/social/twitter?handle=${encodeURIComponent(handle)}&type=${platform.endsWith('-ht')?'hashtag':'user'}`;
+    else if(p === 'telegram') url = `/api/social/telegram?channel=${encodeURIComponent(handle)}`;
+    else if(p === 'youtube')  url = `/api/social/youtube?handle=${encodeURIComponent(handle)}`;
+    else if(p === 'mastodon') url = `/api/social/mastodon?handle=${encodeURIComponent(handle)}`;
+    else if(p === 'bluesky')  url = `/api/social/bluesky?handle=${encodeURIComponent(handle)}`;
+    else if(p === 'reddit')   url = `/api/social/reddit?subreddit=${encodeURIComponent(handle)}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    if(d.ok) toast(`✓ ${d.count || d.items?.length || 0} posts récupérés`, 'ok');
+    else toast('Erreur : ' + (d.error || 'inconnue'), 'err');
+  } catch(e) {
+    toast('Erreur réseau', 'err');
+  }
+  document.getElementById('btnSocialTest').textContent = 'TEST';
+});
+
+document.getElementById('btnAddHt').addEventListener('click', () => {
+  const v = document.getElementById('htInput').value.trim().replace('#','');
+  if(!v) return;
+  if(socialState.hashtags.includes(v)) { toast('Hashtag déjà présent','err'); return; }
+  socialState.hashtags.push(v);
+  document.getElementById('htInput').value = '';
+  saveSocialPersist();
+  renderHashtagCloud();
+  toast('#' + v + ' ajouté', 'ok');
+});
+document.getElementById('htInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') document.getElementById('btnAddHt').click();
+});
+
+// Platform filter chips
+document.querySelectorAll('[data-plat]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-plat]').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    socialState.activePlat = el.dataset.plat;
+    renderSocialFeed();
+  });
+});
+
+// Social sort chips
+document.querySelectorAll('[data-social-sort]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-social-sort]').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    socialState.sortMode = el.dataset.socialSort;
+    renderSocialFeed();
+  });
+});
+document.getElementById('ssort-time').classList.add('active');
+
+document.getElementById('socialSearch').addEventListener('input', e => {
+  socialState.searchQuery = e.target.value;
+  renderSocialFeed();
+});
 
 /* ═══════════════════════════════════════════════════════════════
    INIT
@@ -1231,6 +1887,8 @@ setInterval(fetchAllFeeds, 10 * 60 * 1000);
 renderFeedList();
 renderAll();
 renderFranceBanner([]);
+renderSocialSourceList();
+renderHashtagCloud();
 if(state.feeds.length > 0) fetchAllFeeds();
 </script>
 </body>
