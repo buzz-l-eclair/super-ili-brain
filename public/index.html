@@ -126,6 +126,132 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 .ticker-sep{color:var(--line);margin:0 4px;}
 .ttag{font-size:8px;padding:1px 5px;border:1px solid var(--line);color:var(--text-2);}
 
+/* ══════════════════════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════════════════════ */
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-nav{display:none;}
+
+@media (max-width: 768px) {
+  html,body{font-size:13px;overflow:auto;}
+
+  /* Full-page scrolling instead of fixed panels */
+  .app{
+    display:flex;flex-direction:column;
+    height:auto;min-height:100vh;
+    grid-template-columns:unset;grid-template-rows:unset;
+  }
+
+  /* Topbar */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    padding:0 10px;gap:6px;
+    flex-wrap:nowrap;height:48px;
+  }
+  .brand-text{font-size:10px;letter-spacing:2px;}
+  .brand-sub{display:none;}
+  .zulu{display:none;}
+  .btn{font-size:9px;padding:5px 8px;letter-spacing:.8px;}
+  #btnExport{display:none;}
+
+  /* Hide desktop sidebar, use bottom sheet pattern */
+  .sidebar{
+    display:none;
+    position:fixed;bottom:0;left:0;right:0;z-index:200;
+    max-height:80vh;overflow-y:auto;
+    border-top:2px solid var(--line);
+    border-right:none;
+    background:var(--bg-1);
+    flex-direction:column;
+  }
+  .sidebar.mobile-open{display:flex;}
+
+  /* Center becomes the main scroll */
+  .center{
+    grid-column:unset;
+    flex:1;overflow-y:visible;
+    padding-bottom:60px; /* space for bottom nav */
+  }
+
+  /* Toolbar — horizontal scroll for chips */
+  .toolbar{
+    padding:8px 10px;gap:6px;
+    flex-wrap:nowrap;overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .toolbar::-webkit-scrollbar{display:none;}
+  .search-wrap{min-width:140px;flex-shrink:0;}
+  .search-input{font-size:12px;padding:6px 8px 6px 26px;}
+  .chip{font-size:8px;padding:4px 8px;white-space:nowrap;flex-shrink:0;}
+  .meta-count{display:none;}
+
+  /* Cards — single column */
+  .cards-grid{grid-template-columns:1fr;}
+  .card{padding:10px;}
+  .card-title{font-size:12px;}
+  .card-desc{font-size:11px;}
+
+  /* France banner */
+  .france-banner{margin-bottom:8px;}
+  .fc{max-width:280px;}
+
+  /* Statusbar */
+  .statusbar{
+    position:fixed;bottom:48px;left:0;right:0;z-index:40;
+    height:24px;font-size:8px;
+    padding:0 10px;
+  }
+
+  /* Ticker — hide on mobile (too small) */
+  .ticker{display:none;}
+
+  /* Modal */
+  .modal{max-width:100%;max-height:92vh;margin:auto;}
+  .modal-grid{grid-template-columns:1fr 1fr;}
+  .modal-overlay{padding:8px;}
+
+  /* Toast */
+  .toast{bottom:60px;right:8px;left:8px;right:8px;text-align:center;}
+
+  /* ── MOBILE BOTTOM NAV ── */
+  .mobile-nav{
+    display:flex;
+    position:fixed;bottom:0;left:0;right:0;z-index:300;
+    height:48px;
+    background:var(--bg-1);
+    border-top:1px solid var(--line);
+  }
+  .mob-btn{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:none;border:none;color:var(--text-2);cursor:pointer;
+    font-family:var(--mono);font-size:8px;letter-spacing:.5px;gap:2px;
+    transition:.12s;padding:0;
+  }
+  .mob-btn:active{background:var(--bg-2);}
+  .mob-btn.active{color:var(--cyan);}
+  .mob-btn svg,.mob-icon{font-size:16px;line-height:1;}
+
+  /* Sidebar close button for mobile */
+  .sidebar-mobile-close{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 14px 6px;border-bottom:1px solid var(--line);
+    font-size:9px;color:var(--text-2);letter-spacing:1.5px;
+  }
+  .sidebar-mobile-close button{
+    background:none;border:1px solid var(--line);color:var(--text-2);
+    cursor:pointer;font-family:var(--mono);font-size:9px;padding:3px 8px;
+  }
+
+  /* Feed area */
+  .feed-area{padding:8px 10px;}
+
+  /* Critical banner */
+  .critical-banner-head{font-size:9px;padding:6px 10px;}
+}
+
+
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,7,10,.85);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.show{display:flex;}
@@ -175,7 +301,42 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 /* refresh state */
 .refreshing .dot-pulse{background:var(--amber);}
 
-
+/* ── FRANCE SURVEILLANCE BANNER ── */
+.france-banner{
+  border:1px solid var(--violet);
+  border-left:3px solid var(--violet);
+  background:linear-gradient(90deg,rgba(200,127,255,.06) 0%,transparent 100%);
+  margin-bottom:12px;
+  flex-shrink:0;
+}
+.france-banner-head{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 12px;
+  border-bottom:1px solid rgba(200,127,255,.2);
+  font-size:9px;letter-spacing:1.8px;color:var(--violet);
+  justify-content:space-between;
+}
+.france-banner-head .fb-left{display:flex;align-items:center;gap:8px;}
+.france-banner-scroll{
+  display:flex;gap:6px;padding:6px 10px;overflow-x:auto;
+  scrollbar-width:thin;scrollbar-color:var(--violet-dim) transparent;
+}
+.france-banner-scroll::-webkit-scrollbar{height:3px;}
+.france-banner-scroll::-webkit-scrollbar-thumb{background:var(--violet-dim);}
+.fc{
+  flex-shrink:0;background:rgba(200,127,255,.07);border:1px solid rgba(200,127,255,.25);
+  padding:5px 10px;max-width:360px;cursor:pointer;transition:.12s;
+}
+.fc:hover{border-color:var(--violet);background:rgba(200,127,255,.15);}
+.fc-src{font-size:8px;color:var(--violet);letter-spacing:.8px;margin-bottom:3px;}
+.fc-title{font-size:10px;color:var(--text-0);line-height:1.4;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px;}
+.fc-meta{font-size:8px;color:var(--text-2);margin-top:3px;}
+.fb-count{font-size:9px;background:var(--violet-dim);color:var(--violet);
+  padding:1px 7px;border:1px solid rgba(200,127,255,.3);}
+.fb-toggle{font-size:9px;background:transparent;border:1px solid rgba(200,127,255,.3);
+  color:var(--violet);padding:2px 8px;cursor:pointer;font-family:var(--mono);transition:.12s;}
+.fb-toggle:hover{background:var(--violet-dim);}
 
 </style>
 </head>
@@ -199,7 +360,13 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 </div>
 
 <!-- SIDEBAR -->
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
+
+  <!-- Mobile close -->
+  <div class="sidebar-mobile-close" id="sidebarMobileBar">
+    <span>⚙ CONFIGURATION</span>
+    <button onclick="closeSidebar()">✕ FERMER</button>
+  </div>
 
   <!-- Add feed -->
   <div class="add-feed-form">
@@ -292,16 +459,24 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
     <button class="chip" data-tag="PSYOPS">PSYOPS <span id="cnt-PSYOPS">0</span></button>
     <span class="chip active" data-sort="time" style="margin-left:8px;">⏱ DATE</span>
     <span class="chip" data-sort="crit">⚠ CRIT</span>
-    <span class="chip active" data-lang="all" style="margin-left:8px;">🌐 TOUT</span>
-    <span class="chip" data-lang="FR">🇫🇷 FR</span>
-    <span class="chip" data-lang="EN">🇬🇧 EN</span>
-    <span class="chip" data-lang="UK">🇺🇦 UK</span>
-    <span class="chip" data-lang="DE">🇩🇪 DE</span>
-    <span class="chip" data-lang="RU">🇷🇺 RU</span>
-    <span class="chip" data-lang="AR">🇸🇦 AR</span>
     <div class="meta-count" id="metaCount">0 signaux</div>
   </div>
 
+
+  <!-- France Surveillance Banner -->
+  <div class="france-banner" id="franceBanner" style="display:none;">
+    <div class="france-banner-head">
+      <div class="fb-left">
+        <span class="dot-pulse" style="background:var(--violet);box-shadow:0 0 6px var(--violet);"></span>
+        🇫🇷 ALERTE FRANCE — SIGNAUX CRITIQUES UNIQUEMENT
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="fb-count" id="franceCnt">0 signaux</span>
+        <button class="fb-toggle" id="fbToggle" onclick="toggleFranceBanner()">▼ RÉDUIRE</button>
+      </div>
+    </div>
+    <div class="france-banner-scroll" id="franceScroll"></div>
+  </div>
 
   <!-- Feed area -->
   <div class="feed-area" id="mainFeed">
@@ -332,6 +507,22 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mob-btn active" id="mobFeed" onclick="mobileTab('feed')">
+    <span class="mob-icon">📡</span>SIGNAUX
+  </button>
+  <button class="mob-btn" id="mobRefresh" onclick="fetchAllFeeds();toast('Actualisation…','info')">
+    <span class="mob-icon">⟳</span>REFRESH
+  </button>
+  <button class="mob-btn" id="mobConfig" onclick="toggleSidebar()">
+    <span class="mob-icon">⚙</span>CONFIG
+  </button>
+  <button class="mob-btn" id="mobExport" onclick="document.getElementById('btnExport').click()">
+    <span class="mob-icon">⬇</span>CSV
+  </button>
+</nav>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -520,7 +711,6 @@ let state = {
   feedStatus: {},
   activeTag: 'all',
   sortMode: 'time',
-  activeLang: 'all',
   searchQuery: '',
   refreshInterval: null,
   loading: false,
@@ -611,8 +801,7 @@ async function fetchAllFeeds() {
       if(r.ok) {
         r.items.forEach(item => {
           const scores = scoreItem(item);
-          const feed = state.feeds.find(f => f.url === r.url);
-          state.items.push({ ...item, id: Math.random().toString(36).slice(2), lang: (feed && feed.lang) || 'EN', ...scores });
+          state.items.push({ ...item, id: Math.random().toString(36).slice(2), ...scores });
         });
       }
     });
@@ -749,7 +938,6 @@ renderTerms();
 function getFiltered() {
   let items = state.items;
   if(state.activeTag !== 'all') items = items.filter(it => it.tag === state.activeTag);
-  if(state.activeLang !== 'all') items = items.filter(it => (it.lang || 'EN').toUpperCase() === state.activeLang);
   if(state.searchQuery) {
     const q = state.searchQuery.toLowerCase();
     items = items.filter(it => it.title.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q) || it.source.toLowerCase().includes(q));
@@ -768,7 +956,6 @@ function renderCard(it) {
     <div class="card-top">
       <span class="tag-badge" style="${tagStyle}">${m.label}</span>
       <span class="card-source">${esc(it.source)}</span>
-      <span style="font-size:8px;color:var(--text-2);border:1px solid var(--line-soft);padding:1px 4px;margin-left:4px;">${(it.lang||'EN').toUpperCase()}</span>
     </div>
     <div class="card-title">${esc(it.title)}</div>
     ${it.desc ? `<div class="card-desc">${esc(it.desc)}</div>` : ''}
@@ -825,19 +1012,139 @@ function renderAll() {
   });
 
   renderTicker(filtered);
+  renderFranceBanner(state.items);
 }
 
 
+/* ═══════════════════════════════════════════════════════════════
+   FRANCE SURVEILLANCE BANNER
+   Règle : affiché UNIQUEMENT si l'article est critique (≥ seuil)
+   ET contient un terme France/Armées précis (pas juste "france" seul).
+   Max 2 cartes affichées — les 2 plus critiques.
+═══════════════════════════════════════════════════════════════ */
+
+// Termes PRÉCIS uniquement — expressions composées ou entités spécifiques
+// Jamais de mots seuls trop génériques comme "france" ou "french"
+const FRANCE_EXACT = [
+  // Armée / institutions militaires FR
+  'armée de terre','armée française','armées françaises','forces françaises',
+  'forces armées françaises','ministère des armées','état-major des armées',
+  'emat','cemat','sirpa terre','scoat','straterre',
+  'comcyber','dgse','drsd','dpsd',
+  'légion étrangère','bspp','cpco',
+  // Opérations nommées
+  'opération barkhane','opération serval','opération sangaris',
+  'opération chammal','opération takuba','opération atalante',
+  'bande sahélo-saharienne',
+  // Doctrine ILI — termes propres à la note CCF
+  'ili terre','eiho','scorpion 307','persée 25',
+  'mildec france','comops france','psyops france',
+  'l2i france','lutte informationnelle france',
+  'jagic','utmc','dtmc','srge','gcl france',
+  // Personnes liées
+  'lecornu','percie du sert','cemat france',
+  // Cyber France
+  'cyberattaque france','cyberattaque française','anssi alerte',
+  'cyberattaque française','attaque informatique france',
+  'apt28 france','apt29 france','ingérence numérique france',
+  // Narratifs adverses ciblant la France
+  'anti-france','anti-french','sentiment anti-français',
+  'anti-france','influence russe france','ingérence france',
+  'opération anti-france','désinformation anti-france',
+  'campagne anti-france','propagande anti-france',
+  'wagner france','france afrique russe',
+  // OTAN / défense FR
+  'nato france','otan france','france otan',
+  'défense française','armement français',
+];
+
+let franceBannerCollapsed = false;
+
+function norm(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function isFranceCriticalItem(item, critMin) {
+  // Condition 1 : criticité >= seuil utilisateur
+  if (item.criticite < critMin) return false;
+  // Condition 2 : contient au moins un terme France précis
+  const text = norm(item.title + ' ' + item.desc);
+  return FRANCE_EXACT.some(k => text.includes(norm(k)));
+}
+
+function renderFranceBanner(items) {
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  // Filtre strict : critique ET terme précis France/Armées
+  const frItems = items
+    .filter(it => isFranceCriticalItem(it, critMin))
+    .sort((a, b) => b.criticite - a.criticite)
+    .slice(0, 2); // maximum 2 articles
+
+  const banner = document.getElementById('franceBanner');
+  const scroll = document.getElementById('franceScroll');
+  const cnt = document.getElementById('franceCnt');
+
+  if (frItems.length === 0) {
+    banner.style.display = 'none';
+    return;
+  }
+
+  cnt.textContent = frItems.length + ' signal critique' + (frItems.length > 1 ? 's' : '');
+  banner.style.display = 'block';
+
+  scroll.innerHTML = frItems.map(it => {
+    const age = timeAgo(it.pubDate);
+    return `<div class="fc" style="border-color:var(--red);max-width:480px;">
+      <div class="fc-src" style="color:var(--red);">${esc(it.source)} · ${age} · CRIT ${it.criticite}/10</div>
+      <div class="fc-title" title="${esc(it.title)}">${esc(it.title)}</div>
+      <div class="fc-meta">${(THEME_META[it.tag]||{label:it.tag}).label}</div>
+    </div>`;
+  }).join('');
+
+  scroll.querySelectorAll('.fc').forEach((el, i) => {
+    el.onclick = () => openModal(frItems[i]);
+  });
+}
 
 function renderTicker(items) {
   const track = document.getElementById('tickerTrack');
   if(items.length === 0) return;
+  // Build single copy of ticker items (animation handles loop via translate)
   const html = items.slice(0,15).map(it => {
     const m = tagMeta(it.tag);
     return `<span class="ticker-item"><span class="ttag" style="color:${m.color};border-color:${m.color}44;">${m.label.slice(0,5).toUpperCase()}</span>${esc(it.title)}<span class="ticker-sep">//</span></span>`;
   }).join('');
+  // Duplicate only for seamless scroll loop (not shown as separate content)
   track.innerHTML = html + html;
+  // Reset animation
+  track.style.animation = 'none';
+  track.offsetHeight; // reflow
+  track.style.animation = '';
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════════════════════════════ */
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  sb.classList.toggle('mobile-open');
+  document.getElementById('mobConfig').classList.toggle('active', sb.classList.contains('mobile-open'));
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('mobConfig').classList.remove('active');
+}
+function mobileTab(tab) {
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('mob' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+// Close sidebar when tapping outside
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if(sb.classList.contains('mobile-open') && !sb.contains(e.target) && e.target.id !== 'mobConfig') {
+    closeSidebar();
+  }
+});
 
 /* ═══════════════════════════════════════════════════════════════
    MODAL
@@ -888,14 +1195,6 @@ document.querySelectorAll('[data-sort]').forEach(el => {
     renderAll();
   });
 });
-document.querySelectorAll('[data-lang]').forEach(el => {
-  el.addEventListener('click', () => {
-    document.querySelectorAll('[data-lang]').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
-    state.activeLang = el.dataset.lang;
-    renderAll();
-  });
-});
 document.getElementById('searchInput').addEventListener('input', e => {
   state.searchQuery = e.target.value;
   renderAll();
@@ -931,6 +1230,7 @@ setInterval(fetchAllFeeds, 10 * 60 * 1000);
 ═══════════════════════════════════════════════════════════════ */
 renderFeedList();
 renderAll();
+renderFranceBanner([]);
 if(state.feeds.length > 0) fetchAllFeeds();
 </script>
 </body>
