@@ -1,1 +1,255 @@
-
+[
+  {
+    "id": "ru-tass",
+    "name": "ТАСС",
+    "url": "https://tass.com/rss/v2.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "strategic_communication", "military"]
+  },
+  {
+    "id": "ru-ria",
+    "name": "РИА Новости",
+    "url": "https://ria.ru/export/rss2/index.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "strategic_communication"]
+  },
+  {
+    "id": "ru-rt",
+    "name": "RT",
+    "url": "https://www.rt.com/rss/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "propaganda"]
+  },
+  {
+    "id": "ru-sputnik",
+    "name": "Sputnik",
+    "url": "https://sputniknews.com/export/rss2/archive/index.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "propaganda"]
+  },
+  {
+    "id": "ru-kommersant",
+    "name": "Коммерсантъ",
+    "url": "https://www.kommersant.ru/RSS/main.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "core",
+    "topics": ["geopolitics", "information_environment"]
+  },
+  {
+    "id": "ru-moscowtimes",
+    "name": "The Moscow Times",
+    "url": "https://www.themoscowtimes.com/rss/news",
+    "language": "en",
+    "country": "RU",
+    "region": "Russia",
+    "type": "independent_media",
+    "priority": "core",
+    "topics": ["russia", "information_warfare", "geopolitics"]
+  },
+  {
+    "id": "ru-meduza",
+    "name": "Meduza",
+    "url": "https://meduza.io/rss/all",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "independent_media",
+    "priority": "core",
+    "topics": ["russia", "information_warfare", "influence"]
+  },
+  {
+    "id": "ru-lenta",
+    "name": "Лента.ру",
+    "url": "https://lenta.ru/rss",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["russia", "information_environment"]
+  },
+  {
+    "id": "ru-vesti",
+    "name": "Вести",
+    "url": "https://www.vesti.ru/vesti.rss",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "propaganda"]
+  },
+  {
+    "id": "ru-rg",
+    "name": "Российская газета",
+    "url": "https://rg.ru/xml/index.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "extended",
+    "topics": ["government", "information_warfare"]
+  },
+  {
+    "id": "ru-pravda",
+    "name": "Правда.ру",
+    "url": "https://www.pravda.ru/export.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["influence", "geopolitics"]
+  },
+  {
+    "id": "ru-ng",
+    "name": "Независимая газета",
+    "url": "https://www.ng.ru/rss/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["geopolitics", "military"]
+  },
+  {
+    "id": "ru-nvo",
+    "name": "Независимое военное обозрение",
+    "url": "https://nvo.ng.ru/rss/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "military_media",
+    "priority": "core",
+    "topics": ["military", "information_warfare", "hybrid_warfare"]
+  },
+  {
+    "id": "ru-aif",
+    "name": "Аргументы и факты",
+    "url": "https://aif.ru/rss",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["information_environment", "influence"]
+  },
+  {
+    "id": "ru-kp",
+    "name": "Комсомольская правда",
+    "url": "https://www.kp.ru/rss/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["information_environment", "influence"]
+  },
+  {
+    "id": "ru-russia-global-affairs",
+    "name": "Россия в глобальной политике",
+    "url": "https://globalaffairs.ru/feed/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["geopolitics", "strategic_communication", "information_warfare"]
+  },
+  {
+    "id": "ru-military",
+    "name": "Военное обозрение",
+    "url": "https://topwar.ru/rss.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "military_media",
+    "priority": "core",
+    "topics": ["military", "information_warfare", "influence"]
+  },
+  {
+    "id": "ru-readovka",
+    "name": "Readovka",
+    "url": "https://readovka.news/rss",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["information_warfare", "influence"]
+  },
+  {
+    "id": "ru-rt-russia",
+    "name": "RT Russian",
+    "url": "https://russian.rt.com/rss",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "propaganda"]
+  },
+  {
+    "id": "ru-izvestia",
+    "name": "Известия",
+    "url": "https://iz.ru/xml/rss/all.xml",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["information_environment", "geopolitics"]
+  },
+  {
+    "id": "ru-rbc",
+    "name": "РБК",
+    "url": "https://www.rbc.ru/export/rss2/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["geopolitics", "information_environment"]
+  },
+  {
+    "id": "ru-interfax",
+    "name": "Интерфакс",
+    "url": "https://www.interfax.ru/rss.asp",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "core",
+    "topics": ["geopolitics", "government", "military"]
+  },
+  {
+    "id": "ru-mk",
+    "name": "Московский комсомолец",
+    "url": "https://www.mk.ru/rss/",
+    "language": "ru",
+    "country": "RU",
+    "region": "Russia",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["information_environment", "influence"]
+  }
+]
