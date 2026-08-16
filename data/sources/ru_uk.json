@@ -1,0 +1,263 @@
+[
+  {
+    "id": "ruuk-isw",
+    "name": "Institute for the Study of War",
+    "url": "https://www.understandingwar.org/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "hybrid_warfare",
+      "Russia",
+      "Ukraine",
+      "military_operations"
+    ]
+  },
+  {
+    "id": "ruuk-cepa",
+    "name": "Center for European Policy Analysis",
+    "url": "https://cepa.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "influence",
+      "hybrid_warfare",
+      "disinformation",
+      "Russia",
+      "Ukraine"
+    ]
+  },
+  {
+    "id": "ruuk-jamestown",
+    "name": "Jamestown Foundation",
+    "url": "https://jamestown.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "China",
+      "information_warfare",
+      "influence",
+      "hybrid_warfare"
+    ]
+  },
+  {
+    "id": "ruuk-rusi",
+    "name": "Royal United Services Institute",
+    "url": "https://www.rusi.org/rss.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "information_warfare",
+      "hybrid_warfare",
+      "psychological_warfare",
+      "cyber",
+      "strategic_communication"
+    ]
+  },
+  {
+    "id": "ruuk-carnegie",
+    "name": "Carnegie Russia Eurasia Center",
+    "url": "https://carnegieendowment.org/rss/solr/",
+    "language": "en",
+    "country": "USA",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "information_warfare",
+      "influence",
+      "geopolitics"
+    ]
+  },
+  {
+    "id": "ruuk-wilson",
+    "name": "Wilson Center",
+    "url": "https://www.wilsoncenter.org/rss",
+    "language": "en",
+    "country": "USA",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "China",
+      "influence",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "ruuk-fpri",
+    "name": "Foreign Policy Research Institute",
+    "url": "https://www.fpri.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "information_warfare",
+      "hybrid_warfare",
+      "psychological_warfare"
+    ]
+  },
+  {
+    "id": "ruuk-osw",
+    "name": "Centre for Eastern Studies",
+    "url": "https://www.osw.waw.pl/en/rss.xml",
+    "language": "en",
+    "country": "POL",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "information_warfare",
+      "hybrid_warfare",
+      "influence"
+    ]
+  },
+  {
+    "id": "ruuk-pism",
+    "name": "Polish Institute of International Affairs",
+    "url": "https://www.pism.pl/rss",
+    "language": "en",
+    "country": "POL",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "NATO",
+      "hybrid_warfare",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "ruuk-texty",
+    "name": "Texty.org.ua",
+    "url": "https://texty.org.ua/rss/",
+    "language": "uk",
+    "country": "UKR",
+    "region": "Eastern Europe",
+    "type": "analysis",
+    "priority": "core",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "disinformation",
+      "propaganda",
+      "information_warfare",
+      "influence"
+    ]
+  },
+  {
+    "id": "ruuk-detector-media",
+    "name": "Detector Media",
+    "url": "https://detector.media/rss/",
+    "language": "uk",
+    "country": "UKR",
+    "region": "Eastern Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "propaganda",
+      "information_warfare",
+      "Russia",
+      "Ukraine",
+      "media"
+    ]
+  },
+  {
+    "id": "ruuk-voxukraine",
+    "name": "Vox Ukraine",
+    "url": "https://voxukraine.org/feed/",
+    "language": "en",
+    "country": "UKR",
+    "region": "Eastern Europe",
+    "type": "analysis",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "disinformation",
+      "propaganda",
+      "influence"
+    ]
+  },
+  {
+    "id": "ruuk-ecfr",
+    "name": "European Council on Foreign Relations",
+    "url": "https://ecfr.eu/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "influence",
+      "hybrid_warfare",
+      "geopolitics"
+    ]
+  },
+  {
+    "id": "ruuk-chatham",
+    "name": "Chatham House",
+    "url": "https://www.chathamhouse.org/rss.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "information_warfare",
+      "influence",
+      "hybrid_warfare"
+    ]
+  },
+  {
+    "id": "ruuk-mwi",
+    "name": "Modern War Institute",
+    "url": "https://mwi.westpoint.edu/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "Russia",
+      "Ukraine",
+      "information_warfare",
+      "hybrid_warfare",
+      "psychological_warfare",
+      "military_operations"
+    ]
+  }
+]
