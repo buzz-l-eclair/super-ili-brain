@@ -155,6 +155,23 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 .term-chip.crit{border-color:var(--red-dim);} .term-chip.crit .tl{background:var(--red);}
 .term-chip.high{border-color:var(--amber-dim);} .term-chip.high .tl{background:var(--amber);}
 .term-chip.mid .tl{background:var(--text-2);}
+
+/* Tag management (taxonomie ILI) */
+.terms-panel input[type=text]{
+  width:100%;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);
+  font-family:var(--mono);font-size:10px;padding:5px 8px;outline:none;transition:.12s;
+}
+.terms-panel input[type=text]:focus{border-color:var(--blue);}
+.terms-panel input[type=text]::placeholder{color:var(--text-2);}
+.tag-manage-row{
+  display:flex;align-items:center;gap:6px;padding:3px 6px;
+  border:1px solid var(--line-soft);background:var(--bg-2);font-size:9px;
+}
+.tag-manage-swatch{width:8px;height:8px;flex-shrink:0;border-radius:50%;}
+.tag-manage-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-1);}
+.tag-manage-del{background:none;border:none;color:var(--text-2);cursor:pointer;font-size:11px;padding:0 2px;}
+.tag-manage-del:hover{color:var(--red);}
+.tag-manage-builtin{font-size:7px;color:var(--text-2);border:1px solid var(--line);padding:0 4px;flex-shrink:0;}
 .tl{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
 .trem{background:transparent;border:none;color:var(--text-2);cursor:pointer;font-size:10px;line-height:1;} .trem:hover{color:var(--red);}
 
@@ -370,6 +387,57 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
   .social-feed-area{padding:8px 10px;}
   .cluster-grid{grid-template-columns:1fr 1fr;}
 }
+
+/* ── ANALYTICS PANEL — same slot as .center ── */
+.analytics-panel{
+  grid-column:2;background:var(--bg-0);
+  display:none;flex-direction:column;overflow-y:auto;
+}
+.analytics-panel.visible{display:flex;}
+.tab-btn.analytics.active{background:var(--lime-dim);border-color:var(--lime);color:var(--lime);}
+
+.analytics-toolbar{
+  display:flex;align-items:center;gap:8px;padding:10px 16px;
+  border-bottom:1px solid var(--line);flex-shrink:0;flex-wrap:wrap;
+}
+.range-chip{
+  font-family:var(--mono);font-size:9px;padding:4px 10px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);
+  letter-spacing:.8px;transition:.12s;
+}
+.range-chip:hover{border-color:var(--text-1);color:var(--text-1);}
+.range-chip.active{border-color:var(--lime);color:var(--lime);background:var(--lime-dim);}
+
+.analytics-kpis{
+  display:flex;gap:16px;padding:10px 16px;border-bottom:1px solid var(--line-soft);
+  background:var(--bg-1);flex-shrink:0;flex-wrap:wrap;
+}
+.kpi{display:flex;flex-direction:column;align-items:center;min-width:70px;}
+.kpi-val{font-size:18px;font-weight:700;}
+.kpi-lbl{font-size:8px;color:var(--text-2);letter-spacing:1px;text-align:center;}
+
+.charts-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+  gap:10px;padding:14px 16px;
+}
+.chart-card{
+  background:var(--bg-1);border:1px solid var(--line-soft);padding:10px 12px 6px;
+  display:flex;flex-direction:column;min-height:230px;
+}
+.chart-card.wide{grid-column:1/-1;}
+.chart-card-title{
+  font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.chart-card-body{position:relative;flex:1;min-height:180px;}
+.chart-empty{
+  display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--text-2);font-size:10px;letter-spacing:.5px;text-align:center;padding:10px;
+}
+@media(max-width:768px){
+  .charts-grid{grid-template-columns:1fr;padding:8px 10px;}
+  .analytics-kpis{gap:10px;padding:8px 10px;}
+}
 </style>
 </head>
 <body>
@@ -388,6 +456,7 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
   <div class="tab-switcher">
     <button class="tab-btn active" id="tabRss" onclick="switchTab('rss')">◈ VEILLE RSS</button>
     <button class="tab-btn social" id="tabSocial" onclick="switchTab('social')">⬡ SOCIAL</button>
+    <button class="tab-btn analytics" id="tabAnalytics" onclick="switchTab('analytics')">📊 GRAPHES</button>
   </div>
   <div class="zulu">
     <div class="zulu-time" id="zuluTime">--:--:--Z</div>
@@ -404,17 +473,7 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
     <input type="text" id="inName" placeholder="Nom de la source">
     <input type="url" id="inUrl" placeholder="https://exemple.com/rss.xml">
     <div class="add-row">
-      <select id="inTag">
-        <option value="DECEPTION">Déception</option>
-        <option value="GC">Guerre Cognitive</option>
-        <option value="GI">Guerre Informationnelle</option>
-        <option value="INFLUENCE">Influence</option>
-        <option value="LI">Lutte Informationnelle</option>
-        <option value="L2I">L2I</option>
-        <option value="STRATCOM">STRATCOM</option>
-        <option value="COMOPS">COMOPS</option>
-        <option value="PSYOPS">PSYOPS</option>
-      </select>
+      <select id="inTag"></select>
       <select id="inLang">
         <option>FR</option><option selected>EN</option><option>DE</option>
         <option>AR</option><option>RU</option><option>ES</option>
@@ -454,6 +513,23 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
     <div class="terms-cloud" id="termCloud"></div>
   </div>
 
+  <!-- Gestion des tags (taxonomie ILI — durable, base serveur) -->
+  <div class="terms-panel">
+    <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:6px;">
+      TAXONOMIE ILI — TAGS <span style="color:var(--text-2);font-weight:400;">(ajout/retrait durable)</span>
+    </div>
+    <div id="tagManageList" style="display:flex;flex-direction:column;gap:3px;margin-bottom:8px;max-height:180px;overflow-y:auto;"></div>
+    <div style="font-size:8px;color:var(--text-2);margin:6px 0 4px;letter-spacing:.5px;">+ NOUVEAU TAG</div>
+    <input type="text" id="tagNewLabel" placeholder="Libellé (ex: Guerre Électronique)">
+    <div class="add-row">
+      <input type="text" id="tagNewKey" placeholder="Clé courte (ex: GE)" style="text-transform:uppercase;">
+      <input type="color" id="tagNewColor" value="#7a9bbf" style="width:100%;height:28px;padding:2px;background:var(--bg-2);border:1px solid var(--line);">
+    </div>
+    <input type="text" id="tagNewTermsFR" placeholder="Termes FR (virgules) — requis" style="margin-top:5px;">
+    <input type="text" id="tagNewTermsEN" placeholder="Termes EN (virgules) — optionnel" style="margin-top:5px;">
+    <button class="btn-sm btn-sm-blue" id="btnAddTag" style="width:100%;margin-top:5px;">+ CRÉER LE TAG</button>
+  </div>
+
   <!-- Scoring sliders -->
   <div class="score-mini-panel">
     <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:7px;">SEUILS DE SCORING</div>
@@ -481,15 +557,7 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
       <input class="search-input" type="text" id="searchInput" placeholder="Rechercher dans les signaux...">
     </div>
     <button class="chip active" data-tag="all">TOUT <span id="cnt-all">0</span></button>
-    <button class="chip" data-tag="DECEPTION">DÉCEPTION <span id="cnt-DECEPTION">0</span></button>
-    <button class="chip" data-tag="GC">GC <span id="cnt-GC">0</span></button>
-    <button class="chip" data-tag="GI">GI <span id="cnt-GI">0</span></button>
-    <button class="chip" data-tag="INFLUENCE">INFLUENCE <span id="cnt-INFLUENCE">0</span></button>
-    <button class="chip" data-tag="LI">LI <span id="cnt-LI">0</span></button>
-    <button class="chip" data-tag="L2I">L2I <span id="cnt-L2I">0</span></button>
-    <button class="chip" data-tag="STRATCOM">STRATCOM <span id="cnt-STRATCOM">0</span></button>
-    <button class="chip" data-tag="COMOPS">COMOPS <span id="cnt-COMOPS">0</span></button>
-    <button class="chip" data-tag="PSYOPS">PSYOPS <span id="cnt-PSYOPS">0</span></button>
+    <span id="tagChipsArea" style="display:contents;"></span>
     <span class="chip active" data-sort="time" style="margin-left:8px;">⏱ DATE</span>
     <span class="chip" data-sort="crit">⚠ CRIT</span>
     <div class="meta-count" id="metaCount">0 signaux</div>
@@ -619,6 +687,66 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
 
 </div><!-- /social-panel -->
 
+<!-- ══════════════════════════════════════════════
+     ONGLET GRAPHES / ANALYSE
+══════════════════════════════════════════════ -->
+<div class="analytics-panel" id="analyticsPanel">
+
+  <div class="analytics-kpis" id="analyticsKpis">
+    <div class="kpi"><span class="kpi-val" id="kpi-total">0</span><span class="kpi-lbl">SIGNAUX RSS</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-crit" style="color:var(--red);">0</span><span class="kpi-lbl">ALERTES CRIT.</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-avgcrit">0</span><span class="kpi-lbl">CRITICITÉ MOY.</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-srcok" style="color:var(--green);">0</span><span class="kpi-lbl">SOURCES OK</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-srcerr" style="color:var(--amber);">0</span><span class="kpi-lbl">SOURCES EN ERREUR</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-social" style="color:var(--violet);">0</span><span class="kpi-lbl">SIGNAUX SOCIAUX</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-io" style="color:var(--red);">0</span><span class="kpi-lbl">ALERTES IO</span></div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-ghost" style="font-size:9px;padding:4px 10px;" onclick="renderAnalytics()">⟳ RECALCULER</button>
+    </div>
+  </div>
+
+  <div class="analytics-toolbar">
+    <span style="font-size:9px;color:var(--text-2);letter-spacing:1px;margin-right:4px;">PÉRIODE</span>
+    <button class="range-chip" data-range="6h">6H</button>
+    <button class="range-chip active" data-range="24h">24H</button>
+    <button class="range-chip" data-range="7j">7J</button>
+    <button class="range-chip" data-range="30j">30J</button>
+    <button class="range-chip" data-range="all">TOUT</button>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card wide">
+      <div class="chart-card-title">SIGNAUX DANS LE TEMPS — VOLUME &amp; ALERTES CRITIQUES <span id="ct-timeline-range"></span></div>
+      <div class="chart-card-body" id="body-chartTimeline"><canvas id="chartTimeline"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">RÉPARTITION PAR THÉMATIQUE</div>
+      <div class="chart-card-body" id="body-chartTag"><canvas id="chartTag"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">CRITICITÉ MOYENNE PAR THÉMATIQUE</div>
+      <div class="chart-card-body" id="body-chartCritByTag"><canvas id="chartCritByTag"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">TOP 10 SOURCES (VOLUME)</div>
+      <div class="chart-card-body" id="body-chartTopSources"><canvas id="chartTopSources"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">RÉPARTITION PAR LANGUE</div>
+      <div class="chart-card-body" id="body-chartLang"><canvas id="chartLang"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">SOCIAL — SIGNAUX PAR PLATEFORME</div>
+      <div class="chart-card-body" id="body-chartSocialPlat"><canvas id="chartSocialPlat"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">SOCIAL — SCORE IO MAX PAR PLATEFORME</div>
+      <div class="chart-card-body" id="body-chartSocialIO"><canvas id="chartSocialIO"></canvas></div>
+    </div>
+  </div>
+
+</div><!-- /analytics-panel -->
+
 <!-- STATUSBAR -->
 <div class="statusbar" id="statusbar">
   <div class="dot-pulse"></div>
@@ -651,21 +779,29 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
   </button>
 </nav>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════
    ÉTAT
 ═══════════════════════════════════════════════════════════════ */
-const THEME_META = {
-  DECEPTION:  {label:'Déception',              color:'#ff3a2e'},
-  GC:         {label:'Guerre Cognitive',        color:'#c87fff'},
-  GI:         {label:'Guerre Informationnelle', color:'#ffb800'},
-  INFLUENCE:  {label:'Influence',              color:'#00aaff'},
-  LI:         {label:'Lutte Informationnelle',  color:'#00ffaa'},
-  L2I:        {label:'L2I',                    color:'#ff2d9f'},
-  STRATCOM:   {label:'STRATCOM',               color:'#00ffee'},
-  COMOPS:     {label:'COMOPS',                 color:'#ff6a00'},
-  PSYOPS:     {label:'PSYOPS',                 color:'#a0ff00'},
+// THEME_META est désormais alimenté par le serveur (GET /api/store) — la
+// taxonomie ILI officielle (11 tags + NC) et les tags personnalisés y
+// vivent durablement. Ce fallback ne sert qu'en cas d'échec réseau initial.
+let THEME_META = {
+  GI:        {label:'Guerre Informationnelle', color:'#ffb800'},
+  GC:        {label:'Guerre Cognitive',        color:'#c87fff'},
+  INFLUENCE: {label:'Influence',               color:'#00aaff'},
+  DECEPTION: {label:'Déception',               color:'#ff3a2e'},
+  PSYOPS:    {label:'PSYOPS',                  color:'#a0ff00'},
+  COMOPS:    {label:'COMOPS',                  color:'#ff6a00'},
+  STRATCOM:  {label:'STRATCOM',                color:'#00ffee'},
+  LIO:       {label:'Lutte Informatique Offensive (LIO)',   color:'#ff5540'},
+  LID:       {label:'Lutte Informatique Défensive (LID)',   color:'#3ddc84'},
+  L2I:       {label:"Lutte Informatique d'Influence (L2I)", color:'#ff2d9f'},
+  ILI:       {label:'Influence et Lutte Informationnelle (ILI)', color:'#00ffaa'},
+  NC:        {label:'Non Classifié',           color:'#42607a'},
 };
+const BUILTIN_TAG_KEYS = ['GI','GC','INFLUENCE','DECEPTION','PSYOPS','COMOPS','STRATCOM','LIO','LID','L2I','ILI','NC'];
 
 const FEED_PACKS = {
 
@@ -948,7 +1084,7 @@ const TERM_PACKS = {
 };
 
 let state = {
-  feeds: JSON.parse(localStorage.getItem('sib_feeds') || '[]'),
+  feeds: [],   // rempli depuis le serveur (GET /api/store) par initApp() — plus de localStorage-only
   terms: JSON.parse(localStorage.getItem('sib_terms') || '[]'),
   items: [],
   feedStatus: {},
@@ -957,7 +1093,9 @@ let state = {
   searchQuery: '',
   refreshInterval: null,
   loading: false,
+  analyticsRange: '24h',
 };
+const charts = {}; // instances Chart.js, clés = id canvas
 
 /* ═══════════════════════════════════════════════════════════════
    UTILS
@@ -977,7 +1115,9 @@ function timeAgo(dateStr) {
 function scoreColor(s){ return s>=parseInt(document.getElementById('slCrit').value)?'var(--red)':s>=5?'var(--amber)':'var(--green)'; }
 function tagMeta(tag){ return THEME_META[tag] || {label: tag, color:'var(--text-1)'}; }
 function savePersist() {
-  localStorage.setItem('sib_feeds', JSON.stringify(state.feeds));
+  // Les flux sont désormais gérés par le serveur (data/store.json).
+  // On garde un cache local en lecture seule pour la résilience hors-ligne.
+  localStorage.setItem('sib_feeds_cache', JSON.stringify(state.feeds));
   localStorage.setItem('sib_terms', JSON.stringify(state.terms));
 }
 
@@ -1088,12 +1228,27 @@ function renderFeedList() {
   }).join('');
 }
 
-function removeFeed(i) {
-  const f = state.feeds.splice(i, 1)[0];
-  delete state.feedStatus[f.url];
-  state.items = state.items.filter(it => it.source !== f.name);
-  savePersist(); renderFeedList(); renderAll();
-  toast(`Source supprimée : ${f.name}`, 'info');
+async function removeFeed(i) {
+  const f = state.feeds[i];
+  if(!f) return;
+  try {
+    const r = await fetch('/api/store/feed', {
+      method: 'DELETE', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ url: f.url })
+    });
+    const d = await r.json();
+    if(d.ok) {
+      state.feeds = d.feeds;
+      delete state.feedStatus[f.url];
+      state.items = state.items.filter(it => it.source !== f.name);
+      savePersist(); renderFeedList(); renderAll();
+      toast(`Source supprimée (base serveur) : ${f.name}`, 'info');
+    } else {
+      toast('Erreur suppression : ' + (d.error||'?'), 'err');
+    }
+  } catch(e) {
+    toast('Erreur réseau — suppression impossible', 'err');
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1106,12 +1261,22 @@ document.getElementById('btnAdd').addEventListener('click', async () => {
   const lang = document.getElementById('inLang').value;
   if(!url) { toast('URL requise', 'err'); return; }
   if(state.feeds.find(f=>f.url===url)) { toast('Flux déjà présent', 'err'); return; }
-  state.feeds.push({ name: name || url, url, tag, lang });
-  document.getElementById('inName').value = '';
-  document.getElementById('inUrl').value = '';
-  savePersist(); renderFeedList();
-  toast('Flux ajouté — actualisation…', 'info');
-  await fetchAllFeeds();
+  try {
+    const r = await fetch('/api/store/feed', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name: name || url, url, tag, lang })
+    });
+    const d = await r.json();
+    if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+    state.feeds = d.feeds;
+    document.getElementById('inName').value = '';
+    document.getElementById('inUrl').value = '';
+    savePersist(); renderFeedList();
+    toast('Flux ajouté (base serveur) — actualisation…', 'info');
+    await fetchAllFeeds();
+  } catch(e) {
+    toast('Erreur réseau — ajout impossible', 'err');
+  }
 });
 
 document.getElementById('inUrl').addEventListener('keydown', e => {
@@ -1141,14 +1306,23 @@ Object.entries(FEED_PACKS).forEach(([name, feeds]) => {
   const btn = document.createElement('button');
   btn.className = 'pack-btn';
   btn.textContent = '+ ' + name;
-  btn.addEventListener('click', () => {
-    let added = 0;
-    feeds.forEach(f => {
-      if(!state.feeds.find(x=>x.url===f.url)) { state.feeds.push(f); added++; }
-    });
-    savePersist(); renderFeedList();
-    if(added > 0) { toast(`Pack "${name}" : ${added} flux ajoutés`, 'ok'); fetchAllFeeds(); }
-    else toast('Tous ces flux sont déjà présents', 'info');
+  btn.addEventListener('click', async () => {
+    const toAdd = feeds.filter(f => !state.feeds.find(x=>x.url===f.url));
+    if(toAdd.length === 0) { toast('Tous ces flux sont déjà présents', 'info'); return; }
+    try {
+      const r = await fetch('/api/store/feeds-bulk', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ feeds: toAdd })
+      });
+      const d = await r.json();
+      if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+      state.feeds = d.feeds;
+      savePersist(); renderFeedList();
+      toast(`Pack "${name}" : ${d.added} flux ajoutés (base serveur)`, 'ok');
+      fetchAllFeeds();
+    } catch(e) {
+      toast('Erreur réseau — ajout du pack impossible', 'err');
+    }
   });
   packsArea.appendChild(btn);
 });
@@ -1180,7 +1354,7 @@ renderTerms();
 ═══════════════════════════════════════════════════════════════ */
 function getFiltered() {
   let items = state.items;
-  if(state.activeTag !== 'all') items = items.filter(it => it.tag === state.activeTag);
+  if(state.activeTag !== 'all') items = items.filter(it => (it.matchedTags || [it.tag]).includes(state.activeTag));
   if(state.searchQuery) {
     const q = state.searchQuery.toLowerCase();
     items = items.filter(it => it.title.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q) || it.source.toLowerCase().includes(q));
@@ -1193,11 +1367,14 @@ function getFiltered() {
 function renderCard(it) {
   const critMin = parseInt(document.getElementById('slCrit').value);
   const cls = it.criticite >= critMin ? 'crit' : it.criticite >= 5 ? 'warn' : '';
-  const m = tagMeta(it.tag);
-  const tagStyle = `background:${m.color}22;color:${m.color};border-color:${m.color}44;`;
+  const tags = (it.matchedTags && it.matchedTags.length) ? it.matchedTags : [it.tag || 'NC'];
+  const badges = tags.map(tk => {
+    const m = tagMeta(tk);
+    return `<span class="tag-badge" style="background:${m.color}22;color:${m.color};border-color:${m.color}44;">${m.label}</span>`;
+  }).join('');
   return `<div class="card ${cls}" data-id="${it.id}">
     <div class="card-top">
-      <span class="tag-badge" style="${tagStyle}">${m.label}</span>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>
       <span class="card-source">${esc(it.source)}</span>
     </div>
     <div class="card-title">${esc(it.title)}</div>
@@ -1219,7 +1396,7 @@ function renderAll() {
   document.getElementById('cnt-all').textContent = state.items.length;
   Object.keys(THEME_META).forEach(tag => {
     const el = document.getElementById('cnt-'+tag);
-    if(el) el.textContent = state.items.filter(it=>it.tag===tag).length;
+    if(el) el.textContent = state.items.filter(it=>(it.matchedTags||[it.tag]).includes(tag)).length;
   });
 
   const filtered = getFiltered();
@@ -1390,15 +1567,15 @@ document.getElementById('modalOverlay').addEventListener('click', e => {
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   FILTRES & TRI
+   FILTRES & TRI (délégation — les chips de tag sont dynamiques)
 ═══════════════════════════════════════════════════════════════ */
-document.querySelectorAll('[data-tag]').forEach(el => {
-  el.addEventListener('click', () => {
-    document.querySelectorAll('[data-tag]').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
-    state.activeTag = el.dataset.tag;
-    renderAll();
-  });
+document.querySelector('.toolbar').addEventListener('click', e => {
+  const el = e.target.closest('[data-tag]');
+  if(!el) return;
+  document.querySelectorAll('.toolbar [data-tag]').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  state.activeTag = el.dataset.tag;
+  renderAll();
 });
 document.querySelectorAll('[data-sort]').forEach(el => {
   el.addEventListener('click', () => {
@@ -1414,13 +1591,104 @@ document.getElementById('searchInput').addEventListener('input', e => {
 });
 
 /* ═══════════════════════════════════════════════════════════════
+   TAGS — RENDU DYNAMIQUE (chips filtre, select ajout flux, gestion)
+═══════════════════════════════════════════════════════════════ */
+function renderTagChips() {
+  const area = document.getElementById('tagChipsArea');
+  area.innerHTML = Object.keys(THEME_META).map(k => {
+    const m = THEME_META[k];
+    const active = state.activeTag === k ? ' active' : '';
+    return `<button class="chip${active}" data-tag="${k}" style="${active?`border-color:${m.color};color:${m.color};`:''}">${esc(m.label.split('(')[0].trim())} <span id="cnt-${k}">0</span></button>`;
+  }).join('');
+}
+
+function renderTagSelectOptions() {
+  const sel = document.getElementById('inTag');
+  const current = sel.value;
+  sel.innerHTML = Object.entries(THEME_META).map(([k,m]) => `<option value="${k}">${esc(m.label)}</option>`).join('');
+  if(Object.keys(THEME_META).includes(current)) sel.value = current;
+}
+
+function renderTagManageList() {
+  const box = document.getElementById('tagManageList');
+  box.innerHTML = Object.entries(THEME_META).map(([k,m]) => {
+    const isBuiltin = BUILTIN_TAG_KEYS.includes(k);
+    return `<div class="tag-manage-row">
+      <span class="tag-manage-swatch" style="background:${m.color};"></span>
+      <span class="tag-manage-label" title="${esc(m.label)}">${esc(m.label)}</span>
+      ${isBuiltin ? '<span class="tag-manage-builtin">ILI</span>' : `<button class="tag-manage-del" data-delkey="${k}" title="Supprimer ce tag">✕</button>`}
+    </div>`;
+  }).join('');
+}
+
+function refreshTagUI() {
+  renderTagChips();
+  renderTagSelectOptions();
+  renderTagManageList();
+}
+
+document.getElementById('tagManageList').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-delkey]');
+  if(!btn) return;
+  const key = btn.dataset.delkey;
+  if(!confirm(`Supprimer durablement le tag "${THEME_META[key]?.label || key}" de la base ?`)) return;
+  try {
+    const r = await fetch('/api/store/tag', {
+      method: 'DELETE', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ key })
+    });
+    const d = await r.json();
+    if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+    applyServerTags(d.tags);
+    if(state.activeTag === key) { state.activeTag = 'all'; }
+    refreshTagUI(); renderFeedList(); renderAll();
+    toast('Tag supprimé (base serveur)', 'info');
+  } catch(err) {
+    toast('Erreur réseau — suppression impossible', 'err');
+  }
+});
+
+document.getElementById('btnAddTag').addEventListener('click', async () => {
+  const label   = document.getElementById('tagNewLabel').value.trim();
+  const key     = document.getElementById('tagNewKey').value.trim();
+  const color   = document.getElementById('tagNewColor').value;
+  const termsFR = document.getElementById('tagNewTermsFR').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const termsEN = document.getElementById('tagNewTermsEN').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(!label || !key) { toast('Libellé et clé requis', 'err'); return; }
+  if(termsFR.length === 0) { toast('Au moins un terme FR est requis pour que le tag soit opérant', 'err'); return; }
+  try {
+    const r = await fetch('/api/store/tag', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ key, label, color, terms: { FR: termsFR, EN: termsEN } })
+    });
+    const d = await r.json();
+    if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+    applyServerTags(d.tags);
+    refreshTagUI();
+    document.getElementById('tagNewLabel').value = '';
+    document.getElementById('tagNewKey').value = '';
+    document.getElementById('tagNewTermsFR').value = '';
+    document.getElementById('tagNewTermsEN').value = '';
+    toast(`Tag "${label}" créé (base serveur) — actualise pour le voir appliqué aux nouveaux signaux`, 'ok');
+  } catch(err) {
+    toast('Erreur réseau — création impossible', 'err');
+  }
+});
+
+function applyServerTags(tags) {
+  THEME_META = {};
+  tags.forEach(t => { THEME_META[t.key] = { label: t.label, color: t.color }; });
+}
+
+/* ═══════════════════════════════════════════════════════════════
    EXPORT CSV
 ═══════════════════════════════════════════════════════════════ */
 document.getElementById('btnExport').addEventListener('click', () => {
   if(state.items.length === 0) { toast('Aucun signal à exporter','err'); return; }
-  const rows = [['Titre','Source','Tag','Date','Criticité','Viralité','URL']];
+  const rows = [['Titre','Source','Tags','Date','Criticité','Viralité','URL']];
   getFiltered().forEach(it => {
-    rows.push([`"${(it.title||'').replace(/"/g,'""')}"`, `"${it.source}"`, it.tag,
+    const tagsStr = (it.matchedTags && it.matchedTags.length) ? it.matchedTags.join('|') : (it.tag||'NC');
+    rows.push([`"${(it.title||'').replace(/"/g,'""')}"`, `"${it.source}"`, tagsStr,
       new Date(it.pubDate).toISOString(), it.criticite, it.viralite, `"${it.link}"`]);
   });
   const csv = rows.map(r=>r.join(',')).join('\n');
@@ -1443,18 +1711,205 @@ setInterval(fetchAllFeeds, 10 * 60 * 1000);
 let activeTab = 'rss';
 function switchTab(tab) {
   activeTab = tab;
-  const center = document.querySelector('.center');
-  const social = document.getElementById('socialPanel');
+  const center     = document.querySelector('.center');
+  const social     = document.getElementById('socialPanel');
+  const analytics  = document.getElementById('analyticsPanel');
   document.getElementById('tabRss').classList.toggle('active', tab === 'rss');
   document.getElementById('tabSocial').classList.toggle('active', tab === 'social');
-  if(tab === 'rss') {
-    center.classList.remove('hidden');
-    social.classList.remove('visible');
-  } else {
-    center.classList.add('hidden');
-    social.classList.add('visible');
-    renderSocialFeed();
+  document.getElementById('tabAnalytics').classList.toggle('active', tab === 'analytics');
+  center.classList.toggle('hidden', tab !== 'rss');
+  social.classList.toggle('visible', tab === 'social');
+  analytics.classList.toggle('visible', tab === 'analytics');
+  if(tab === 'social')     renderSocialFeed();
+  if(tab === 'analytics')  renderAnalytics();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRAPHES / ANALYSE
+═══════════════════════════════════════════════════════════════ */
+const CHART_COLORS = {
+  text0:'#ddeeff', text1:'#7a9bbf', text2:'#42607a', line:'rgba(122,155,191,.12)',
+  red:'#ff3a2e', amber:'#ffb800', green:'#00ffaa', blue:'#00aaff',
+  violet:'#c87fff', cyan:'#00ffee', pink:'#ff2d9f', orange:'#ff6a00', lime:'#a0ff00',
+};
+const PLAT_COLORS = { twitter:'#1DA1F2', telegram:'#2CA5E0', youtube:'#FF0000', mastodon:'#6364FF', bluesky:'#0085FF', reddit:'#FF4500' };
+
+document.querySelectorAll('.range-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.range-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.analyticsRange = btn.dataset.range;
+    renderAnalytics();
+  });
+});
+
+function upsertChart(canvasId, bodyId, hasData, emptyMsg, config) {
+  const body = document.getElementById(bodyId);
+  if(!body) return;
+  if(!hasData) {
+    if(charts[canvasId]) { charts[canvasId].destroy(); delete charts[canvasId]; }
+    body.innerHTML = `<div class="chart-empty">${emptyMsg}</div>`;
+    return;
   }
+  if(!document.getElementById(canvasId)) body.innerHTML = `<canvas id="${canvasId}"></canvas>`;
+  if(charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart(document.getElementById(canvasId).getContext('2d'), config);
+}
+
+function bucketizeByTime(items, range) {
+  const now = Date.now();
+  let n, sizeMs, unit;
+  if(range==='6h')       { n=12; sizeMs=30*60*1000;       unit='h30'; }
+  else if(range==='24h') { n=24; sizeMs=60*60*1000;        unit='h';   }
+  else if(range==='7j')  { n=7;  sizeMs=24*60*60*1000;     unit='j';   }
+  else                    { n=30; sizeMs=24*60*60*1000;     unit='j';   } // 30j & all
+
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const buckets = Array(n).fill(0), bucketsCrit = Array(n).fill(0);
+
+  items.forEach(it => {
+    const t = new Date(it.pubDate).getTime();
+    if(isNaN(t)) return;
+    const age = now - t;
+    let idx = n - 1 - Math.floor(age / sizeMs);
+    if(range === 'all' && idx < 0) idx = 0; // regroupe l'historique ancien dans le 1er bucket
+    if(idx < 0 || idx >= n) return;
+    buckets[idx]++;
+    if(it.criticite >= critMin) bucketsCrit[idx]++;
+  });
+
+  const labels = [];
+  for(let i=0;i<n;i++){
+    const stepsAgo = n-1-i;
+    if(unit==='h30') labels.push(stepsAgo===0?'maint.':`-${(stepsAgo*0.5).toFixed(stepsAgo%2?1:0)}h`);
+    else if(unit==='h') labels.push(stepsAgo===0?'maint.':`-${stepsAgo}h`);
+    else labels.push(stepsAgo===0?"auj.":`-${stepsAgo}j`);
+  }
+  return { labels, buckets, bucketsCrit };
+}
+
+function renderAnalytics() {
+  if(typeof Chart === 'undefined') {
+    document.getElementById('analyticsPanel').querySelectorAll('.chart-card-body').forEach(b =>
+      b.innerHTML = '<div class="chart-empty">Chart.js indisponible (hors-ligne ?)</div>');
+    return;
+  }
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const items = state.items;
+
+  /* ── KPIs ── */
+  const critCount = items.filter(it => it.criticite >= critMin).length;
+  const avgCrit   = items.length ? (items.reduce((s,it)=>s+it.criticite,0)/items.length).toFixed(1) : '0';
+  const srcOk     = Object.values(state.feedStatus).filter(s=>s.ok).length;
+  const srcErr    = Object.values(state.feedStatus).filter(s=>!s.ok).length;
+  document.getElementById('kpi-total').textContent   = items.length;
+  document.getElementById('kpi-crit').textContent    = critCount;
+  document.getElementById('kpi-avgcrit').textContent = avgCrit;
+  document.getElementById('kpi-srcok').textContent   = srcOk;
+  document.getElementById('kpi-srcerr').textContent  = srcErr;
+  document.getElementById('kpi-social').textContent  = socialState.items.length;
+
+  let ioTotal = 0;
+  if(socialState.items.length) {
+    const plats = [...new Set(socialState.items.map(it=>it.platform))];
+    plats.forEach(p => { if(computeIOScore(socialState.items.filter(it=>it.platform===p)).detected > 0) ioTotal++; });
+  }
+  document.getElementById('kpi-io').textContent = ioTotal;
+  document.getElementById('ct-timeline-range').textContent =
+    '(' + {'6h':'6 heures','24h':'24 heures','7j':'7 jours','30j':'30 jours','all':'historique complet'}[state.analyticsRange] + ')';
+
+  /* ── 1. Timeline ── */
+  const { labels, buckets, bucketsCrit } = bucketizeByTime(items, state.analyticsRange);
+  upsertChart('chartTimeline', 'body-chartTimeline', items.length > 0,
+    'Aucun signal — ajoute des flux et actualise.', {
+    type: 'line',
+    data: { labels, datasets: [
+      { label:'Signaux', data: buckets, borderColor: CHART_COLORS.blue, backgroundColor: CHART_COLORS.blue+'22', fill:true, tension:.3, pointRadius:2 },
+      { label:'Alertes critiques', data: bucketsCrit, borderColor: CHART_COLORS.red, backgroundColor: CHART_COLORS.red+'22', fill:true, tension:.3, pointRadius:2 },
+    ]},
+    options: chartBaseOptions({ stacked:false })
+  });
+
+  /* ── 2. Répartition par thématique (doughnut) ── */
+  const tagCounts = {};
+  items.forEach(it => { tagCounts[it.tag] = (tagCounts[it.tag]||0) + 1; });
+  const tagKeys = Object.keys(tagCounts);
+  upsertChart('chartTag', 'body-chartTag', tagKeys.length > 0, 'Aucune donnée.', {
+    type: 'doughnut',
+    data: {
+      labels: tagKeys.map(k => tagMeta(k).label),
+      datasets: [{ data: tagKeys.map(k=>tagCounts[k]), backgroundColor: tagKeys.map(k=>tagMeta(k).color) }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ color: CHART_COLORS.text1, font:{size:9}, boxWidth:10 } } } }
+  });
+
+  /* ── 3. Criticité moyenne par thématique (bar) ── */
+  const critByTag = {};
+  tagKeys.forEach(k => {
+    const arr = items.filter(it=>it.tag===k);
+    critByTag[k] = arr.reduce((s,it)=>s+it.criticite,0) / arr.length;
+  });
+  const sortedTags = [...tagKeys].sort((a,b)=>critByTag[b]-critByTag[a]);
+  upsertChart('chartCritByTag', 'body-chartCritByTag', sortedTags.length > 0, 'Aucune donnée.', {
+    type: 'bar',
+    data: {
+      labels: sortedTags.map(k=>tagMeta(k).label),
+      datasets: [{ data: sortedTags.map(k=>critByTag[k].toFixed(1)), backgroundColor: sortedTags.map(k=>tagMeta(k).color) }]
+    },
+    options: chartBaseOptions({ indexAxis:'x', max:10 })
+  });
+
+  /* ── 4. Top 10 sources ── */
+  const srcCounts = {};
+  items.forEach(it => { srcCounts[it.source] = (srcCounts[it.source]||0) + 1; });
+  const topSrc = Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  upsertChart('chartTopSources', 'body-chartTopSources', topSrc.length > 0, 'Aucune donnée.', {
+    type: 'bar',
+    data: { labels: topSrc.map(([n])=>n), datasets: [{ data: topSrc.map(([,c])=>c), backgroundColor: CHART_COLORS.cyan }] },
+    options: chartBaseOptions({ indexAxis:'y' })
+  });
+
+  /* ── 5. Répartition par langue ── */
+  const langCounts = {};
+  items.forEach(it => { const l = it.lang || '?'; langCounts[l] = (langCounts[l]||0) + 1; });
+  const langKeys = Object.keys(langCounts).sort((a,b)=>langCounts[b]-langCounts[a]);
+  upsertChart('chartLang', 'body-chartLang', langKeys.length > 0, 'Aucune donnée.', {
+    type: 'bar',
+    data: { labels: langKeys, datasets: [{ data: langKeys.map(k=>langCounts[k]), backgroundColor: CHART_COLORS.lime }] },
+    options: chartBaseOptions({})
+  });
+
+  /* ── 6. Social par plateforme ── */
+  const platCounts = {};
+  socialState.items.forEach(it => { platCounts[it.platform] = (platCounts[it.platform]||0) + 1; });
+  const platKeys = Object.keys(platCounts);
+  upsertChart('chartSocialPlat', 'body-chartSocialPlat', platKeys.length > 0,
+    'Aucune donnée sociale — onglet SOCIAL puis ⟳ FETCH.', {
+    type: 'doughnut',
+    data: { labels: platKeys, datasets: [{ data: platKeys.map(k=>platCounts[k]), backgroundColor: platKeys.map(k=>PLAT_COLORS[k]||CHART_COLORS.text1) }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ color: CHART_COLORS.text1, font:{size:9}, boxWidth:10 } } } }
+  });
+
+  /* ── 7. Score IO max par plateforme ── */
+  const ioByPlat = platKeys.map(p => computeIOScore(socialState.items.filter(it=>it.platform===p)).maxScore || 0);
+  upsertChart('chartSocialIO', 'body-chartSocialIO', platKeys.length > 0,
+    'Aucune donnée sociale — onglet SOCIAL puis ⟳ FETCH.', {
+    type: 'bar',
+    data: { labels: platKeys, datasets: [{ data: ioByPlat, backgroundColor: CHART_COLORS.red }] },
+    options: chartBaseOptions({ max:10 })
+  });
+}
+
+function chartBaseOptions(opts) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    indexAxis: opts.indexAxis || 'x',
+    plugins: { legend: { display: (opts.legend !== false) && false } },
+    scales: {
+      x: { ticks:{ color:CHART_COLORS.text2, font:{size:9} }, grid:{ color:CHART_COLORS.line }, max: opts.indexAxis==='y' ? opts.max : undefined },
+      y: { ticks:{ color:CHART_COLORS.text2, font:{size:9} }, grid:{ color:CHART_COLORS.line }, max: opts.indexAxis==='y' ? undefined : opts.max, beginAtZero:true },
+    }
+  };
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2003,12 +2458,49 @@ document.getElementById('socialSearch').addEventListener('input', e => {
 /* ═══════════════════════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════════════════════ */
-renderFeedList();
-renderAll();
-renderFranceBanner([]);
-renderSocialSourceList();
-renderHashtagCloud();
-if(state.feeds.length > 0) fetchAllFeeds();
+async function initApp() {
+  refreshTagUI(); // affiche d'abord le fallback local, remplacé dès que le serveur répond
+  renderFeedList();
+  renderAll();
+  renderFranceBanner([]);
+  renderSocialSourceList();
+  renderHashtagCloud();
+
+  try {
+    const r = await fetch('/api/store');
+    const d = await r.json();
+    if(d.ok) {
+      applyServerTags(d.tags);
+      if(d.feeds.length > 0) {
+        state.feeds = d.feeds;
+      } else {
+        // Migration : d'anciens flux existaient peut-être en localStorage
+        // (ancienne version, base client uniquement) — on les repousse
+        // vers la base serveur une seule fois, puis on bascule dessus.
+        const legacy = JSON.parse(localStorage.getItem('sib_feeds') || localStorage.getItem('sib_feeds_cache') || '[]');
+        if(Array.isArray(legacy) && legacy.length > 0) {
+          const rb = await fetch('/api/store/feeds-bulk', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ feeds: legacy })
+          });
+          const db = await rb.json();
+          state.feeds = db.ok ? db.feeds : legacy;
+          toast(`${legacy.length} flux migrés vers la base serveur`, 'info');
+        }
+      }
+      savePersist();
+      refreshTagUI();
+      renderFeedList();
+    }
+  } catch(e) {
+    toast('Serveur indisponible — fonctionnement en mode local dégradé', 'err');
+    const legacy = JSON.parse(localStorage.getItem('sib_feeds') || localStorage.getItem('sib_feeds_cache') || '[]');
+    if(Array.isArray(legacy)) { state.feeds = legacy; renderFeedList(); }
+  }
+
+  if(state.feeds.length > 0) fetchAllFeeds();
+}
+initApp();
 </script>
 </body>
 </html>
