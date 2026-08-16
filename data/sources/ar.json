@@ -1,1 +1,123 @@
-
+[
+  {
+    "id": "ar-aawsat-all",
+    "name": "الشرق الأوسط - كل الأخبار",
+    "url": "https://aawsat.com/feed/news",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "core",
+    "topics": ["geopolitics", "influence", "information_environment"]
+  },
+  {
+    "id": "ar-aawsat-arab",
+    "name": "الشرق الأوسط - العالم العربي",
+    "url": "https://aawsat.com/feed/arab-world",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "core",
+    "topics": ["arab_world", "influence", "information_warfare"]
+  },
+  {
+    "id": "ar-aawsat-gulf",
+    "name": "الشرق الأوسط - الخليج",
+    "url": "https://aawsat.com/feed/gulf",
+    "language": "ar",
+    "country": "SA",
+    "region": "Gulf",
+    "type": "media",
+    "priority": "core",
+    "topics": ["gulf", "geopolitics", "influence"]
+  },
+  {
+    "id": "ar-aawsat-europe",
+    "name": "الشرق الأوسط - أوروبا",
+    "url": "https://aawsat.com/feed/europe",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["europe", "geopolitics"]
+  },
+  {
+    "id": "ar-aawsat-asia",
+    "name": "الشرق الأوسط - آسيا",
+    "url": "https://aawsat.com/feed/asia",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["asia", "geopolitics"]
+  },
+  {
+    "id": "ar-aawsat-africa",
+    "name": "الشرق الأوسط - أفريقيا",
+    "url": "https://aawsat.com/feed/africa",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["africa", "influence"]
+  },
+  {
+    "id": "ar-aawsat-fundamentalism",
+    "name": "الشرق الأوسط - أصولية",
+    "url": "https://aawsat.com/feed/fundamentalism",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "core",
+    "topics": ["radicalization", "influence", "psyops"]
+  },
+  {
+    "id": "ar-aawsat-media",
+    "name": "الشرق الأوسط - الإعلام",
+    "url": "https://aawsat.com/feed/press",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "core",
+    "topics": ["strategic_communication", "media", "influence"]
+  },
+  {
+    "id": "ar-aawsat-tech",
+    "name": "الشرق الأوسط - تقنية المعلومات",
+    "url": "https://aawsat.com/feed/information-technology",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "extended",
+    "topics": ["cyber", "information_warfare"]
+  },
+  {
+    "id": "ar-aawsat-investigation",
+    "name": "الشرق الأوسط - تحقيق",
+    "url": "https://aawsat.com/feed/investigation",
+    "language": "ar",
+    "country": "SA",
+    "region": "MENA",
+    "type": "media",
+    "priority": "core",
+    "topics": ["osint", "influence", "information_warfare"]
+  },
+  {
+    "id": "ar-tasnim",
+    "name": "تسنيم - عربي",
+    "url": "https://www.tasnimnews.ir/ar/rss",
+    "language": "ar",
+    "country": "IR",
+    "region": "MENA",
+    "type": "state_aligned_media",
+    "priority": "core",
+    "topics": ["iran", "influence", "information_warfare"]
+  }
+]
