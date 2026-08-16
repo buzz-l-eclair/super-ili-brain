@@ -33,6 +33,58 @@ app.use(express.static(publicDir));
 ════════════════════════════════════════════════════════════════ */
 const DATA_DIR   = path.join(__dirname, 'data');
 const STORE_FILE = path.join(DATA_DIR, 'store.json');
+const SOURCES_DIR = path.join(DATA_DIR, 'sources');
+
+function loadSourceLibrary() {
+  if (!fs.existsSync(SOURCES_DIR)) {
+    console.warn('⚠️ Répertoire sources absent');
+    return [];
+  }
+
+  const files = fs.readdirSync(SOURCES_DIR)
+    .filter(file => file.endsWith('.json') && file !== 'index.json');
+
+  const sources = [];
+
+  for (const file of files) {
+    try {
+      const fullPath = path.join(SOURCES_DIR, file);
+      const content = fs.readFileSync(fullPath, 'utf8');
+      const data = JSON.parse(content);
+
+      if (!Array.isArray(data)) {
+        console.warn(`⚠️ ${file} n'est pas un tableau JSON`);
+        continue;
+      }
+
+      sources.push(...data);
+    } catch (error) {
+      console.error(
+        `❌ Erreur chargement ${file}:`,
+        error.message
+      );
+    }
+  }
+
+  const unique = [];
+  const seen = new Set();
+
+  for (const source of sources) {
+    if (!source.url) continue;
+    if (seen.has(source.url)) continue;
+
+    seen.add(source.url);
+    unique.push(source);
+  }
+
+  return unique;
+}
+
+const SOURCE_LIBRARY = loadSourceLibrary();
+
+console.log(
+  `✓ Bibliothèque ILI chargée : ${SOURCE_LIBRARY.length} sources`
+);
 
 // Taxonomie ILI officielle — 11 catégories + 1 fallback "non classifié".
 // Chaque tag porte ses propres termes de classification, en français
@@ -323,6 +375,62 @@ app.get('/api/feed', async (req, res) => {
   }
 });
 
+app.get('/api/source-library', (req, res) => {
+  const {
+    language,
+    country,
+    region,
+    type,
+    priority,
+    topic
+  } = req.query;
+
+  let sources = SOURCE_LIBRARY;
+
+  if (language) {
+    sources = sources.filter(
+      s => s.language === language
+    );
+  }
+
+  if (country) {
+    sources = sources.filter(
+      s => s.country === country
+    );
+  }
+
+  if (region) {
+    sources = sources.filter(
+      s => s.region === region
+    );
+  }
+
+  if (type) {
+    sources = sources.filter(
+      s => s.type === type
+    );
+  }
+
+  if (priority) {
+    sources = sources.filter(
+      s => s.priority === priority
+    );
+  }
+
+  if (topic) {
+    sources = sources.filter(
+      s => Array.isArray(s.topics) &&
+           s.topics.includes(topic)
+    );
+  }
+
+  res.json({
+    ok: true,
+    count: sources.length,
+    sources
+  });
+});
+
 app.post('/api/feeds', async (req, res) => {
   const { feeds } = req.body;
   if (!Array.isArray(feeds)) return res.status(400).json({ error: 'feeds must be array' });
@@ -354,6 +462,52 @@ app.post('/api/feeds', async (req, res) => {
   }));
   res.json({ results });
 });
+
+app.post('/api/source-library/import', (req, res) => {
+  const { ids } = req.body;
+
+  if (!Array.isArray(ids)) {
+    return res.status(400).json({
+      ok: false,
+      error: 'ids doit être un tableau'
+    });
+  }
+
+  const selected = SOURCE_LIBRARY.filter(
+    source => ids.includes(source.id)
+  );
+
+  const existing = new Set(
+    store.feeds.map(feed => feed.url)
+  );
+
+  const added = [];
+
+  for (const source of selected) {
+    if (existing.has(source.url)) continue;
+
+    store.feeds.push({
+      name: source.name,
+      url: source.url,
+      tag: source.topics?.[0] || 'information_warfare',
+      lang: source.language
+    });
+
+    added.push(source);
+    existing.add(source.url);
+  }
+
+  saveStore();
+
+  res.json({
+    ok: true,
+    requested: ids.length,
+    found: selected.length,
+    added: added.length,
+    totalFeeds: store.feeds.length
+  });
+});
+
 
 app.get('/api/test-feed', async (req, res) => {
   const { url } = req.query;
