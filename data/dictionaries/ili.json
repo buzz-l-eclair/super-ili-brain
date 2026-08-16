@@ -1,0 +1,473 @@
+{
+  "information_warfare": {
+    "fr": [
+      "guerre informationnelle",
+      "guerre de l'information",
+      "lutte informationnelle",
+      "opérations informationnelles",
+      "opération informationnelle",
+      "environnement informationnel",
+      "supériorité informationnelle"
+    ],
+    "en": [
+      "information warfare",
+      "information war",
+      "information operations",
+      "information operation",
+      "information environment",
+      "information confrontation",
+      "information conflict",
+      "information advantage",
+      "information superiority"
+    ],
+    "ru": [
+      "информационная война",
+      "информационная борьба",
+      "информационное противоборство",
+      "информационные операции",
+      "информационная операция",
+      "информационное воздействие",
+      "информационное противостояние"
+    ],
+    "uk": [
+      "інформаційна війна",
+      "інформаційна боротьба",
+      "інформаційне протиборство",
+      "інформаційні операції",
+      "інформаційний вплив"
+    ],
+    "zh": [
+      "信息战",
+      "信息战争",
+      "信息对抗",
+      "信息作战",
+      "信息行动",
+      "信息影响"
+    ],
+    "ar": [
+      "حرب المعلومات",
+      "الحرب المعلوماتية",
+      "العمليات المعلوماتية",
+      "العملية المعلوماتية",
+      "التأثير المعلوماتي",
+      "الصراع المعلوماتي"
+    ],
+    "fa": [
+      "جنگ اطلاعاتی",
+      "جنگ اطلاعات",
+      "عملیات اطلاعاتی",
+      "عملیات اطلاع‌رسانی",
+      "تأثیرگذاری اطلاعاتی",
+      "مقابله اطلاعاتی"
+    ],
+    "he": [
+      "לוחמת מידע",
+      "מלחמת מידע",
+      "מבצעי מידע",
+      "מבצע מידע",
+      "השפעה במרחב המידע"
+    ]
+  },
+
+  "cognitive_warfare": {
+    "fr": [
+      "guerre cognitive",
+      "guerre de la cognition",
+      "domaine cognitif",
+      "menace cognitive",
+      "influence cognitive",
+      "sécurité cognitive",
+      "résilience cognitive"
+    ],
+    "en": [
+      "cognitive warfare",
+      "cognitive war",
+      "cognitive domain",
+      "cognitive threat",
+      "cognitive threats",
+      "cognitive influence",
+      "cognitive security",
+      "cognitive resilience",
+      "cognitive vulnerability",
+      "cognitive vulnerabilities"
+    ],
+    "ru": [
+      "когнитивная война",
+      "когнитивная борьба",
+      "когнитивное противоборство",
+      "когнитивное воздействие",
+      "когнитивная безопасность",
+      "когнитивные угрозы"
+    ],
+    "zh": [
+      "认知战",
+      "认知战争",
+      "认知域",
+      "认知对抗",
+      "认知作战",
+      "认知安全"
+    ],
+    "ar": [
+      "الحرب المعرفية",
+      "الحرب الإدراكية",
+      "العمليات المعرفية",
+      "التأثير المعرفي",
+      "الأمن المعرفي"
+    ],
+    "fa": [
+      "جنگ شناختی",
+      "جنگ شناختی",
+      "عملیات شناختی",
+      "تأثیر شناختی",
+      "امنیت شناختی"
+    ],
+    "he": [
+      "לוחמה קוגניטיבית",
+      "לוחמה קוגניטיבית",
+      "השפעה קוגניטיבית",
+      "ביטחון קוגניטיבי"
+    ]
+  },
+
+  "influence": {
+    "fr": [
+      "opération d'influence",
+      "opérations d'influence",
+      "influence étrangère",
+      "ingérence étrangère",
+      "campagne d'influence",
+      "campagnes d'influence",
+      "influence malveillante"
+    ],
+    "en": [
+      "influence operation",
+      "influence operations",
+      "foreign influence",
+      "foreign interference",
+      "influence campaign",
+      "influence campaigns",
+      "malign influence",
+      "covert influence",
+      "foreign information manipulation"
+    ],
+    "ru": [
+      "операция влияния",
+      "операции влияния",
+      "иностранное влияние",
+      "иностранное вмешательство",
+      "кампания влияния",
+      "информационное влияние"
+    ],
+    "zh": [
+      "影响行动",
+      "影响力行动",
+      "外国影响",
+      "外国干预",
+      "影响行动",
+      "舆论影响"
+    ],
+    "ar": [
+      "عمليات التأثير",
+      "عملية تأثير",
+      "التأثير الأجنبي",
+      "التدخل الأجنبي",
+      "حملات التأثير"
+    ],
+    "fa": [
+      "عملیات نفوذ",
+      "نفوذ خارجی",
+      "مداخله خارجی",
+      "کارزار نفوذ",
+      "عملیات تأثیرگذاری"
+    ],
+    "he": [
+      "מבצעי השפעה",
+      "השפעה זרה",
+      "התערבות זרה",
+      "קמפיין השפעה"
+    ]
+  },
+
+  "deception": {
+    "fr": [
+      "déception",
+      "tromperie",
+      "opération de déception",
+      "opérations de déception",
+      "désinformation"
+    ],
+    "en": [
+      "deception",
+      "military deception",
+      "deception operation",
+      "deception operations",
+      "disinformation"
+    ],
+    "ru": [
+      "военная дезинформация",
+      "дезинформация",
+      "военная хитрость",
+      "маскировка",
+      "введение в заблуждение"
+    ],
+    "zh": [
+      "军事欺骗",
+      "欺骗行动",
+      "虚假信息",
+      "误导",
+      "伪装"
+    ],
+    "ar": [
+      "الخداع العسكري",
+      "عمليات الخداع",
+      "التضليل",
+      "المعلومات المضللة"
+    ],
+    "fa": [
+      "فریب نظامی",
+      "عملیات فریب",
+      "اطلاعات نادرست",
+      "گمراه‌سازی"
+    ],
+    "he": [
+      "הונאה צבאית",
+      "מבצעי הונאה",
+      "דיסאינפורמציה",
+      "הטעיה"
+    ]
+  },
+
+  "psyops": {
+    "fr": [
+      "opérations psychologiques",
+      "opération psychologique",
+      "guerre psychologique",
+      "actions psychologiques",
+      "psyops"
+    ],
+    "en": [
+      "psychological operations",
+      "psychological operation",
+      "psyops",
+      "psyop",
+      "psychological warfare"
+    ],
+    "ru": [
+      "психологические операции",
+      "психологическая операция",
+      "психологическая война",
+      "психологическое воздействие"
+    ],
+    "zh": [
+      "心理战",
+      "心理战术",
+      "心理作战",
+      "心理影响"
+    ],
+    "ar": [
+      "العمليات النفسية",
+      "العملية النفسية",
+      "الحرب النفسية",
+      "التأثير النفسي"
+    ],
+    "fa": [
+      "عملیات روانی",
+      "جنگ روانی",
+      "عملیات روانشناختی",
+      "تأثیر روانی"
+    ],
+    "he": [
+      "לוחמה פסיכולוגית",
+      "מבצעים פסיכולוגיים",
+      "פעולות פסיכולוגיות"
+    ]
+  },
+
+  "strategic_communication": {
+    "fr": [
+      "communication stratégique",
+      "communications stratégiques",
+      "communication opérationnelle",
+      "communications opérationnelles",
+      "communication institutionnelle",
+      "diplomatie publique"
+    ],
+    "en": [
+      "strategic communication",
+      "strategic communications",
+      "stratcom",
+      "operational communication",
+      "operational communications",
+      "public diplomacy",
+      "strategic messaging",
+      "strategic narrative"
+    ],
+    "ru": [
+      "стратегические коммуникации",
+      "стратегическая коммуникация",
+      "оперативные коммуникации",
+      "публичная дипломатия",
+      "стратегический нарратив"
+    ],
+    "zh": [
+      "战略传播",
+      "战略沟通",
+      "公共外交",
+      "战略叙事",
+      "战略传播能力"
+    ],
+    "ar": [
+      "الاتصال الاستراتيجي",
+      "الاتصالات الاستراتيجية",
+      "الدبلوماسية العامة",
+      "السردية الاستراتيجية"
+    ],
+    "fa": [
+      "ارتباطات راهبردی",
+      "ارتباطات استراتژیک",
+      "دیپلماسی عمومی",
+      "روایت راهبردی"
+    ],
+    "he": [
+      "תקשורת אסטרטגית",
+      "תקשורת אסטרטגית",
+      "דיפלומטיה ציבורית",
+      "נרטיב אסטרטגי"
+    ]
+  },
+
+  "hybrid_warfare": {
+    "fr": [
+      "guerre hybride",
+      "menace hybride",
+      "menaces hybrides",
+      "zone grise",
+      "zone grise",
+      "opération hybride"
+    ],
+    "en": [
+      "hybrid warfare",
+      "hybrid war",
+      "hybrid threat",
+      "hybrid threats",
+      "grey zone",
+      "gray zone",
+      "hybrid operations"
+    ],
+    "ru": [
+      "гибридная война",
+      "гибридная угроза",
+      "гибридные угрозы",
+      "гибридные операции",
+      "серая зона"
+    ],
+    "zh": [
+      "混合战争",
+      "混合战",
+      "混合威胁",
+      "混合行动",
+      "灰色地带"
+    ],
+    "ar": [
+      "الحرب الهجينة",
+      "التهديدات الهجينة",
+      "العمليات الهجينة",
+      "المنطقة الرمادية"
+    ],
+    "fa": [
+      "جنگ ترکیبی",
+      "تهدید ترکیبی",
+      "عملیات ترکیبی",
+      "منطقه خاکستری"
+    ],
+    "he": [
+      "לוחמה היברידית",
+      "איום היברידי",
+      "איומים היברידיים",
+      "המרחב האפור"
+    ]
+  },
+
+  "narrative_warfare": {
+    "fr": [
+      "guerre narrative",
+      "guerre des récits",
+      "narratif stratégique",
+      "récit stratégique",
+      "contre-narratif"
+    ],
+    "en": [
+      "narrative warfare",
+      "narrative war",
+      "strategic narrative",
+      "strategic narratives",
+      "counter-narrative",
+      "master narrative"
+    ],
+    "ru": [
+      "нарративная война",
+      "стратегический нарратив",
+      "информационный нарратив",
+      "контрнарратив"
+    ],
+    "zh": [
+      "叙事战",
+      "战略叙事",
+      "话语权",
+      "国际话语权"
+    ],
+    "ar": [
+      "حرب السرديات",
+      "السردية الاستراتيجية",
+      "الرواية الاستراتيجية",
+      "السرديات"
+    ],
+    "fa": [
+      "جنگ روایتی",
+      "روایت راهبردی",
+      "روایت استراتژیک"
+    ],
+    "he": [
+      "לוחמת נרטיבים",
+      "נרטיב אסטרטגי",
+      "לוחמת נרטיבים"
+    ]
+  },
+
+  "cyber_influence": {
+    "fr": [
+      "cyber influence",
+      "influence cyber",
+      "cyber influence operation",
+      "opération d'influence cyber"
+    ],
+    "en": [
+      "cyber influence",
+      "cyber-enabled influence",
+      "cyber influence operation",
+      "cyber-enabled influence operation"
+    ],
+    "ru": [
+      "кибероперация влияния",
+      "кибернетическое влияние",
+      "кибероперации влияния"
+    ],
+    "zh": [
+      "网络影响",
+      "网络影响行动",
+      "网络舆论战"
+    ],
+    "ar": [
+      "التأثير السيبراني",
+      "عمليات التأثير السيبراني"
+    ],
+    "fa": [
+      "نفوذ سایبری",
+      "عملیات نفوذ سایبری"
+    ],
+    "he": [
+      "השפעה סייברית",
+      "מבצע השפעה בסייבר"
+    ]
+  }
+}
