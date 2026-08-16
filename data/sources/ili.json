@@ -1,0 +1,175 @@
+[
+  {
+    "id": "ili-nato-stratcom-coe",
+    "name": "NATO Strategic Communications Centre of Excellence",
+    "url": "https://stratcomcoe.org/rss.xml",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "cognitive_warfare",
+      "influence",
+      "strategic_communication",
+      "psychological_warfare",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "ili-nato-act",
+    "name": "NATO Allied Command Transformation",
+    "url": "https://www.act.nato.int/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "military",
+    "priority": "core",
+    "topics": [
+      "cognitive_warfare",
+      "information_warfare",
+      "hybrid_warfare",
+      "influence",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "ili-nato-c2coe",
+    "name": "NATO Command and Control Centre of Excellence",
+    "url": "https://c2coe.org/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "information_operations",
+      "information_warfare",
+      "cognitive_warfare",
+      "military_operations",
+      "command_and_control"
+    ]
+  },
+  {
+    "id": "ili-hybrid-coe",
+    "name": "European Centre of Excellence for Countering Hybrid Threats",
+    "url": "https://www.hybridcoe.fi/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "hybrid_warfare",
+      "information_warfare",
+      "influence",
+      "disinformation",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "ili-dfrlab",
+    "name": "Digital Forensic Research Lab",
+    "url": "https://dfrlab.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "information_warfare",
+      "influence",
+      "foreign_interference",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "ili-graphika",
+    "name": "Graphika",
+    "url": "https://graphika.com/feed",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "influence",
+      "disinformation",
+      "information_operations",
+      "social_media",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "ili-isd",
+    "name": "Institute for Strategic Dialogue",
+    "url": "https://www.isdglobal.org/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "extremism",
+      "disinformation",
+      "influence",
+      "information_warfare",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "ili-rusi",
+    "name": "Royal United Services Institute",
+    "url": "https://www.rusi.org/rss.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "hybrid_warfare",
+      "influence",
+      "psychological_warfare",
+      "cyber",
+      "strategic_communication"
+    ]
+  },
+  {
+    "id": "ili-cepa",
+    "name": "Center for European Policy Analysis",
+    "url": "https://cepa.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "influence",
+      "hybrid_warfare",
+      "disinformation",
+      "Russia",
+      "China"
+    ]
+  },
+  {
+    "id": "ili-war-on-rocks",
+    "name": "War on the Rocks",
+    "url": "https://warontherocks.com/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "analysis",
+    "priority": "high",
+    "topics": [
+      "information_warfare",
+      "hybrid_warfare",
+      "psychological_warfare",
+      "military_operations",
+      "strategic_communication"
+    ]
+  }
+]
