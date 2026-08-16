@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPER-ILI-BRAIN — Veille RSS</title>
+<title>SUPER-ILI-BRAIN --- Outil de veille de flux RSS</title>
 <style>
 :root{
   --bg-0:#03050a;--bg-1:#070c14;--bg-2:#0b1120;--bg-3:#0f1728;
@@ -418,6 +418,9 @@ html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);fon
       <select id="inLang">
         <option>FR</option><option selected>EN</option><option>DE</option>
         <option>AR</option><option>RU</option><option>ES</option>
+        <option>ZH</option><option>PT</option><option>IT</option>
+        <option>TR</option><option>FA</option><option>JA</option>
+        <option>HI</option><option>UK</option><option>PL</option>
       </select>
     </div>
     <div style="display:flex;gap:5px;margin-top:5px;">
@@ -814,10 +817,126 @@ const FEED_PACKS = {
     {name:'Le Monde',            url:'https://www.lemonde.fr/rss/une.xml',                     tag:'GI',        lang:'FR'},
     {name:'Le Figaro',           url:'https://www.lefigaro.fr/rss/figaro_actualites.xml',      tag:'GI',        lang:'FR'},
     {name:'France 24 FR',        url:'https://www.france24.com/fr/rss',                        tag:'GI',        lang:'FR'},
+    {name:'Franceinfo',          url:'https://www.francetvinfo.fr/titres.rss',                 tag:'GI',        lang:'FR'},
+    {name:'Ouest-France',        url:'https://www.ouest-france.fr/rss-en-continu.xml',         tag:'GI',        lang:'FR'},
+    {name:'La Dépêche',          url:'https://www.ladepeche.fr/rss.xml',                       tag:'GI',        lang:'FR'},
+    {name:'Mediapart',           url:'https://www.mediapart.fr/articles/feed',                 tag:'INFLUENCE', lang:'FR'},
+    {name:'Ministère des Armées',url:'https://www.defense.gouv.fr/rss.xml',                    tag:'STRATCOM',  lang:'FR'},
   ],
   'Sahel / Afrique': [
     {name:'Jeune Afrique',       url:'https://www.jeuneafrique.com/feed/',                     tag:'INFLUENCE', lang:'FR'},
     {name:'RFI Afrique',         url:'https://www.rfi.fr/fr/afrique/rss',                      tag:'GC',        lang:'FR'},
+  ],
+
+  /* ── AXE 2 : MONDE ARABE / MENA ── */
+  'Monde Arabe / MENA': [
+    {name:'Al Jazeera English',  url:'https://www.aljazeera.com/xml/rss/all.xml',              tag:'GI',        lang:'EN'},
+    {name:'Middle East Eye',     url:'https://www.middleeasteye.net/rss',                      tag:'GI',        lang:'EN'},
+    {name:'Arab News (Saoudite)',url:'https://www.arabnews.com/rss.xml',                       tag:'GI',        lang:'EN'},
+    {name:'Al-Monitor',          url:'https://www.al-monitor.com/rss',                         tag:'INFLUENCE', lang:'EN'},
+    {name:'The National (UAE)',  url:'https://www.thenationalnews.com/rss',                    tag:'GI',        lang:'EN'},
+    {name:'TRT World (Turquie)', url:'https://www.trtworld.com/rss',                           tag:'INFLUENCE', lang:'EN'},
+    {name:'Anadolu Agency EN',   url:'https://www.aa.com.tr/en/rss/default?cat=guncel',        tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 2 : IRAN / GOLFE ── */
+  'Iran / Golfe': [
+    {name:'Iran International EN',url:'https://www.iranintl.com/en/rss',                       tag:'GI',        lang:'EN'},
+    {name:'ISNA (Iran)',         url:'https://www.isna.ir/rss',                                tag:'GI',        lang:'FA'},
+    {name:'Mehr News (Iran)',    url:'https://www.mehrnews.com/rss',                           tag:'GI',        lang:'FA'},
+    {name:'Tabnak (Iran)',       url:'https://www.tabnak.ir/fa/rss/allnews',                   tag:'DECEPTION', lang:'FA'},
+  ],
+
+  /* ── AXE 2 : TURQUIE / CAUCASE ── */
+  'Turquie / Caucase': [
+    {name:'Hürriyet Daily News', url:'https://www.hurriyetdailynews.com/rss',                  tag:'GI',        lang:'EN'},
+    {name:'Eurasianet',          url:'https://eurasianet.org/feed',                             tag:'GI',        lang:'EN'},
+    {name:'OC Media (Caucase)',  url:'https://oc-media.org/feed/',                              tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : CHINE / INDOPACIFIQUE ── */
+  'Chine / Indopacifique': [
+    {name:'SCMP Chine',          url:'https://www.scmp.com/rss/4/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'SCMP Asie',           url:'https://www.scmp.com/rss/3/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'SCMP Hong Kong',      url:'https://www.scmp.com/rss/91/feed',                       tag:'GI',        lang:'EN'},
+    {name:'The Diplomat',        url:'https://thediplomat.com/feed/',                          tag:'STRATCOM',  lang:'EN'},
+    {name:'Taipei Times',        url:'https://www.taipeitimes.com/xml/index.rss',              tag:'GI',        lang:'EN'},
+    {name:'Radio Free Asia',     url:'https://www.rfa.org/english/rss2.xml',                   tag:'GI',        lang:'EN'},
+    {name:'Global Times (RPC)',  url:'https://www.globaltimes.cn/rss/china.xml',               tag:'DECEPTION', lang:'EN'},
+    {name:'Japan Times',         url:'https://www.japantimes.co.jp/feed/topstories/',          tag:'GI',        lang:'EN'},
+    {name:'Kyodo News',          url:'https://english.kyodonews.net/rss/all.xml',              tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : ASIE DU SUD ── */
+  'Asie du Sud': [
+    {name:'Times of India',      url:'https://timesofindia.indiatimes.com/rssfeedstopstories.cms', tag:'GI',   lang:'EN'},
+    {name:'The Hindu',           url:'https://www.thehindu.com/feeder/default.rss',            tag:'GI',        lang:'EN'},
+    {name:'The Print (Inde)',    url:'https://theprint.in/feed/',                              tag:'GI',        lang:'EN'},
+    {name:'Dawn (Pakistan)',     url:'https://www.dawn.com/feeds/home',                        tag:'GI',        lang:'EN'},
+    {name:'Express Tribune (PK)',url:'https://tribune.com.pk/feed/home',                       tag:'GI',        lang:'EN'},
+    {name:'Daily Star (Bangl.)', url:'https://www.thedailystar.net/frontpage/rss.xml',         tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 4 : AMÉRIQUE LATINE ── */
+  'Amérique Latine': [
+    {name:'Folha de S.Paulo',    url:'https://feeds.folha.uol.com.br/emcimadahora/rss091.xml', tag:'GI',        lang:'PT'},
+    {name:'Reforma (Mexique)',   url:'https://www.reforma.com/rss/portada.xml',                tag:'GI',        lang:'ES'},
+    {name:'Mexico News Daily',   url:'https://mexiconewsdaily.com/feed/',                      tag:'GI',        lang:'EN'},
+    {name:'El País (Global)',    url:'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada', tag:'GI', lang:'ES'},
+    {name:'MercoPress',          url:'https://en.mercopress.com/rss/',                         tag:'GI',        lang:'EN'},
+    {name:'Diálogo Américas',    url:'https://dialogo-americas.com/feed/',                     tag:'STRATCOM',  lang:'EN'},
+  ],
+
+  /* ── AXE 5 : EUROPE GERMANOPHONE (DACH) ── */
+  'Europe Germanophone': [
+    {name:'Tagesschau (ARD)',    url:'http://www.tagesschau.de/xml/rss2',                      tag:'GI',        lang:'DE'},
+    {name:'Zeit Online',         url:'http://newsfeed.zeit.de/index',                          tag:'GI',        lang:'DE'},
+    {name:'FAZ',                 url:'https://www.faz.net/rss/aktuell/',                       tag:'GI',        lang:'DE'},
+    {name:'Focus Online',        url:'https://rss.focus.de/fol/XML/rss_folnews.xml',           tag:'GI',        lang:'DE'},
+    {name:'DW English',          url:'https://rss.dw.com/rdf/rss-en-all',                      tag:'GI',        lang:'EN'},
+    {name:'NZZ (Suisse)',        url:'https://www.nzz.ch/international.rss',                   tag:'GI',        lang:'DE'},
+  ],
+
+  /* ── AXE 5 : EUROPE DU SUD ── */
+  'Europe du Sud': [
+    {name:'ANSA (Italie)',       url:'https://www.ansa.it/sito/ansait_rss.xml',                tag:'GI',        lang:'IT'},
+    {name:'Repubblica (Italie)', url:'https://www.repubblica.it/rss/homepage/rss2.0.xml',      tag:'GI',        lang:'IT'},
+    {name:'El Confidencial (Es)',url:'https://rss.elconfidencial.com/espana/',                 tag:'GI',        lang:'ES'},
+    {name:'ElDiario.es',         url:'https://www.eldiario.es/rss/',                           tag:'GI',        lang:'ES'},
+    {name:'Agencia EFE English', url:'https://www.efe.com/efe/english/4/rss',                  tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 6 : AFRIQUE ÉLARGIE ── */
+  'Afrique élargie': [
+    {name:'Africanews',          url:'https://www.africanews.com/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'AllAfrica',           url:'https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf', tag:'GI', lang:'EN'},
+    {name:'News24 (Afr. du Sud)',url:'http://feeds.news24.com/articles/news24/TopStories/rss', tag:'GI',        lang:'EN'},
+    {name:'Daily Maverick (ZA)', url:'https://www.dailymaverick.co.za/dmrss/',                 tag:'DECEPTION', lang:'EN'},
+    {name:'Guardian Nigeria',    url:'https://guardian.ng/feed/',                              tag:'GI',        lang:'EN'},
+    {name:'Premium Times (NG)',  url:'https://www.premiumtimesng.com/feed',                    tag:'DECEPTION', lang:'EN'},
+    {name:'Sahara Reporters',    url:'http://saharareporters.com/feeds/latest/feed',           tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 7 : INSTITUTIONS INTERNATIONALES ── */
+  'Institutions Internationales': [
+    {name:'UN News',             url:'https://news.un.org/feed/subscribe/en/news/all/rss.xml', tag:'STRATCOM',  lang:'EN'},
+    {name:'NATO News',           url:'https://www.nato.int/cps/en/natohq/news.rss',            tag:'STRATCOM',  lang:'EN'},
+    {name:'OSCE',                url:'https://www.osce.org/rss',                               tag:'STRATCOM',  lang:'EN'},
+  ],
+
+  /* ── AXE 7 : FACT-CHECK MONDE ── */
+  'Fact-check Monde': [
+    {name:'Africa Check',        url:'https://africacheck.org/feed',                           tag:'DECEPTION', lang:'EN'},
+    {name:'Chequeado (LATAM)',   url:'https://chequeado.com/feed/',                             tag:'DECEPTION', lang:'ES'},
+    {name:'Rappler (Philippines)',url:'https://www.rappler.com/feed/',                          tag:'DECEPTION', lang:'EN'},
+    {name:'BOOM Live (Inde)',    url:'https://www.boomlive.in/feed',                            tag:'DECEPTION', lang:'EN'},
+    {name:'Poynter / IFCN',      url:'https://www.poynter.org/feed/',                           tag:'DECEPTION', lang:'EN'},
+  ],
+
+  /* ── AXE 8 : AGENCES / MÉDIAS D'ÉTAT (surveillance narratives) ── */
+  'Agences / Médias État': [
+    {name:'TASS (Russie)',       url:'http://tass.com/rss/v2.xml',                             tag:'DECEPTION', lang:'RU'},
+    {name:'RT (Russie)',         url:'https://www.rt.com/rss/',                                tag:'DECEPTION', lang:'EN'},
   ],
 };
 
