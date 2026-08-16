@@ -1,1 +1,255 @@
-
+[
+  {
+    "id": "en-nato",
+    "name": "NATO",
+    "url": "https://www.nato.int/cps/en/natohq/news.xml",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["strategic_communication", "information_warfare", "cognitive_warfare"]
+  },
+  {
+    "id": "en-nato-act",
+    "name": "NATO ACT",
+    "url": "https://www.act.nato.int/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "military",
+    "priority": "core",
+    "topics": ["cognitive_warfare", "information_warfare", "military"]
+  },
+  {
+    "id": "en-stratcomcoe",
+    "name": "NATO StratCom COE",
+    "url": "https://stratcomcoe.org/rss.xml",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "center_of_excellence",
+    "priority": "core",
+    "topics": ["strategic_communication", "information_warfare", "cognitive_warfare"]
+  },
+  {
+    "id": "en-ccdcoe",
+    "name": "NATO CCDCOE",
+    "url": "https://ccdcoe.org/news/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "NATO",
+    "type": "center_of_excellence",
+    "priority": "core",
+    "topics": ["cyber", "offensive_cyber", "defensive_cyber"]
+  },
+  {
+    "id": "en-eeas",
+    "name": "EEAS",
+    "url": "https://www.eeas.europa.eu/rss.xml",
+    "language": "en",
+    "country": "EU",
+    "region": "Europe",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["strategic_communication", "foreign_policy", "influence"]
+  },
+  {
+    "id": "en-euvsdisinfo",
+    "name": "EUvsDisinfo",
+    "url": "https://euvsdisinfo.eu/feed/",
+    "language": "en",
+    "country": "EU",
+    "region": "Europe",
+    "type": "osint",
+    "priority": "core",
+    "topics": ["disinformation", "fimI", "foreign_interference"]
+  },
+  {
+    "id": "en-hybridcoe",
+    "name": "European Centre of Excellence for Countering Hybrid Threats",
+    "url": "https://www.hybridcoe.fi/feed/",
+    "language": "en",
+    "country": "EU",
+    "region": "Europe",
+    "type": "center_of_excellence",
+    "priority": "core",
+    "topics": ["hybrid_warfare", "information_warfare", "influence"]
+  },
+  {
+    "id": "en-rand",
+    "name": "RAND",
+    "url": "https://www.rand.org/pubs/rss.xml",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["military", "information_warfare", "strategic_communication"]
+  },
+  {
+    "id": "en-rusi",
+    "name": "RUSI",
+    "url": "https://rusi.org/rss/commentary",
+    "language": "en",
+    "country": "UK",
+    "region": "Europe",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["military", "geopolitics", "information_warfare"]
+  },
+  {
+    "id": "en-iiss",
+    "name": "IISS",
+    "url": "https://www.iiss.org/rss/iiss-rss",
+    "language": "en",
+    "country": "UK",
+    "region": "Europe",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["military", "geopolitics", "strategic_communication"]
+  },
+  {
+    "id": "en-atlanticcouncil",
+    "name": "Atlantic Council",
+    "url": "https://www.atlanticcouncil.org/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["geopolitics", "influence", "information_warfare"]
+  },
+  {
+    "id": "en-dfrlab",
+    "name": "DFRLab",
+    "url": "https://www.atlanticcouncil.org/programs/digital-forensic-research-lab/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "osint",
+    "priority": "core",
+    "topics": ["osint", "fimI", "disinformation", "influence"]
+  },
+  {
+    "id": "en-bellingcat",
+    "name": "Bellingcat",
+    "url": "https://www.bellingcat.com/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "osint",
+    "priority": "core",
+    "topics": ["osint", "influence", "information_warfare"]
+  },
+  {
+    "id": "en-isd",
+    "name": "Institute for Strategic Dialogue",
+    "url": "https://www.isdglobal.org/feed/",
+    "language": "en",
+    "country": "UK",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": ["extremism", "influence", "disinformation", "cognitive_warfare"]
+  },
+  {
+    "id": "en-graphika",
+    "name": "Graphika",
+    "url": "https://graphika.com/feed",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "osint",
+    "priority": "core",
+    "topics": ["influence", "disinformation", "social_media"]
+  },
+  {
+    "id": "en-warontherocks",
+    "name": "War on the Rocks",
+    "url": "https://warontherocks.com/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "defense_media",
+    "priority": "core",
+    "topics": ["military", "information_warfare", "strategic_communication"]
+  },
+  {
+    "id": "en-mwi",
+    "name": "Modern War Institute",
+    "url": "https://mwi.westpoint.edu/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "military_research",
+    "priority": "core",
+    "topics": ["military", "psyops", "information_warfare"]
+  },
+  {
+    "id": "en-csis",
+    "name": "CSIS",
+    "url": "https://www.csis.org/rss/csis_reports.xml",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["geopolitics", "military", "cyber", "information_warfare"]
+  },
+  {
+    "id": "en-cepa",
+    "name": "CEPA",
+    "url": "https://cepa.org/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "Europe",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["russia", "eastern_europe", "information_warfare"]
+  },
+  {
+    "id": "en-isw",
+    "name": "Institute for the Study of War",
+    "url": "https://www.understandingwar.org/feeds/latest",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": ["military", "ukraine", "russia"]
+  },
+  {
+    "id": "en-cisa",
+    "name": "CISA",
+    "url": "https://www.cisa.gov/news.xml",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["cyber", "defensive_cyber"]
+  },
+  {
+    "id": "en-krebs",
+    "name": "Krebs on Security",
+    "url": "https://krebsonsecurity.com/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "cybersecurity",
+    "priority": "core",
+    "topics": ["cyber"]
+  },
+  {
+    "id": "en-bleepingcomputer",
+    "name": "BleepingComputer",
+    "url": "https://www.bleepingcomputer.com/feed/",
+    "language": "en",
+    "country": "US",
+    "region": "North America",
+    "type": "cybersecurity",
+    "priority": "core",
+    "topics": ["cyber", "offensive_cyber", "defensive_cyber"]
+  }
+]
