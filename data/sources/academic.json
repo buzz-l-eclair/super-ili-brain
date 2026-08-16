@@ -1,0 +1,373 @@
+[
+  {
+    "id": "academic-journal-information-warfare",
+    "name": "Journal of Information Warfare",
+    "url": "https://www.jinfowar.com/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "cyber",
+      "psychological_warfare",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "academic-intelligence-national-security",
+    "name": "Intelligence and National Security",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=fint20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "intelligence",
+      "information_warfare",
+      "psychological_warfare",
+      "influence",
+      "hybrid_warfare"
+    ]
+  },
+  {
+    "id": "academic-ijic",
+    "name": "International Journal of Intelligence and CounterIntelligence",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=ujic20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "USA",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "intelligence",
+      "counterintelligence",
+      "information_warfare",
+      "influence"
+    ]
+  },
+  {
+    "id": "academic-journal-strategic-studies",
+    "name": "Journal of Strategic Studies",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=fjss20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "strategy",
+      "hybrid_warfare",
+      "information_warfare",
+      "military_operations"
+    ]
+  },
+  {
+    "id": "academic-defence-studies",
+    "name": "Defence Studies",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=fdef20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "academic",
+    "priority": "high",
+    "topics": [
+      "defence",
+      "military_operations",
+      "hybrid_warfare",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "academic-journal-cyber-policy",
+    "name": "Journal of Cyber Policy",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=rcyb20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "cyber",
+      "cyber_warfare",
+      "information_warfare",
+      "cyber_policy"
+    ]
+  },
+  {
+    "id": "academic-political-communication",
+    "name": "Political Communication",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=upco20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "political_communication",
+      "strategic_communication",
+      "propaganda",
+      "influence"
+    ]
+  },
+  {
+    "id": "academic-political-psychology",
+    "name": "Political Psychology",
+    "url": "https://onlinelibrary.wiley.com/feed/15498196/most-recent",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "psychology",
+      "influence",
+      "cognition",
+      "propaganda",
+      "political_communication"
+    ]
+  },
+  {
+    "id": "academic-new-media-society",
+    "name": "New Media & Society",
+    "url": "https://journals.sagepub.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=nmsa&type=etoc&feed=rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "social_media",
+      "disinformation",
+      "information_operations",
+      "influence",
+      "cognition"
+    ]
+  },
+  {
+    "id": "academic-information-communication-society",
+    "name": "Information, Communication & Society",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=rics20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "information",
+      "communication",
+      "social_media",
+      "disinformation",
+      "influence"
+    ]
+  },
+  {
+    "id": "academic-digital-journalism",
+    "name": "Digital Journalism",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=rdij20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "high",
+    "topics": [
+      "digital_media",
+      "disinformation",
+      "social_media",
+      "propaganda",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "academic-security-studies",
+    "name": "Security Studies",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=fsst20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "high",
+    "topics": [
+      "security",
+      "strategy",
+      "hybrid_warfare",
+      "information_warfare",
+      "political_warfare"
+    ]
+  },
+  {
+    "id": "academic-international-affairs",
+    "name": "International Affairs",
+    "url": "https://academic.oup.com/ia/pages/rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "academic",
+    "priority": "high",
+    "topics": [
+      "international_relations",
+      "strategy",
+      "influence",
+      "hybrid_warfare",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "academic-survival",
+    "name": "Survival",
+    "url": "https://www.tandfonline.com/action/showFeed?ui=0&mi=3d7t9s&ai=1gvoi&jc=tsur20&type=etoc&feed=rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "academic",
+    "priority": "high",
+    "topics": [
+      "strategy",
+      "geopolitics",
+      "hybrid_warfare",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "academic-frontiers-psychology",
+    "name": "Frontiers in Psychology",
+    "url": "https://www.frontiersin.org/journals/psychology/articles/rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "high",
+    "topics": [
+      "cognition",
+      "psychology",
+      "influence",
+      "decision_making",
+      "persuasion"
+    ]
+  },
+  {
+    "id": "academic-frontiers-communication",
+    "name": "Frontiers in Communication",
+    "url": "https://www.frontiersin.org/journals/communication/articles/rss",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "communication",
+      "strategic_communication",
+      "influence",
+      "disinformation",
+      "propaganda"
+    ]
+  },
+  {
+    "id": "academic-royal-united-services",
+    "name": "RUSI",
+    "url": "https://www.rusi.org/rss.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "hybrid_warfare",
+      "psychological_warfare",
+      "influence",
+      "cyber"
+    ]
+  },
+  {
+    "id": "academic-rand",
+    "name": "RAND Corporation",
+    "url": "https://www.rand.org/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "cognitive_warfare",
+      "hybrid_warfare",
+      "psychological_warfare",
+      "cyber",
+      "strategy"
+    ]
+  },
+  {
+    "id": "academic-csis",
+    "name": "Center for Strategic and International Studies",
+    "url": "https://www.csis.org/rss",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "core",
+    "topics": [
+      "information_warfare",
+      "influence",
+      "hybrid_warfare",
+      "cyber",
+      "China",
+      "Russia"
+    ]
+  },
+  {
+    "id": "academic-atlantic-council",
+    "name": "Atlantic Council",
+    "url": "https://www.atlanticcouncil.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "think_tank",
+    "priority": "high",
+    "topics": [
+      "information_warfare",
+      "influence",
+      "hybrid_warfare",
+      "cyber",
+      "Russia",
+      "China"
+    ]
+  },
+  {
+    "id": "academic-chatham-house",
+    "name": "Chatham House",
+    "url": "https://www.chathamhouse.org/rss.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "think_tank",
+    "priority": "high",
+    "topics": [
+      "strategy",
+      "information_warfare",
+      "influence",
+      "Russia",
+      "China"
+    ]
+  },
+  {
+    "id": "academic-ecfr",
+    "name": "European Council on Foreign Relations",
+    "url": "https://ecfr.eu/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "think_tank",
+    "priority": "high",
+    "topics": [
+      "influence",
+      "hybrid_warfare",
+      "information_warfare",
+      "Russia",
+      "China",
+      "Europe"
+    ]
+  }
+]
