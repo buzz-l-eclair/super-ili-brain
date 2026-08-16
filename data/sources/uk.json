@@ -1,79 +1,79 @@
 [
   {
-    "id": "he-ynet",
-    "name": "ynet",
-    "url": "https://www.ynet.co.il/Integration/StoryRss2.xml",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
+    "id": "uk-ukrinform",
+    "name": "Укрінформ",
+    "url": "https://www.ukrinform.net/rss/block-lastnews",
+    "language": "uk",
+    "country": "UA",
+    "region": "Ukraine",
+    "type": "news_agency",
+    "priority": "core",
+    "topics": ["ukraine", "information_warfare", "strategic_communication"]
+  },
+  {
+    "id": "uk-detector",
+    "name": "Детектор медіа",
+    "url": "https://detector.media/rss/news.xml",
+    "language": "uk",
+    "country": "UA",
+    "region": "Ukraine",
+    "type": "media_monitor",
+    "priority": "core",
+    "topics": ["disinformation", "fimI", "media", "influence"]
+  },
+  {
+    "id": "uk-texty",
+    "name": "Тексти",
+    "url": "https://texty.org.ua/rss/",
+    "language": "uk",
+    "country": "UA",
+    "region": "Ukraine",
+    "type": "osint",
+    "priority": "core",
+    "topics": ["osint", "disinformation", "information_warfare"]
+  },
+  {
+    "id": "uk-vox",
+    "name": "VoxUkraine",
+    "url": "https://voxukraine.org/en/feed/",
+    "language": "en",
+    "country": "UA",
+    "region": "Ukraine",
+    "type": "fact_check",
+    "priority": "core",
+    "topics": ["disinformation", "fimI", "fact_check"]
+  },
+  {
+    "id": "uk-stopfake",
+    "name": "StopFake",
+    "url": "https://www.stopfake.org/en/feed/",
+    "language": "en",
+    "country": "UA",
+    "region": "Ukraine",
+    "type": "fact_check",
+    "priority": "core",
+    "topics": ["disinformation", "fimI", "information_warfare"]
+  },
+  {
+    "id": "uk-euromaidan",
+    "name": "Euromaidan Press",
+    "url": "https://euromaidanpress.com/feed/",
+    "language": "en",
+    "country": "UA",
+    "region": "Ukraine",
     "type": "media",
     "priority": "core",
-    "topics": ["israel", "information_environment", "geopolitics"]
+    "topics": ["ukraine", "information_warfare", "geopolitics"]
   },
   {
-    "id": "he-ynet-breaking",
-    "name": "ynet - מבזקים",
-    "url": "https://www.ynet.co.il/Integration/StoryRss1854.xml",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
-    "type": "media",
+    "id": "uk-uacrisis",
+    "name": "Ukraine Crisis Media Center",
+    "url": "https://uacrisis.org/en/feed",
+    "language": "en",
+    "country": "UA",
+    "region": "Ukraine",
+    "type": "strategic_communication",
     "priority": "core",
-    "topics": ["israel", "information_environment"]
-  },
-  {
-    "id": "he-ynet-computers",
-    "name": "ynet - מחשבים",
-    "url": "https://www.ynet.co.il/Integration/StoryRss544.xml",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
-    "type": "media",
-    "priority": "extended",
-    "topics": ["cyber", "technology"]
-  },
-  {
-    "id": "he-ynet-hardware",
-    "name": "ynet - תוכנה וחומרה",
-    "url": "https://www.ynet.co.il/Integration/StoryRss545.xml",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
-    "type": "media",
-    "priority": "extended",
-    "topics": ["cyber", "technology"]
-  },
-  {
-    "id": "he-haaretz",
-    "name": "הארץ",
-    "url": "https://www.haaretz.co.il/rss",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
-    "type": "media",
-    "priority": "core",
-    "topics": ["israel", "geopolitics", "information_environment"]
-  },
-  {
-    "id": "he-israelhayom",
-    "name": "ישראל היום",
-    "url": "https://www.israelhayom.co.il/rss",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
-    "type": "media",
-    "priority": "extended",
-    "topics": ["israel", "information_environment"]
-  },
-  {
-    "id": "he-israel-national-news",
-    "name": "ערוץ 7",
-    "url": "https://www.inn.co.il/Rss.aspx",
-    "language": "he",
-    "country": "IL",
-    "region": "Israel",
-    "type": "media",
-    "priority": "extended",
-    "topics": ["israel", "politics", "influence"]
+    "topics": ["strategic_communication", "influence", "ukraine"]
   }
 ]
