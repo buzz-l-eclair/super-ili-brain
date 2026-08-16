@@ -1,1 +1,156 @@
-
+[
+  {
+    "id": "zh-xinhua-politics",
+    "name": "新华网 - 时政",
+    "url": "http://www.xinhuanet.com/politics/news_politics.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["information_warfare", "strategic_communication", "government"]
+  },
+  {
+    "id": "zh-xinhua-world",
+    "name": "新华网 - 国际",
+    "url": "http://www.xinhuanet.com/world/news_world.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["geopolitics", "information_warfare", "influence"]
+  },
+  {
+    "id": "zh-xinhua-military",
+    "name": "新华网 - 军事",
+    "url": "http://www.xinhuanet.com/mil/news_mil.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["military", "information_warfare", "cognitive_warfare"]
+  },
+  {
+    "id": "zh-xinhua-taiwan",
+    "name": "新华网 - 台湾",
+    "url": "http://www.xinhuanet.com/tw/news_tw.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["taiwan", "influence", "information_warfare"]
+  },
+  {
+    "id": "zh-people-politics",
+    "name": "人民网 - 时政",
+    "url": "http://www.people.com.cn/rss/politics.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["government", "strategic_communication", "influence"]
+  },
+  {
+    "id": "zh-people-world",
+    "name": "人民网 - 国际",
+    "url": "http://www.people.com.cn/rss/world.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["geopolitics", "information_warfare", "influence"]
+  },
+  {
+    "id": "zh-people-military",
+    "name": "人民网 - 军事",
+    "url": "http://www.people.com.cn/rss/military.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["military", "information_warfare", "cognitive_warfare"]
+  },
+  {
+    "id": "zh-people-taiwan",
+    "name": "人民网 - 台港澳",
+    "url": "http://www.people.com.cn/rss/haixia.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["taiwan", "influence", "information_warfare"]
+  },
+  {
+    "id": "zh-cctv-domestic",
+    "name": "央视 - 国内",
+    "url": "http://www.cctv.com/program/rss/02/01/index.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "extended",
+    "topics": ["information_environment", "government"]
+  },
+  {
+    "id": "zh-cctv-international",
+    "name": "央视 - 国际",
+    "url": "http://www.cctv.com/program/rss/02/02/index.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["geopolitics", "information_warfare", "influence"]
+  },
+  {
+    "id": "zh-cctv-xinwen",
+    "name": "央视 - 新闻联播",
+    "url": "http://www.cctv.com/program/rss/02/09/index.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["strategic_communication", "information_warfare", "government"]
+  },
+  {
+    "id": "zh-cctv-hk-tw",
+    "name": "央视 - 港澳台",
+    "url": "http://www.cctv.com/program/rss/02/10/index.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["taiwan", "influence"]
+  },
+  {
+    "id": "zh-global-times",
+    "name": "环球时报",
+    "url": "https://www.globaltimes.cn/rss/outbrain.xml",
+    "language": "zh",
+    "country": "CN",
+    "region": "China",
+    "type": "state_aligned_media",
+    "priority": "core",
+    "topics": ["information_warfare", "influence", "strategic_narrative"]
+  },
+  {
+    "id": "zh-cgtn",
+    "name": "CGTN",
+    "url": "https://www.cgtn.com/subscribe/rss",
+    "language": "en",
+    "country": "CN",
+    "region": "China",
+    "type": "state_media",
+    "priority": "core",
+    "topics": ["strategic_communication", "influence", "geopolitics"]
+  }
+]
