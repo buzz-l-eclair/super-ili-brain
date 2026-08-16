@@ -1,0 +1,470 @@
+[
+  {
+    "id": "cyber-cert-eu-threat-intelligence",
+    "name": "CERT-EU - Threat Intelligence",
+    "url": "https://cert.europa.eu/publications/threat-intelligence/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "government",
+    "priority": "core",
+    "topics": [
+      "cyber_defence",
+      "cyber_threat_intelligence",
+      "information_warfare",
+      "APT",
+      "threat_actor"
+    ]
+  },
+  {
+    "id": "cyber-cert-eu-advisories",
+    "name": "CERT-EU - Security Advisories",
+    "url": "https://cert.europa.eu/publications/security-advisories/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "government",
+    "priority": "high",
+    "topics": [
+      "cyber_defence",
+      "vulnerability",
+      "cyber_security"
+    ]
+  },
+  {
+    "id": "cyber-ncsc-uk-news",
+    "name": "UK NCSC - News",
+    "url": "https://www.ncsc.gov.uk/api/1/services/v1/news-rss-feed.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "government",
+    "priority": "core",
+    "topics": [
+      "cyber_defence",
+      "cyber_security",
+      "cyber_threat_intelligence"
+    ]
+  },
+  {
+    "id": "cyber-ncsc-uk-threat-reports",
+    "name": "UK NCSC - Threat Reports",
+    "url": "https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "government",
+    "priority": "core",
+    "topics": [
+      "cyber_defence",
+      "cyber_threat_intelligence",
+      "APT",
+      "threat_actor",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "cyber-cisa",
+    "name": "CISA",
+    "url": "https://www.cisa.gov/news.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "government",
+    "priority": "core",
+    "topics": [
+      "cyber_defence",
+      "cyber_security",
+      "critical_infrastructure",
+      "cyber_threat_intelligence"
+    ]
+  },
+  {
+    "id": "cyber-jpcert",
+    "name": "JPCERT/CC",
+    "url": "https://www.jpcert.or.jp/english/rss/jpcert-en.rdf",
+    "language": "en",
+    "country": "JPN",
+    "region": "Indo-Pacific",
+    "type": "government",
+    "priority": "high",
+    "topics": [
+      "cyber_defence",
+      "cyber_security",
+      "incident_response",
+      "APT"
+    ]
+  },
+  {
+    "id": "cyber-ncsc-netherlands",
+    "name": "NCSC Netherlands",
+    "url": "https://advisories.ncsc.nl/rss/advisories",
+    "language": "nl",
+    "country": "NLD",
+    "region": "Europe",
+    "type": "government",
+    "priority": "high",
+    "topics": [
+      "cyber_defence",
+      "cyber_security",
+      "vulnerability"
+    ]
+  },
+  {
+    "id": "cyber-ncsc-netherlands-news",
+    "name": "NCSC Netherlands - News",
+    "url": "https://feeds.ncsc.nl/nieuws.rss",
+    "language": "nl",
+    "country": "NLD",
+    "region": "Europe",
+    "type": "government",
+    "priority": "high",
+    "topics": [
+      "cyber_defence",
+      "cyber_security",
+      "cyber_threat_intelligence"
+    ]
+  },
+  {
+    "id": "cyber-ncsc-switzerland",
+    "name": "NCSC Switzerland",
+    "url": "https://www.ncsc.admin.ch/ncsc/en/home/dokumentation/medienmitteilungen/rss.html",
+    "language": "en",
+    "country": "CHE",
+    "region": "Europe",
+    "type": "government",
+    "priority": "extended",
+    "topics": [
+      "cyber_defence",
+      "cyber_security",
+      "cyber_threat_intelligence"
+    ]
+  },
+  {
+    "id": "cyber-krebs",
+    "name": "Krebs on Security",
+    "url": "https://krebsonsecurity.com/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "media",
+    "priority": "core",
+    "topics": [
+      "cyber_security",
+      "cyber_threat_intelligence",
+      "cyber_crime",
+      "APT"
+    ]
+  },
+  {
+    "id": "cyber-record",
+    "name": "The Record",
+    "url": "https://therecord.media/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "media",
+    "priority": "core",
+    "topics": [
+      "cyber_security",
+      "cyber_threat_intelligence",
+      "information_warfare",
+      "APT",
+      "cyber_operations"
+    ]
+  },
+  {
+    "id": "cyber-bleepingcomputer",
+    "name": "BleepingComputer",
+    "url": "https://www.bleepingcomputer.com/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "media",
+    "priority": "high",
+    "topics": [
+      "cyber_security",
+      "malware",
+      "ransomware",
+      "vulnerability",
+      "APT"
+    ]
+  },
+  {
+    "id": "cyber-mandiant",
+    "name": "Mandiant Threat Intelligence",
+    "url": "https://www.mandiant.com/resources/blog/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "core",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "threat_actor",
+      "cyber_operations",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "cyber-microsoft-security",
+    "name": "Microsoft Security",
+    "url": "https://www.microsoft.com/en-us/security/blog/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "core",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "threat_actor",
+      "cyber_operations",
+      "cyber_defence"
+    ]
+  },
+  {
+    "id": "cyber-google-threat",
+    "name": "Google Threat Intelligence",
+    "url": "https://blog.google/threat-analysis-group/rss/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "core",
+    "topics": [
+      "APT",
+      "threat_actor",
+      "cyber_operations",
+      "information_warfare",
+      "cyber_threat_intelligence"
+    ]
+  },
+  {
+    "id": "cyber-tal-os",
+    "name": "Cisco Talos",
+    "url": "https://blog.talosintelligence.com/feeds/posts/default?alt=rss",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "core",
+    "topics": [
+      "cyber_threat_intelligence",
+      "malware",
+      "APT",
+      "threat_actor",
+      "cyber_operations"
+    ]
+  },
+  {
+    "id": "cyber-unit42",
+    "name": "Palo Alto Networks Unit 42",
+    "url": "https://unit42.paloaltonetworks.com/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "core",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "threat_actor",
+      "cyber_operations",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "cyber-sentinelone",
+    "name": "SentinelOne - SentinelLabs",
+    "url": "https://www.sentinelone.com/labs/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "core",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "threat_actor",
+      "cyber_operations"
+    ]
+  },
+  {
+    "id": "cyber-sophos",
+    "name": "Sophos X-Ops",
+    "url": "https://news.sophos.com/en-us/category/threat-research/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "threat_intelligence",
+    "priority": "high",
+    "topics": [
+      "cyber_threat_intelligence",
+      "malware",
+      "APT",
+      "threat_actor"
+    ]
+  },
+  {
+    "id": "cyber-eset",
+    "name": "ESET WeLiveSecurity",
+    "url": "https://www.welivesecurity.com/en/rss/feed/",
+    "language": "en",
+    "country": "SVK",
+    "region": "Europe",
+    "type": "threat_intelligence",
+    "priority": "high",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "malware",
+      "threat_actor"
+    ]
+  },
+  {
+    "id": "cyber-securelist",
+    "name": "Kaspersky Securelist",
+    "url": "https://securelist.com/feed/",
+    "language": "en",
+    "country": "RUS",
+    "region": "Eastern Europe",
+    "type": "threat_intelligence",
+    "priority": "high",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "malware",
+      "threat_actor",
+      "Russia"
+    ]
+  },
+  {
+    "id": "cyber-proofpoint",
+    "name": "Proofpoint Threat Insight",
+    "url": "https://www.proofpoint.com/us/rss-feeds/blog-feed.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "high",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "threat_actor",
+      "social_engineering",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "cyber-rapid7",
+    "name": "Rapid7 Threat Intelligence",
+    "url": "https://blog.rapid7.com/tag/threat-intel/rss/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "high",
+    "topics": [
+      "cyber_threat_intelligence",
+      "vulnerability",
+      "APT",
+      "threat_actor"
+    ]
+  },
+  {
+    "id": "cyber-schneier",
+    "name": "Schneier on Security",
+    "url": "https://www.schneier.com/feed/atom/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "analysis",
+    "priority": "high",
+    "topics": [
+      "cyber_security",
+      "cyber_defence",
+      "information_warfare",
+      "privacy"
+    ]
+  },
+  {
+    "id": "cyber-sans-isc",
+    "name": "SANS Internet Storm Center",
+    "url": "https://isc.sans.edu/rssfeed_full.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "high",
+    "topics": [
+      "cyber_threat_intelligence",
+      "cyber_defence",
+      "malware",
+      "incident_response"
+    ]
+  },
+  {
+    "id": "cyber-darkreading",
+    "name": "Dark Reading",
+    "url": "https://www.darkreading.com/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "media",
+    "priority": "extended",
+    "topics": [
+      "cyber_security",
+      "cyber_threat_intelligence",
+      "cyber_defence"
+    ]
+  },
+  {
+    "id": "cyber-hackernews",
+    "name": "The Hacker News",
+    "url": "https://feeds.feedburner.com/TheHackersNews",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "media",
+    "priority": "extended",
+    "topics": [
+      "cyber_security",
+      "cyber_threat_intelligence",
+      "APT",
+      "vulnerability"
+    ]
+  },
+  {
+    "id": "cyber-malwarebytes",
+    "name": "Malwarebytes Labs",
+    "url": "https://www.malwarebytes.com/blog/feed/index.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "threat_intelligence",
+    "priority": "extended",
+    "topics": [
+      "cyber_threat_intelligence",
+      "malware",
+      "cyber_crime"
+    ]
+  },
+  {
+    "id": "cyber-trendmicro",
+    "name": "Trend Micro Research",
+    "url": "https://feeds.feedburner.com/TrendMicroSimplySecurity",
+    "language": "en",
+    "country": "JPN",
+    "region": "Indo-Pacific",
+    "type": "threat_intelligence",
+    "priority": "extended",
+    "topics": [
+      "cyber_threat_intelligence",
+      "APT",
+      "malware",
+      "threat_actor"
+    ]
+  }
+]
