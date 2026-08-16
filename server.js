@@ -385,7 +385,17 @@ app.get('/api/source-library', (req, res) => {
     topic
   } = req.query;
 
-  let sources = SOURCE_LIBRARY;
+  let sources = [
+  ...SOURCE_LIBRARY,
+  ...store.feeds
+    .filter(feed => feed && feed.url)
+    .map(feed => ({
+      ...feed,
+      id: `manual-${encodeURIComponent(feed.url)}`,
+      custom: true,
+      source: 'manual'
+    }))
+];
 
   if (language) {
     sources = sources.filter(
