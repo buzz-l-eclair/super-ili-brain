@@ -1,0 +1,383 @@
+[
+  {
+    "id": "disinfo-euvsdisinfo",
+    "name": "EUvsDisinfo",
+    "url": "https://euvsdisinfo.eu/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "government",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "FIMI",
+      "foreign_interference",
+      "propaganda",
+      "Russia",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "disinfo-edmo",
+    "name": "European Digital Media Observatory",
+    "url": "https://edmo.eu/feed/",
+    "language": "en",
+    "country": "INT",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "FIMI",
+      "media_literacy",
+      "information_manipulation"
+    ]
+  },
+  {
+    "id": "disinfo-dfrlab",
+    "name": "DFRLab",
+    "url": "https://dfrlab.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "information_operations",
+      "influence",
+      "foreign_interference",
+      "social_media",
+      "Russia",
+      "China"
+    ]
+  },
+  {
+    "id": "disinfo-graphika",
+    "name": "Graphika",
+    "url": "https://graphika.com/feed",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "influence_operations",
+      "disinformation",
+      "social_media",
+      "foreign_interference",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "disinfo-isd",
+    "name": "Institute for Strategic Dialogue",
+    "url": "https://www.isdglobal.org/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "extremism",
+      "influence",
+      "information_operations",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "disinfo-cir",
+    "name": "Centre for Information Resilience",
+    "url": "https://www.info-res.org/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "information_operations",
+      "foreign_interference",
+      "influence",
+      "open_source_intelligence"
+    ]
+  },
+  {
+    "id": "disinfo-logically",
+    "name": "Logically",
+    "url": "https://www.logicallyfacts.com/en/rss",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "influence_operations",
+      "information_manipulation",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "disinfo-fullfact",
+    "name": "Full Fact",
+    "url": "https://fullfact.org/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "fact_checking",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "information_manipulation"
+    ]
+  },
+  {
+    "id": "disinfo-poynter",
+    "name": "Poynter Institute",
+    "url": "https://www.poynter.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "extended",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "media"
+    ]
+  },
+  {
+    "id": "disinfo-snopes",
+    "name": "Snopes",
+    "url": "https://www.snopes.com/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "fact_checking",
+    "priority": "extended",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking"
+    ]
+  },
+  {
+    "id": "disinfo-politifact",
+    "name": "PolitiFact",
+    "url": "https://www.politifact.com/feeds/articles/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "fact_checking",
+    "priority": "extended",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "political_communication"
+    ]
+  },
+  {
+    "id": "disinfo-maldita",
+    "name": "Maldita.es",
+    "url": "https://maldita.es/feed/",
+    "language": "es",
+    "country": "ESP",
+    "region": "Europe",
+    "type": "fact_checking",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "information_manipulation"
+    ]
+  },
+  {
+    "id": "disinfo-correctiv",
+    "name": "CORRECTIV",
+    "url": "https://correctiv.org/feed/",
+    "language": "de",
+    "country": "DEU",
+    "region": "Europe",
+    "type": "fact_checking",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "disinfo-afp-factuel",
+    "name": "AFP Factuel",
+    "url": "https://factuel.afp.com/rss",
+    "language": "fr",
+    "country": "FRA",
+    "region": "Europe",
+    "type": "fact_checking",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "information_manipulation"
+    ]
+  },
+  {
+    "id": "disinfo-france24-observers",
+    "name": "France 24 Observers",
+    "url": "https://observers.france24.com/en/rss",
+    "language": "en",
+    "country": "FRA",
+    "region": "Europe",
+    "type": "media",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "open_source_intelligence",
+      "propaganda",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "disinfo-bbc-verify",
+    "name": "BBC Verify",
+    "url": "https://feeds.bbci.co.uk/news/10628494",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "media",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking",
+      "information_manipulation"
+    ]
+  },
+  {
+    "id": "disinfo-reuters-factcheck",
+    "name": "Reuters Fact Check",
+    "url": "https://feeds.reuters.com/reuters/worldNews",
+    "language": "en",
+    "country": "INT",
+    "region": "International",
+    "type": "media",
+    "priority": "extended",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "fact_checking"
+    ]
+  },
+  {
+    "id": "disinfo-firstdraft",
+    "name": "First Draft",
+    "url": "https://firstdraftnews.org/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "International",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "information_manipulation",
+      "media_literacy",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "disinfo-newsguard",
+    "name": "NewsGuard",
+    "url": "https://www.newsguardtech.com/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "misinformation",
+      "information_manipulation",
+      "media"
+    ]
+  },
+  {
+    "id": "disinfo-o2",
+    "name": "Oxford Internet Institute",
+    "url": "https://www.oii.ox.ac.uk/feed/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "computational_propaganda",
+      "disinformation",
+      "social_media",
+      "influence",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "disinfo-stanford-internet",
+    "name": "Stanford Internet Observatory",
+    "url": "https://cyber.fsi.stanford.edu/io/news/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "academic",
+    "priority": "core",
+    "topics": [
+      "disinformation",
+      "influence_operations",
+      "social_media",
+      "foreign_interference",
+      "information_operations"
+    ]
+  },
+  {
+    "id": "disinfo-carnegie",
+    "name": "Carnegie Endowment - Technology and International Affairs",
+    "url": "https://carnegieendowment.org/rss/solr/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "disinformation",
+      "influence",
+      "foreign_interference",
+      "information_warfare",
+      "technology"
+    ]
+  },
+  {
+    "id": "disinfo-asd",
+    "name": "Alliance for Securing Democracy",
+    "url": "https://securingdemocracy.gmfus.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "foreign_interference",
+      "disinformation",
+      "influence_operations",
+      "Russia",
+      "China"
+    ]
+  }
+]
