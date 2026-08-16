@@ -1,0 +1,296 @@
+[
+  {
+    "id": "china-chinapower",
+    "name": "ChinaPower - CSIS",
+    "url": "https://chinapower.csis.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Indo-Pacific",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "information_warfare",
+      "influence",
+      "hybrid_warfare",
+      "cyber",
+      "strategic_communication"
+    ]
+  },
+  {
+    "id": "china-aspi",
+    "name": "Australian Strategic Policy Institute",
+    "url": "https://www.aspi.org.au/rss.xml",
+    "language": "en",
+    "country": "AUS",
+    "region": "Indo-Pacific",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "information_warfare",
+      "influence",
+      "cyber",
+      "disinformation",
+      "foreign_interference"
+    ]
+  },
+  {
+    "id": "china-merics",
+    "name": "Mercator Institute for China Studies",
+    "url": "https://merics.org/en/rss.xml",
+    "language": "en",
+    "country": "DEU",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "influence",
+      "political_warfare",
+      "foreign_interference",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "china-jamestown",
+    "name": "Jamestown Foundation - China Brief",
+    "url": "https://jamestown.org/programs/china-brief/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Indo-Pacific",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "PLA",
+      "information_warfare",
+      "influence",
+      "political_warfare",
+      "Taiwan"
+    ]
+  },
+  {
+    "id": "china-uscc",
+    "name": "US-China Economic and Security Review Commission",
+    "url": "https://www.uscc.gov/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "PLA",
+      "influence",
+      "cyber",
+      "political_warfare",
+      "Taiwan"
+    ]
+  },
+  {
+    "id": "china-doD",
+    "name": "US Department of Defense - China Military Power",
+    "url": "https://www.defense.gov/News/RSS/",
+    "language": "en",
+    "country": "USA",
+    "region": "Indo-Pacific",
+    "type": "government",
+    "priority": "core",
+    "topics": [
+      "China",
+      "PLA",
+      "information_warfare",
+      "cyber",
+      "military_operations",
+      "Taiwan"
+    ]
+  },
+  {
+    "id": "china-rand",
+    "name": "RAND - China",
+    "url": "https://www.rand.org/topics/china.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "Indo-Pacific",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "China",
+      "information_warfare",
+      "influence",
+      "cyber",
+      "military_operations"
+    ]
+  },
+  {
+    "id": "china-hoover",
+    "name": "Hoover Institution - China",
+    "url": "https://www.hoover.org/rss.xml",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "China",
+      "political_warfare",
+      "influence",
+      "information_warfare",
+      "Taiwan"
+    ]
+  },
+  {
+    "id": "china-cfr",
+    "name": "Council on Foreign Relations - China",
+    "url": "https://www.cfr.org/rss",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "China",
+      "influence",
+      "political_warfare",
+      "Taiwan",
+      "geopolitics"
+    ]
+  },
+  {
+    "id": "china-iiss",
+    "name": "International Institute for Strategic Studies",
+    "url": "https://www.iiss.org/rss/",
+    "language": "en",
+    "country": "GBR",
+    "region": "Europe",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "China",
+      "PLA",
+      "information_warfare",
+      "cyber",
+      "hybrid_warfare",
+      "Taiwan"
+    ]
+  },
+  {
+    "id": "china-nids",
+    "name": "National Institute for Defense Studies - Japan",
+    "url": "https://www.nids.mod.go.jp/english/publication/rss.xml",
+    "language": "en",
+    "country": "JPN",
+    "region": "Indo-Pacific",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "PLA",
+      "information_warfare",
+      "psychological_warfare",
+      "Taiwan",
+      "Japan"
+    ]
+  },
+  {
+    "id": "china-global-taiwan",
+    "name": "Global Taiwan Institute",
+    "url": "https://globaltaiwan.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "Indo-Pacific",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "Taiwan",
+      "influence",
+      "information_warfare",
+      "psychological_warfare",
+      "political_warfare"
+    ]
+  },
+  {
+    "id": "china-4d",
+    "name": "Alliance for Securing Democracy",
+    "url": "https://securingdemocracy.gmfus.org/feed/",
+    "language": "en",
+    "country": "USA",
+    "region": "North America",
+    "type": "research",
+    "priority": "high",
+    "topics": [
+      "China",
+      "foreign_interference",
+      "disinformation",
+      "influence",
+      "information_warfare"
+    ]
+  },
+  {
+    "id": "china-sinopsis",
+    "name": "Sinopsis",
+    "url": "https://sinopsis.cz/en/feed/",
+    "language": "en",
+    "country": "CZE",
+    "region": "Europe",
+    "type": "research",
+    "priority": "core",
+    "topics": [
+      "China",
+      "political_warfare",
+      "influence",
+      "United_Front",
+      "disinformation"
+    ]
+  },
+  {
+    "id": "china-mercator-spektrum",
+    "name": "China Spektrum",
+    "url": "https://merics.org/en/china-spektrum",
+    "language": "en",
+    "country": "DEU",
+    "region": "Europe",
+    "type": "research",
+    "priority": "extended",
+    "topics": [
+      "China",
+      "influence",
+      "political_warfare",
+      "strategic_communication"
+    ]
+  },
+  {
+    "id": "china-china-org",
+    "name": "China.org.cn - World",
+    "url": "https://www.china.org.cn/rss/1201720.xml",
+    "language": "en",
+    "country": "CHN",
+    "region": "East Asia",
+    "type": "media",
+    "priority": "discovery",
+    "topics": [
+      "China",
+      "strategic_communication",
+      "propaganda",
+      "foreign_policy"
+    ]
+  },
+  {
+    "id": "china-china-org-top",
+    "name": "China.org.cn - Top News",
+    "url": "https://www.china.org.cn/rss/1185842.xml",
+    "language": "en",
+    "country": "CHN",
+    "region": "East Asia",
+    "type": "media",
+    "priority": "discovery",
+    "topics": [
+      "China",
+      "propaganda",
+      "strategic_communication",
+      "information_environment"
+    ]
+  }
+]
