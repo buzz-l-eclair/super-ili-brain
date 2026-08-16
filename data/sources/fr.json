@@ -1,1 +1,101 @@
-
+[
+  {
+    "id": "fr-defense",
+    "name": "Ministère des Armées",
+    "url": "https://www.defense.gouv.fr/rss.xml",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["military", "strategic_communication", "comops"]
+  },
+  {
+    "id": "fr-anssi",
+    "name": "ANSSI",
+    "url": "https://www.ssi.gouv.fr/feed/",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["cyber", "defensive_cyber"]
+  },
+  {
+    "id": "fr-certfr",
+    "name": "CERT-FR",
+    "url": "https://www.cert.ssi.gouv.fr/feed/",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "cybersecurity",
+    "priority": "core",
+    "topics": ["cyber", "defensive_cyber"]
+  },
+  {
+    "id": "fr-sgdsn",
+    "name": "SGDSN",
+    "url": "https://www.sgdsn.gouv.fr/feed",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["hybrid_warfare", "information_warfare", "strategic_communication"]
+  },
+  {
+    "id": "fr-viginum",
+    "name": "VIGINUM",
+    "url": "https://www.sgdsn.gouv.fr/viginum/feed",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["fimI", "disinformation", "foreign_interference"]
+  },
+  {
+    "id": "fr-diplomatie",
+    "name": "France Diplomatie",
+    "url": "https://www.diplomatie.gouv.fr/spip.php?page=backend",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "institution",
+    "priority": "core",
+    "topics": ["strategic_communication", "public_diplomacy", "influence"]
+  },
+  {
+    "id": "fr-opex360",
+    "name": "Opex360",
+    "url": "https://www.opex360.com/feed/",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "defense_media",
+    "priority": "core",
+    "topics": ["military", "geopolitics", "information_warfare"]
+  },
+  {
+    "id": "fr-meta-defense",
+    "name": "Meta-Défense",
+    "url": "https://meta-defense.fr/feed/",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "defense_media",
+    "priority": "core",
+    "topics": ["military", "technology", "strategic_communication"]
+  },
+  {
+    "id": "fr-theatrum",
+    "name": "Theatrum Belli",
+    "url": "https://theatrum-belli.com/feed/",
+    "language": "fr",
+    "country": "FR",
+    "region": "France",
+    "type": "defense_media",
+    "priority": "extended",
+    "topics": ["military", "geopolitics"]
+  }
+]
