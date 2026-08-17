@@ -1,8 +1,8 @@
-const express  = require('express');
-const Parser   = require('rss-parser');
-const cors     = require('cors');
-const path     = require('path');
-const fs       = require('fs');
+const express = require('express');
+const Parser = require('rss-parser');
+const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 
@@ -14,9 +14,9 @@ const parser = new Parser({
   },
   customFields: {
     item: [
-      ['media:content',   'mediaContent'],
+      ['media:content', 'mediaContent'],
       ['media:thumbnail', 'mediaThumbnail'],
-      ['content:encoded', 'contentEncoded'],
+      ['content:encoded', 'contentEncoded']
     ]
   }
 });
@@ -27,19 +27,18 @@ app.use(express.json());
 const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));
 
+/* ================================================================
+   DONNÉES
+================================================================ */
 
-/* ════════════════════════════════════════════════════════════════
-   BASE DE DONNÉES PERSISTANTE
-════════════════════════════════════════════════════════════════ */
-
-const DATA_DIR    = path.join(__dirname, 'data');
-const STORE_FILE  = path.join(DATA_DIR, 'store.json');
+const DATA_DIR = path.join(__dirname, 'data');
+const STORE_FILE = path.join(DATA_DIR, 'store.json');
 const SOURCES_DIR = path.join(DATA_DIR, 'sources');
 
 
-/* ════════════════════════════════════════════════════════════════
-   BIBLIOTHÈQUE DES SOURCES
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   BIBLIOTHÈQUE DE SOURCES
+================================================================ */
 
 function loadSourceLibrary() {
   if (!fs.existsSync(SOURCES_DIR)) {
@@ -48,7 +47,10 @@ function loadSourceLibrary() {
   }
 
   const files = fs.readdirSync(SOURCES_DIR)
-    .filter(file => file.endsWith('.json') && file !== 'index.json');
+    .filter(file =>
+      file.endsWith('.json') &&
+      file !== 'index.json'
+    );
 
   const sources = [];
 
@@ -76,7 +78,7 @@ function loadSourceLibrary() {
   const seen = new Set();
 
   for (const source of sources) {
-    if (!source.url) continue;
+    if (!source || !source.url) continue;
     if (seen.has(source.url)) continue;
 
     seen.add(source.url);
@@ -93,10 +95,35 @@ console.log(
 );
 
 
-/* ════════════════════════════════════════════════════════════════
+/* ================================================================
    TAXONOMIE ILI
-   11 catégories officielles + NC
-════════════════════════════════════════════════════════════════ */
+================================================================ */
+
+/*
+ * IMPORTANT :
+ *
+ * Les clés utilisées dans toute l'application sont UNIQUEMENT :
+ *
+ * GI
+ * GC
+ * INFLUENCE
+ * DECEPTION
+ * PSYOPS
+ * COMOPS
+ * STRATCOM
+ * LIO
+ * LID
+ * L2I
+ * ILI
+ * NC
+ *
+ * Il ne faut notamment PLUS utiliser :
+ *
+ * information_warfare
+ * cognitive_warfare
+ * influence_operation
+ * etc.
+ */
 
 const DEFAULT_TAGS = [
 
@@ -112,9 +139,8 @@ const DEFAULT_TAGS = [
       ],
       EN: [
         'information warfare',
-        'information war',
         'infowar',
-        'information operations'
+        'information war'
       ],
       DE: [
         'informationskrieg',
@@ -140,27 +166,13 @@ const DEFAULT_TAGS = [
         'інформаційна війна',
         'інформаційну війну'
       ],
-      AR: [
-        'حرب المعلومات'
-      ],
-      ZH: [
-        '信息战'
-      ],
-      TR: [
-        'bilgi savaşı'
-      ],
-      FA: [
-        'جنگ اطلاعاتی'
-      ],
-      JA: [
-        '情報戦'
-      ],
-      HI: [
-        'सूचना युद्ध'
-      ],
-      PL: [
-        'wojna informacyjna'
-      ]
+      AR: ['حرب المعلومات'],
+      ZH: ['信息战'],
+      TR: ['bilgi savaşı'],
+      FA: ['جنگ اطلاعاتی'],
+      JA: ['情報戦'],
+      HI: ['सूचना युद्ध'],
+      PL: ['wojna informacyjna']
     }
   },
 
@@ -228,22 +240,20 @@ const DEFAULT_TAGS = [
     terms: {
       FR: [
         'opération d’influence',
+        'operation d’influence',
         "opération d'influence",
-        'opérations d’influence',
-        "opérations d'influence",
-        'influence étrangère',
         'ingérence',
         'ingérence étrangère',
-        'action d’influence',
-        "action d'influence",
-        'campagne d’influence',
-        "campagne d'influence"
+        'influence étrangère',
+        'influence malveillante',
+        'manipulation de l’information',
+        "manipulation de l'information"
       ],
       EN: [
         'influence operation',
         'influence operations',
-        'foreign influence',
         'foreign interference',
+        'information manipulation',
         'malign influence',
         'influence campaign'
       ],
@@ -253,7 +263,6 @@ const DEFAULT_TAGS = [
       ],
       ES: [
         'operación de influencia',
-        'operaciones de influencia',
         'injerencia'
       ],
       IT: [
@@ -309,17 +318,16 @@ const DEFAULT_TAGS = [
     terms: {
       FR: [
         'déception',
+        'desinformation',
         'désinformation',
         'mésinformation',
-        'campagne de désinformation',
-        'opération de désinformation'
+        'mesinformation'
       ],
       EN: [
         'deception',
+        'deception operation',
         'disinformation',
-        'misinformation',
-        'disinformation campaign',
-        'deception operation'
+        'misinformation'
       ],
       DE: [
         'täuschung',
@@ -380,21 +388,19 @@ const DEFAULT_TAGS = [
     builtin: true,
     terms: {
       FR: [
-        'opération psychologique',
         'opérations psychologiques',
+        'operations psychologiques',
         'guerre psychologique',
         'psyops'
       ],
       EN: [
-        'psychological operation',
         'psychological operations',
-        'psychological warfare',
+        'psychological operation',
         'psywar',
         'psyops'
       ],
       DE: [
         'psychologische kriegsführung',
-        'psychologische operation',
         'psyop'
       ],
       ES: [
@@ -410,8 +416,7 @@ const DEFAULT_TAGS = [
         'guerra psicológica'
       ],
       RU: [
-        'психологические операции',
-        'психологическая война'
+        'психологические операции'
       ],
       UK: [
         'психологічні операції'
@@ -561,13 +566,15 @@ const DEFAULT_TAGS = [
     builtin: true,
     terms: {
       FR: [
-        'lutte informatique offensive'
+        'lutte informatique offensive',
+        'cyberoffensive',
+        'cyber offensive'
       ],
       EN: [
         'offensive cyber operations',
         'offensive cyber operation',
         'offensive cyber',
-        'offensive cyber warfare'
+        'cyber offensive operations'
       ],
       DE: [
         'offensive cyberoperationen'
@@ -618,14 +625,16 @@ const DEFAULT_TAGS = [
     builtin: true,
     terms: {
       FR: [
-        'lutte informatique défensive'
+        'lutte informatique défensive',
+        'cyberdéfense',
+        'cyber défense'
       ],
       EN: [
         'defensive cyber operations',
         'defensive cyber operation',
         'defensive cyber',
-        'cyber defence',
-        'cyber defense'
+        'cyber defense operations',
+        'cyber defence operations'
       ],
       DE: [
         'defensive cyberoperationen'
@@ -677,8 +686,10 @@ const DEFAULT_TAGS = [
     terms: {
       FR: [
         "lutte informatique d'influence",
-        'lutte informatique influence',
-        'l2i'
+        'lutte informatique d’influence',
+        'influence cyber',
+        'cyberinfluence',
+        'cyber influence'
       ],
       EN: [
         'cyber influence operations',
@@ -735,8 +746,7 @@ const DEFAULT_TAGS = [
     terms: {
       FR: [
         'influence et lutte informationnelle',
-        'lutte informationnelle',
-        'ili'
+        'influence & lutte informationnelle'
       ],
       EN: [
         'influence and information warfare',
@@ -791,336 +801,97 @@ const DEFAULT_TAGS = [
     builtin: true,
     terms: {}
   }
+
 ];
 
 
-/* ════════════════════════════════════════════════════════════════
-   ALIAS / NORMALISATION DES CATÉGORIES
-   Permet de convertir les anciennes catégories des JSON sources
-   vers les nouvelles clés GI / GC / INFLUENCE / etc.
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   VALIDATION DES TAGS
+================================================================ */
 
-const CATEGORY_ALIASES = {
+const VALID_TAG_KEYS = new Set(
+  DEFAULT_TAGS.map(tag => tag.key)
+);
 
-  GI: [
-    'gi',
-    'guerre informationnelle',
-    "guerre de l'information",
-    'information warfare',
-    'information war',
-    'infowar',
-    'information_warfare',
-    'information warfare / infowar'
-  ],
-
-  GC: [
-    'gc',
-    'guerre cognitive',
-    'cognitive warfare',
-    'cognitive war',
-    'cognitive_warfare'
-  ],
-
-  INFLUENCE: [
-    'influence',
-    'influence operation',
-    'influence operations',
-    'influence_operation',
-    'influence_operations',
-    'influence warfare',
-    'influence_warfare',
-    'foreign influence',
-    'foreign interference'
-  ],
-
-  DECEPTION: [
-    'deception',
-    'déception',
-    'disinformation',
-    'désinformation',
-    'misinformation',
-    'mésinformation',
-    'deception warfare',
-    'deception_warfare'
-  ],
-
-  PSYOPS: [
-    'psyops',
-    'psyop',
-    'psy ops',
-    'opérations psychologiques',
-    'opération psychologique',
-    'psychological operations',
-    'psychological operation',
-    'psychological warfare',
-    'psywar',
-    'psychological_warfare'
-  ],
-
-  COMOPS: [
-    'comops',
-    'communication opérationnelle',
-    'communications opérationnelles',
-    'operational communication',
-    'operational communications',
-    'operations communication'
-  ],
-
-  STRATCOM: [
-    'stratcom',
-    'communication stratégique',
-    'communications stratégiques',
-    'strategic communication',
-    'strategic communications',
-    'strategic_communication',
-    'strategic_communications'
-  ],
-
-  LIO: [
-    'lio',
-    'lutte informatique offensive',
-    'offensive cyber',
-    'offensive cyber operation',
-    'offensive cyber operations',
-    'offensive cyber warfare',
-    'offensive_cyber',
-    'offensive_cyber_operations'
-  ],
-
-  LID: [
-    'lid',
-    'lutte informatique défensive',
-    'defensive cyber',
-    'defensive cyber operation',
-    'defensive cyber operations',
-    'cyber defence',
-    'cyber defense',
-    'defensive_cyber',
-    'defensive_cyber_operations'
-  ],
-
-  L2I: [
-    'l2i',
-    "lutte informatique d'influence",
-    'lutte informatique influence',
-    'cyber influence',
-    'cyber influence operation',
-    'cyber influence operations',
-    'cyber_influence',
-    'cyber_influence_operations'
-  ],
-
-  ILI: [
-    'ili',
-    'influence et lutte informationnelle',
-    'lutte informationnelle',
-    'influence and information warfare',
-    'influence and information operations',
-    'influence_information_warfare'
-  ]
-};
-
-
-/* ════════════════════════════════════════════════════════════════
-   OUTILS DE CLASSIFICATION
-════════════════════════════════════════════════════════════════ */
-
-function normalizeText(value) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[_/|]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+function isValidTagKey(key) {
+  return VALID_TAG_KEYS.has(key);
 }
 
 
-function canonicalCategory(value) {
-  const normalized = normalizeText(value);
-
-  if (!normalized) return null;
-
-  for (const [key, aliases] of Object.entries(CATEGORY_ALIASES)) {
-    for (const alias of aliases) {
-      const a = normalizeText(alias);
-
-      if (
-        normalized === a ||
-        normalized.includes(a)
-      ) {
-        return key;
-      }
-    }
-  }
-
-  return null;
-}
-
-
-/*
- * Récupère les catégories explicitement associées à une source.
- *
- * On regarde plusieurs champs possibles parce que les fichiers JSON
- * de la bibliothèque peuvent avoir évolué :
- *
- * topics
- * tags
- * tag
- * category
- * categories
- */
-function getSourceCategories(source) {
-
-  const values = [];
-
-  const fields = [
-    source.topics,
-    source.tags,
-    source.tag,
-    source.category,
-    source.categories
-  ];
-
-  for (const field of fields) {
-
-    if (Array.isArray(field)) {
-      values.push(...field);
-    } else if (field !== undefined && field !== null) {
-      values.push(field);
-    }
-  }
-
-  const categories = [];
-
-  for (const value of values) {
-
-    const category = canonicalCategory(value);
-
-    if (category && !categories.includes(category)) {
-      categories.push(category);
-    }
-  }
-
-  return categories;
-}
-
-
-/*
- * Classification du contenu d'un article.
- *
- * IMPORTANT :
- * Cette fonction n'utilise PAS les noms génériques comme
- * "influence" tout seuls.
- *
- * Elle cherche les expressions réellement discriminantes.
- */
-function classifyText(text, lang, tags) {
-
-  const normalized = normalizeText(text);
-  const L = String(lang || 'FR').toUpperCase();
-
-  const matched = [];
-
-  for (const tag of (tags || [])) {
-
-    if (!tag.terms || tag.key === 'NC') {
-      continue;
-    }
-
-    const terms = [
-      ...(tag.terms.FR || []),
-      ...(tag.terms[L] || [])
-    ];
-
-    const found = terms.some(term => {
-
-      const normalizedTerm = normalizeText(term);
-
-      if (!normalizedTerm) return false;
-
-      return normalized.includes(normalizedTerm);
-    });
-
-    if (found) {
-      matched.push(tag.key);
-    }
-  }
-
-  return matched;
-}
-
-
-/*
- * Classification complète d'une source.
- *
- * Priorité :
- *
- * 1. catégories explicitement présentes dans le JSON
- * 2. catégories déduites du nom / description de la source
- * 3. NC
- */
-function classifySource(source) {
-
-  const explicit = getSourceCategories(source);
-
-  if (explicit.length) {
-    return explicit;
-  }
-
-  const metadata = [
-    source.name,
-    source.title,
-    source.description,
-    source.about,
-    source.type
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const inferred = classifyText(
-    metadata,
-    source.language || source.lang || 'FR',
-    DEFAULT_TAGS
-  );
-
-  return inferred.length ? inferred : ['NC'];
-}
-
-
-/* ════════════════════════════════════════════════════════════════
+/* ================================================================
    STORE
-════════════════════════════════════════════════════════════════ */
+================================================================ */
 
 function loadStore() {
 
   try {
 
     if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+      fs.mkdirSync(DATA_DIR, {
+        recursive: true
+      });
     }
 
     if (fs.existsSync(STORE_FILE)) {
 
       const raw = JSON.parse(
-        fs.readFileSync(STORE_FILE, 'utf-8')
+        fs.readFileSync(STORE_FILE, 'utf8')
       );
 
-      return {
-        feeds: Array.isArray(raw.feeds)
-          ? raw.feeds
-          : [],
+      /*
+       * On ne fait PAS confiance aveuglément à l'ancien store.
+       *
+       * Cela permet de corriger les anciennes valeurs comme :
+       *
+       * information_warfare
+       * cognitive_warfare
+       * etc.
+       */
 
-        tags: Array.isArray(raw.tags) && raw.tags.length
-          ? raw.tags
-          : DEFAULT_TAGS
+      const feeds = Array.isArray(raw.feeds)
+        ? raw.feeds.map(feed => {
+
+            const clean = {
+              ...feed
+            };
+
+            if (!isValidTagKey(clean.tag)) {
+              clean.tag = 'NC';
+            }
+
+            return clean;
+          })
+        : [];
+
+      /*
+       * Les tags personnalisés sont conservés.
+       * Les tags builtin viennent toujours de la nouvelle taxonomie.
+       */
+
+      const customTags = Array.isArray(raw.tags)
+        ? raw.tags.filter(tag =>
+            tag &&
+            tag.builtin !== true &&
+            tag.key &&
+            tag.label
+          )
+        : [];
+
+      return {
+        feeds,
+        tags: [
+          ...DEFAULT_TAGS,
+          ...customTags.filter(
+            tag => !VALID_TAG_KEYS.has(tag.key)
+          )
+        ]
       };
     }
 
   } catch (e) {
 
     console.error(
-      '⚠ Erreur lecture data/store.json :',
+      '⚠ Erreur lecture data/store.json:',
       e.message
     );
   }
@@ -1130,7 +901,6 @@ function loadStore() {
     tags: DEFAULT_TAGS
   };
 }
-
 
 let store = loadStore();
 
@@ -1148,104 +918,184 @@ function saveStore() {
     fs.writeFileSync(
       STORE_FILE,
       JSON.stringify(store, null, 2),
-      'utf-8'
+      'utf8'
     );
 
   } catch (e) {
 
     console.error(
-      '⚠ Erreur écriture data/store.json :',
+      '⚠ Erreur écriture data/store.json:',
       e.message
     );
   }
 }
 
-
-/*
- * S'assure que la taxonomie active correspond toujours à nos
- * catégories officielles.
- *
- * Les tags personnalisés éventuellement créés par l'utilisateur
- * sont conservés.
- */
-function ensureDefaultTags() {
-
-  const customTags = (store.tags || [])
-    .filter(tag => !DEFAULT_TAGS.some(
-      d => d.key === tag.key
-    ));
-
-  store.tags = [
-    ...DEFAULT_TAGS,
-    ...customTags
-  ];
-}
-
-
-/*
- * Migration automatique des flux déjà enregistrés.
- *
- * Elle est exécutée au démarrage.
- *
- * Aucun besoin de modifier manuellement store.json.
- */
-function migrateExistingFeeds() {
-
-  let changed = false;
-
-  store.feeds = (store.feeds || []).map(feed => {
-
-    const categories = classifySource(feed);
-
-    const primaryTag =
-      categories[0] || 'NC';
-
-    const oldTopics = JSON.stringify(
-      Array.isArray(feed.topics)
-        ? feed.topics
-        : []
-    );
-
-    const newTopics = JSON.stringify(categories);
-
-    if (
-      feed.tag !== primaryTag ||
-      oldTopics !== newTopics
-    ) {
-      changed = true;
-    }
-
-    return {
-      ...feed,
-      tag: primaryTag,
-      topics: categories,
-      lang: feed.lang || feed.language || 'FR'
-    };
-  });
-
-  if (changed) {
-
-    console.log(
-      '✓ Migration automatique des catégories ILI effectuée'
-    );
-
-    saveStore();
-  }
-}
-
-
-ensureDefaultTags();
-
 if (!fs.existsSync(STORE_FILE)) {
   saveStore();
 }
 
-migrateExistingFeeds();
+
+/* ================================================================
+   CLASSIFICATION
+================================================================ */
+
+/*
+ * Normalisation du texte.
+ *
+ * On conserve les caractères Unicode afin que les langues comme
+ * russe, arabe, chinois, etc. restent exploitables.
+ */
+
+function normalizeText(text) {
+
+  return String(text || '')
+    .normalize('NFKC')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
 
 
-/* ════════════════════════════════════════════════════════════════
-   UTILS
-════════════════════════════════════════════════════════════════ */
+/*
+ * Vérifie un terme avec une logique plus stricte.
+ *
+ * On évite notamment que :
+ *
+ * "war"
+ *
+ * classe arbitrairement un article sportif contenant "warriors".
+ *
+ * Pour les expressions composées, includes() reste approprié.
+ * Pour les termes courts, on exige des limites lexicales.
+ */
+
+function termMatches(text, term) {
+
+  const t = normalizeText(text);
+  const q = normalizeText(term);
+
+  if (!q) return false;
+
+  /*
+   * Expressions longues :
+   * recherche directe.
+   */
+
+  if (q.length >= 5 || q.includes(' ')) {
+    return t.includes(q);
+  }
+
+  /*
+   * Termes courts :
+   * frontière lexicale.
+   */
+
+  const escaped = q.replace(
+    /[.*+?^${}()|[\]\\]/g,
+    '\\$&'
+  );
+
+  const regex = new RegExp(
+    `(^|[^\\p{L}\\p{N}])${escaped}([^\\p{L}\\p{N}]|$)`,
+    'iu'
+  );
+
+  return regex.test(t);
+}
+
+
+/*
+ * Classification d'un article.
+ *
+ * IMPORTANT :
+ *
+ * Aucun tag par défaut.
+ * Aucun GI par défaut.
+ *
+ * Si aucun terme ne correspond :
+ *
+ * NC
+ */
+
+function classifyText(text, lang, tags) {
+
+  const matched = [];
+  const L = String(lang || 'FR').toUpperCase();
+
+  for (const tag of tags || []) {
+
+    if (!tag || tag.key === 'NC') {
+      continue;
+    }
+
+    if (!tag.terms) {
+      continue;
+    }
+
+    const terms = [
+      ...(tag.terms.FR || []),
+      ...(tag.terms[L] || [])
+    ];
+
+    for (const term of terms) {
+
+      if (termMatches(text, term)) {
+
+        matched.push(tag.key);
+        break;
+      }
+    }
+  }
+
+  return matched;
+}
+
+
+/*
+ * Priorité des catégories lorsque plusieurs tags matchent.
+ *
+ * On ne choisit PAS simplement le premier tag du tableau.
+ *
+ * Une occurrence très précise de L2I doit par exemple passer
+ * devant une occurrence générique d'influence.
+ */
+
+const TAG_PRIORITY = [
+  'L2I',
+  'LIO',
+  'LID',
+  'PSYOPS',
+  'DECEPTION',
+  'STRATCOM',
+  'COMOPS',
+  'GC',
+  'GI',
+  'INFLUENCE',
+  'ILI',
+  'NC'
+];
+
+
+function selectPrimaryTag(tags) {
+
+  if (!Array.isArray(tags) || tags.length === 0) {
+    return 'NC';
+  }
+
+  for (const key of TAG_PRIORITY) {
+
+    if (tags.includes(key)) {
+      return key;
+    }
+  }
+
+  return 'NC';
+}
+
+
+/* ================================================================
+   UTILITAIRES
+================================================================ */
 
 function stripHtml(html) {
 
@@ -1263,7 +1113,24 @@ function stripHtml(html) {
 }
 
 
-function normalizeSocialItem(raw, platform, handle) {
+function extractHashtags(text) {
+
+  const m = String(text || '')
+    .match(/#[\wÀ-ÿ]+/g);
+
+  return m
+    ? [...new Set(
+        m.map(h => h.toLowerCase())
+      )].slice(0, 10)
+    : [];
+}
+
+
+function normalizeSocialItem(
+  raw,
+  platform,
+  handle
+) {
 
   return {
 
@@ -1337,23 +1204,9 @@ function normalizeSocialItem(raw, platform, handle) {
 }
 
 
-function extractHashtags(text) {
-
-  const m = text.match(/#[\wÀ-ÿ]+/g);
-
-  return m
-    ? [
-        ...new Set(
-          m.map(h => h.toLowerCase())
-        )
-      ].slice(0, 10)
-    : [];
-}
-
-
-/* ════════════════════════════════════════════════════════════════
-   RSS FEEDS
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   RSS
+================================================================ */
 
 app.get('/api/feed', async (req, res) => {
 
@@ -1418,9 +1271,9 @@ app.get('/api/feed', async (req, res) => {
 });
 
 
-/* ════════════════════════════════════════════════════════════════
-   BIBLIOTHÈQUE DES SOURCES
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   SOURCE LIBRARY
+================================================================ */
 
 app.get('/api/source-library', (req, res) => {
 
@@ -1437,22 +1290,28 @@ app.get('/api/source-library', (req, res) => {
     ...SOURCE_LIBRARY,
 
     ...store.feeds
-      .filter(feed => feed && feed.url)
+      .filter(feed =>
+        feed &&
+        feed.url
+      )
       .map(feed => ({
+
         ...feed,
+
         id:
           `manual-${encodeURIComponent(feed.url)}`,
+
         custom: true,
+
         source: 'manual'
       }))
   ];
 
+
   if (language) {
 
     sources = sources.filter(
-      s =>
-        s.language === language ||
-        s.lang === language
+      s => s.language === language
     );
   }
 
@@ -1486,15 +1345,11 @@ app.get('/api/source-library', (req, res) => {
 
   if (topic) {
 
-    sources = sources.filter(source => {
-
-      const categories =
-        classifySource(source);
-
-      return categories.includes(
-        canonicalCategory(topic) || topic
-      );
-    });
+    sources = sources.filter(
+      s =>
+        Array.isArray(s.topics) &&
+        s.topics.includes(topic)
+    );
   }
 
   res.json({
@@ -1505,9 +1360,137 @@ app.get('/api/source-library', (req, res) => {
 });
 
 
-/* ════════════════════════════════════════════════════════════════
+/* ================================================================
    IMPORT DES SOURCES
-════════════════════════════════════════════════════════════════ */
+================================================================ */
+
+/*
+ * CORRECTION MAJEURE :
+ *
+ * On ne fait PLUS :
+ *
+ * source.topics?.[0] || 'information_warfare'
+ *
+ * car information_warfare n'existe pas.
+ *
+ * On convertit les éventuels anciens noms de topics vers
+ * les nouvelles clés.
+ */
+
+const LEGACY_TOPIC_MAP = {
+
+  information_warfare: 'GI',
+  information_war: 'GI',
+  'information warfare': 'GI',
+
+  cognitive_warfare: 'GC',
+  cognitive_war: 'GC',
+  'cognitive warfare': 'GC',
+
+  influence: 'INFLUENCE',
+  influence_operations: 'INFLUENCE',
+  influence_operation: 'INFLUENCE',
+
+  deception: 'DECEPTION',
+  disinformation: 'DECEPTION',
+  misinformation: 'DECEPTION',
+
+  psyops: 'PSYOPS',
+  psychological_operations: 'PSYOPS',
+
+  communication_operationnelle: 'COMOPS',
+  operational_communication: 'COMOPS',
+
+  strategic_communication: 'STRATCOM',
+  stratcom: 'STRATCOM',
+
+  offensive_cyber: 'LIO',
+  offensive_cyber_operations: 'LIO',
+
+  defensive_cyber: 'LID',
+  defensive_cyber_operations: 'LID',
+
+  cyber_influence: 'L2I',
+  cyber_influence_operations: 'L2I',
+
+  ili: 'ILI',
+  influence_information_warfare: 'ILI'
+};
+
+
+function normalizeSourceTopic(topic) {
+
+  if (!topic) {
+    return 'NC';
+  }
+
+  const raw = String(topic)
+    .trim();
+
+  /*
+   * Déjà une clé correcte.
+   */
+
+  if (isValidTagKey(raw)) {
+    return raw;
+  }
+
+  /*
+   * Anciennes clés.
+   */
+
+  const normalized = raw
+    .toLowerCase()
+    .replace(/-/g, '_')
+    .replace(/\s+/g, '_');
+
+  if (LEGACY_TOPIC_MAP[normalized]) {
+    return LEGACY_TOPIC_MAP[normalized];
+  }
+
+  /*
+   * Si la source possède un label textuel correspondant exactement
+   * à un tag actuel.
+   */
+
+  const found = store.tags.find(
+    tag =>
+      String(tag.label || '')
+        .toLowerCase() === raw.toLowerCase()
+  );
+
+  if (found) {
+    return found.key;
+  }
+
+  /*
+   * JAMAIS GI par défaut.
+   */
+
+  return 'NC';
+}
+
+
+function normalizeSourceTopics(source) {
+
+  if (!source) {
+    return ['NC'];
+  }
+
+  const topics = Array.isArray(source.topics)
+    ? source.topics
+    : [];
+
+  const normalized = topics
+    .map(normalizeSourceTopic)
+    .filter(isValidTagKey)
+    .filter(key => key !== 'NC');
+
+  return normalized.length
+    ? [...new Set(normalized)]
+    : ['NC'];
+}
+
 
 app.post('/api/source-library/import', (req, res) => {
 
@@ -1523,7 +1506,8 @@ app.post('/api/source-library/import', (req, res) => {
 
   const selected =
     SOURCE_LIBRARY.filter(
-      source => ids.includes(source.id)
+      source =>
+        ids.includes(source.id)
     );
 
   const existing =
@@ -1541,16 +1525,16 @@ app.post('/api/source-library/import', (req, res) => {
       continue;
     }
 
+    const topics =
+      normalizeSourceTopics(source);
+
     /*
-     * NOUVELLE LOGIQUE :
-     * on convertit les catégories du JSON source vers
-     * les clés officielles de notre taxonomie.
+     * Une source peut avoir plusieurs topics.
+     * Le premier devient uniquement le tag source principal.
      */
-    const categories =
-      classifySource(source);
 
     const primaryTag =
-      categories[0] || 'NC';
+      topics[0] || 'NC';
 
     store.feeds.push({
 
@@ -1565,8 +1549,8 @@ app.post('/api/source-library/import', (req, res) => {
       tag:
         primaryTag,
 
-      topics:
-        categories,
+      tags:
+        topics,
 
       lang:
         source.language ||
@@ -1574,11 +1558,7 @@ app.post('/api/source-library/import', (req, res) => {
         'FR'
     });
 
-    added.push({
-      ...source,
-      tag: primaryTag,
-      topics: categories
-    });
+    added.push(source);
 
     existing.add(source.url);
   }
@@ -1599,17 +1579,14 @@ app.post('/api/source-library/import', (req, res) => {
       added.length,
 
     totalFeeds:
-      store.feeds.length,
-
-    sources:
-      added
+      store.feeds.length
   });
 });
 
 
-/* ════════════════════════════════════════════════════════════════
-   FLUX UTILISATEUR
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   RÉCUPÉRATION DES FLUX
+================================================================ */
 
 app.post('/api/feeds', async (req, res) => {
 
@@ -1624,7 +1601,6 @@ app.post('/api/feeds', async (req, res) => {
 
   const results =
     await Promise.all(
-
       feeds.map(async f => {
 
         try {
@@ -1649,35 +1625,27 @@ app.post('/api/feeds', async (req, res) => {
                     ''
                   );
 
-                /*
-                 * Catégorie définie par la source.
-                 */
-                const sourceCategories =
-                  classifySource(f);
-
-                const sourceTag =
-                  sourceCategories[0] || 'NC';
+                const text =
+                  `${title} ${desc}`;
 
                 /*
-                 * Catégories détectées dans le contenu.
+                 * Classification par le CONTENU.
+                 *
+                 * On ne se sert PAS du tag de la source pour
+                 * transformer tous ses articles en GI.
                  */
-                const contentTags =
+
+                const matchedTags =
                   classifyText(
-                    `${title} ${desc}`,
-                    f.lang || f.language || 'FR',
+                    text,
+                    f.lang,
                     store.tags
                   );
 
-                /*
-                 * Le tag de la source est TOUJOURS prioritaire.
-                 * Les autres catégories sont secondaires.
-                 */
-                const matchedTags = [
-                  sourceTag,
-                  ...contentTags.filter(
-                    tag => tag !== sourceTag
-                  )
-                ];
+                const primaryTag =
+                  selectPrimaryTag(
+                    matchedTags
+                  );
 
                 return {
 
@@ -1700,18 +1668,33 @@ app.post('/api/feeds', async (req, res) => {
                     feed.title ||
                     f.url,
 
+                  /*
+                   * Tag de la source.
+                   * Informatif uniquement.
+                   */
+
                   feedTag:
-                    sourceTag,
+                    normalizeSourceTopic(
+                      f.tag
+                    ),
+
+                  sourceTags:
+                    Array.isArray(f.tags)
+                      ? f.tags
+                      : [normalizeSourceTopic(f.tag)],
 
                   lang:
-                    f.lang ||
-                    f.language ||
-                    'FR',
+                    f.lang,
+
+                  /*
+                   * Classification réellement détectée
+                   * dans l'article.
+                   */
 
                   matchedTags,
 
                   tag:
-                    matchedTags[0] || 'NC'
+                    primaryTag
                 };
               });
 
@@ -1723,8 +1706,7 @@ app.post('/api/feeds', async (req, res) => {
             url:
               f.url,
 
-            ok:
-              true,
+            ok: true,
 
             count:
               items.length,
@@ -1742,8 +1724,7 @@ app.post('/api/feeds', async (req, res) => {
             url:
               f.url,
 
-            ok:
-              false,
+            ok: false,
 
             error:
               err.message,
@@ -1760,9 +1741,9 @@ app.post('/api/feeds', async (req, res) => {
 });
 
 
-/* ════════════════════════════════════════════════════════════════
-   TEST FEED
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   TEST FLUX
+================================================================ */
 
 app.get('/api/test-feed', async (req, res) => {
 
@@ -1782,31 +1763,44 @@ app.get('/api/test-feed', async (req, res) => {
       await parser.parseURL(url);
 
     res.json({
+
       ok: true,
-      title: feed.title,
-      count: (feed.items || []).length
+
+      title:
+        feed.title,
+
+      count:
+        (feed.items || []).length
     });
 
   } catch (err) {
 
     res.json({
+
       ok: false,
-      error: err.message
+
+      error:
+        err.message
     });
   }
 });
 
 
-/* ════════════════════════════════════════════════════════════════
-   STORE
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   STORE API
+================================================================ */
 
 app.get('/api/store', (req, res) => {
 
   res.json({
+
     ok: true,
-    feeds: store.feeds,
-    tags: store.tags
+
+    feeds:
+      store.feeds,
+
+    tags:
+      store.tags
   });
 });
 
@@ -1817,6 +1811,7 @@ app.post('/api/store/feed', (req, res) => {
     name,
     url,
     tag,
+    tags,
     lang
   } = req.body || {};
 
@@ -1841,32 +1836,52 @@ app.post('/api/store/feed', (req, res) => {
     });
   }
 
-  const requestedCategory =
-    canonicalCategory(tag) || 'NC';
+  let sourceTags = [];
+
+  if (Array.isArray(tags)) {
+
+    sourceTags =
+      tags
+        .map(normalizeSourceTopic)
+        .filter(isValidTagKey);
+
+  }
+
+  if (!sourceTags.length) {
+
+    const normalized =
+      normalizeSourceTopic(tag);
+
+    sourceTags = [normalized];
+  }
 
   store.feeds.push({
 
     name:
-      name || url,
+      name ||
+      url,
 
     url,
 
     tag:
-      requestedCategory,
+      sourceTags[0] || 'NC',
 
-    topics: [
-      requestedCategory
-    ],
+    tags:
+      sourceTags,
 
     lang:
-      lang || 'FR'
+      lang ||
+      'FR'
   });
 
   saveStore();
 
   res.json({
+
     ok: true,
-    feeds: store.feeds
+
+    feeds:
+      store.feeds
   });
 });
 
@@ -1888,39 +1903,53 @@ app.post('/api/store/feeds-bulk', (req, res) => {
   feeds.forEach(f => {
 
     if (
-      f &&
-      f.url &&
-      !store.feeds.find(
+      !f ||
+      !f.url ||
+      store.feeds.find(
         x => x.url === f.url
       )
     ) {
-
-      const categories =
-        classifySource(f);
-
-      store.feeds.push({
-
-        name:
-          f.name ||
-          f.url,
-
-        url:
-          f.url,
-
-        tag:
-          categories[0] || 'NC',
-
-        topics:
-          categories,
-
-        lang:
-          f.lang ||
-          f.language ||
-          'FR'
-      });
-
-      added++;
+      return;
     }
+
+    const sourceTags =
+      Array.isArray(f.tags)
+        ? f.tags
+            .map(normalizeSourceTopic)
+            .filter(isValidTagKey)
+        : [];
+
+    if (!sourceTags.length) {
+
+      sourceTags.push(
+        normalizeSourceTopic(
+          f.tag
+        )
+      );
+    }
+
+    store.feeds.push({
+
+      name:
+        f.name ||
+        f.url,
+
+      url:
+        f.url,
+
+      tag:
+        sourceTags[0] || 'NC',
+
+      tags:
+        sourceTags,
+
+      lang:
+        f.lang ||
+        f.language ||
+        'FR'
+    });
+
+    added++;
   });
 
   if (added > 0) {
@@ -1928,16 +1957,21 @@ app.post('/api/store/feeds-bulk', (req, res) => {
   }
 
   res.json({
+
     ok: true,
+
     added,
-    feeds: store.feeds
+
+    feeds:
+      store.feeds
   });
 });
 
 
 app.delete('/api/store/feed', (req, res) => {
 
-  const { url } = req.body || {};
+  const { url } =
+    req.body || {};
 
   if (!url) {
 
@@ -1962,15 +1996,18 @@ app.delete('/api/store/feed', (req, res) => {
   }
 
   res.json({
+
     ok: true,
-    feeds: store.feeds
+
+    feeds:
+      store.feeds
   });
 });
 
 
-/* ════════════════════════════════════════════════════════════════
+/* ================================================================
    TAGS PERSONNALISÉS
-════════════════════════════════════════════════════════════════ */
+================================================================ */
 
 app.post('/api/store/tag', (req, res) => {
 
@@ -2024,9 +2061,14 @@ app.post('/api/store/tag', (req, res) => {
   ) {
 
     Object.entries(terms)
-      .forEach(([langCode, list]) => {
+      .forEach(
+        ([langCode, list]) => {
 
-        if (Array.isArray(list)) {
+          if (
+            !Array.isArray(list)
+          ) {
+            return;
+          }
 
           const arr =
             list
@@ -2047,7 +2089,7 @@ app.post('/api/store/tag', (req, res) => {
             ] = arr;
           }
         }
-      });
+      );
   }
 
   store.tags.push({
@@ -2055,17 +2097,16 @@ app.post('/api/store/tag', (req, res) => {
     key: k,
 
     label:
-      String(label).slice(0, 80),
+      String(label)
+        .slice(0, 80),
 
     color:
-      /^#[0-9a-fA-F]{6}$/.test(
-        color || ''
-      )
+      /^#[0-9a-fA-F]{6}$/
+        .test(color || '')
         ? color
         : '#7a9bbf',
 
-    builtin:
-      false,
+    builtin: false,
 
     terms:
       cleanTerms
@@ -2074,15 +2115,19 @@ app.post('/api/store/tag', (req, res) => {
   saveStore();
 
   res.json({
+
     ok: true,
-    tags: store.tags
+
+    tags:
+      store.tags
   });
 });
 
 
 app.delete('/api/store/tag', (req, res) => {
 
-  const { key } = req.body || {};
+  const { key } =
+    req.body || {};
 
   if (!key) {
 
@@ -2092,26 +2137,31 @@ app.delete('/api/store/tag', (req, res) => {
     });
   }
 
-  const before =
-    store.tags.length;
-
   /*
-   * On empêche la suppression accidentelle
-   * des catégories officielles.
+   * Les tags builtin ne doivent pas être supprimés.
    */
+
   const builtin =
-    DEFAULT_TAGS.some(
+    DEFAULT_TAGS.find(
       tag => tag.key === key
     );
 
   if (builtin) {
 
     return res.status(400).json({
+
       ok: false,
+
       error:
-        'Les catégories ILI officielles ne peuvent pas être supprimées'
+        'Les catégories intégrées ne peuvent pas être supprimées',
+
+      tags:
+        store.tags
     });
   }
+
+  const before =
+    store.tags.length;
 
   store.tags =
     store.tags.filter(
@@ -2125,21 +2175,24 @@ app.delete('/api/store/tag', (req, res) => {
   }
 
   res.json({
+
     ok: true,
-    tags: store.tags
+
+    tags:
+      store.tags
   });
 });
 
 
-/* ════════════════════════════════════════════════════════════════
-   SOCIAL — RSS BRIDGE
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   SOCIAL
+================================================================ */
 
 const NITTER_INSTANCES = [
   'https://nitter.privacydev.net',
   'https://nitter.poast.org',
   'https://nitter.1d4.us',
-  'https://nitter.kavin.rocks',
+  'https://nitter.kavin.rocks'
 ];
 
 
@@ -2154,7 +2207,8 @@ async function fetchNitterRSS(
       : `/${handle.replace('@', '')}/rss`;
 
   for (
-    const instance of NITTER_INSTANCES
+    const instance
+    of NITTER_INSTANCES
   ) {
 
     try {
@@ -2202,659 +2256,492 @@ async function fetchNitterRSS(
 }
 
 
-/* Twitter */
+app.get('/api/social/twitter', async (req, res) => {
 
-app.get(
-  '/api/social/twitter',
-  async (req, res) => {
+  const {
+    handle,
+    type
+  } = req.query;
 
-    const {
-      handle,
-      type
-    } = req.query;
+  if (!handle) {
 
-    if (!handle) {
-
-      return res.status(400).json({
-        ok: false,
-        error: 'Missing handle'
-      });
-    }
-
-    const result =
-      await fetchNitterRSS(
-        handle,
-        type || 'user'
-      );
-
-    res.json(result);
+    return res.status(400).json({
+      ok: false,
+      error: 'Missing handle'
+    });
   }
-);
+
+  res.json(
+    await fetchNitterRSS(
+      handle,
+      type || 'user'
+    )
+  );
+});
 
 
-/* YouTube */
+/* ================================================================
+   YOUTUBE
+================================================================ */
 
-app.get(
-  '/api/social/youtube',
-  async (req, res) => {
+app.get('/api/social/youtube', async (req, res) => {
 
-    const {
-      channel_id,
-      handle
-    } = req.query;
+  const {
+    channel_id,
+    handle
+  } = req.query;
 
-    let url;
+  let url;
 
-    if (channel_id) {
+  if (channel_id) {
 
-      url =
-        `https://www.youtube.com/feeds/videos.xml?channel_id=${channel_id}`;
+    url =
+      `https://www.youtube.com/feeds/videos.xml?channel_id=${channel_id}`;
 
-    } else if (handle) {
+  } else if (handle) {
 
-      try {
+    try {
 
-        const r =
-          await fetch(
-            `https://www.youtube.com/@${handle}`,
-            {
-              headers: {
-                'User-Agent':
-                  'Mozilla/5.0 (compatible; RSS-Fetcher/1.0)'
-              }
+      const r =
+        await fetch(
+          `https://www.youtube.com/@${handle}`,
+          {
+            headers: {
+              'User-Agent':
+                'Mozilla/5.0'
             }
-          );
+          }
+        );
 
-        const txt =
-          await r.text();
+      const txt =
+        await r.text();
 
-        const m =
-          txt.match(
-            /"channelId":"([^"]+)"/
-          );
+      const m =
+        txt.match(
+          /"channelId":"([^"]+)"/
+        );
 
-        if (!m) {
-
-          return res.json({
-            ok: false,
-            error:
-              'Channel ID introuvable',
-            items: []
-          });
-        }
-
-        url =
-          `https://www.youtube.com/feeds/videos.xml?channel_id=${m[1]}`;
-
-      } catch (e) {
+      if (!m) {
 
         return res.json({
           ok: false,
-          error: e.message,
+          error: 'Channel ID introuvable',
           items: []
         });
       }
 
-    } else {
-
-      return res.status(400).json({
-        ok: false,
-        error:
-          'channel_id ou handle requis'
-      });
-    }
-
-    try {
-
-      const feed =
-        await parser.parseURL(url);
-
-      const items =
-        (feed.items || [])
-          .slice(0, 20)
-          .map(item => ({
-
-            ...normalizeSocialItem(
-              item,
-              'youtube',
-              handle || channel_id
-            ),
-
-            thumbnail:
-              item.mediaContent?.$.url ||
-              item.mediaThumbnail?.$.url ||
-              ''
-          }));
-
-      res.json({
-        ok: true,
-        items,
-        count: items.length
-      });
-
-    } catch (e) {
-
-      res.json({
-        ok: false,
-        error: e.message,
-        items: []
-      });
-    }
-  }
-);
-
-
-/* Mastodon */
-
-app.get(
-  '/api/social/mastodon',
-  async (req, res) => {
-
-    const {
-      handle,
-      hashtag,
-      instance
-    } = req.query;
-
-    let url;
-
-    try {
-
-      if (hashtag) {
-
-        const inst =
-          instance ||
-          'mastodon.social';
-
-        url =
-          `https://${inst}/tags/${hashtag.replace('#', '')}.rss`;
-
-      } else if (handle) {
-
-        const parts =
-          handle
-            .replace('@', '')
-            .split('@');
-
-        const user =
-          parts[0];
-
-        const inst =
-          parts[1] ||
-          instance ||
-          'mastodon.social';
-
-        const apiUrl =
-          `https://${inst}/api/v1/accounts/lookup?acct=${user}`;
-
-        const r =
-          await fetch(
-            apiUrl,
-            {
-              headers: {
-                'User-Agent':
-                  'SUPER-ILI-BRAIN/1.0'
-              }
-            }
-          );
-
-        const acct =
-          await r.json();
-
-        if (!acct.id) {
-
-          return res.json({
-            ok: false,
-            error:
-              'Compte Mastodon introuvable',
-            items: []
-          });
-        }
-
-        url =
-          `https://${inst}/@${user}.rss`;
-
-      } else {
-
-        return res.status(400).json({
-          ok: false,
-          error:
-            'handle ou hashtag requis'
-        });
-      }
-
-      const feed =
-        await parser.parseURL(url);
-
-      const items =
-        (feed.items || [])
-          .slice(0, 30)
-          .map(item =>
-            normalizeSocialItem(
-              item,
-              'mastodon',
-              handle || hashtag
-            )
-          );
-
-      res.json({
-        ok: true,
-        items,
-        count: items.length,
-        url
-      });
-
-    } catch (e) {
-
-      res.json({
-        ok: false,
-        error: e.message,
-        items: []
-      });
-    }
-  }
-);
-
-
-/* Bluesky */
-
-app.get(
-  '/api/social/bluesky',
-  async (req, res) => {
-
-    const {
-      handle,
-      hashtag
-    } = req.query;
-
-    let url;
-
-    try {
-
-      if (hashtag) {
-
-        url =
-          `https://bsky.app/search?q=${encodeURIComponent('#' + hashtag.replace('#', ''))}&rss=1`;
-
-      } else if (handle) {
-
-        url =
-          `https://bsky.app/profile/${handle}/rss`;
-
-      } else {
-
-        return res.status(400).json({
-          ok: false,
-          error:
-            'handle ou hashtag requis'
-        });
-      }
-
-      const feed =
-        await parser.parseURL(url);
-
-      const items =
-        (feed.items || [])
-          .slice(0, 30)
-          .map(item =>
-            normalizeSocialItem(
-              item,
-              'bluesky',
-              handle || hashtag
-            )
-          );
-
-      res.json({
-        ok: true,
-        items,
-        count: items.length
-      });
-
-    } catch (e) {
-
-      res.json({
-        ok: false,
-        error: e.message,
-        items: []
-      });
-    }
-  }
-);
-
-
-/* Reddit */
-
-app.get(
-  '/api/social/reddit',
-  async (req, res) => {
-
-    const {
-      subreddit,
-      search,
-      sort
-    } = req.query;
-
-    let url;
-
-    if (search) {
-
       url =
-        `https://www.reddit.com/search.rss?q=${encodeURIComponent(search)}&sort=${sort || 'new'}&limit=25`;
-
-    } else if (subreddit) {
-
-      url =
-        `https://www.reddit.com/r/${subreddit}/${sort || 'new'}.rss?limit=25`;
-
-    } else {
-
-      return res.status(400).json({
-        ok: false,
-        error:
-          'subreddit ou search requis'
-      });
-    }
-
-    try {
-
-      const feed =
-        await parser.parseURL(url);
-
-      const items =
-        (feed.items || [])
-          .slice(0, 25)
-          .map(item =>
-            normalizeSocialItem(
-              item,
-              'reddit',
-              subreddit || search
-            )
-          );
-
-      res.json({
-        ok: true,
-        items,
-        count: items.length
-      });
+        `https://www.youtube.com/feeds/videos.xml?channel_id=${m[1]}`;
 
     } catch (e) {
 
-      res.json({
+      return res.json({
         ok: false,
         error: e.message,
         items: []
       });
     }
+
+  } else {
+
+    return res.status(400).json({
+      ok: false,
+      error: 'channel_id ou handle requis'
+    });
   }
-);
 
+  try {
 
-/* Telegram */
+    const feed =
+      await parser.parseURL(url);
 
-app.get(
-  '/api/social/telegram',
-  async (req, res) => {
+    const items =
+      (feed.items || [])
+        .slice(0, 20)
+        .map(item => ({
 
-    const { channel } =
-      req.query;
+          ...normalizeSocialItem(
+            item,
+            'youtube',
+            handle || channel_id
+          ),
 
-    if (!channel) {
-
-      return res.status(400).json({
-        ok: false,
-        error: 'channel requis'
-      });
-    }
-
-    const bridges = [
-
-      `https://rsshub.app/telegram/channel/${channel}`,
-
-      `https://tg.i-c-a.su/rss/${channel}`,
-
-      `https://telegramrss.com/rss/${channel}`
-    ];
-
-    for (const url of bridges) {
-
-      try {
-
-        const feed =
-          await parser.parseURL(url);
-
-        const items =
-          (feed.items || [])
-            .slice(0, 30)
-            .map(item =>
-              normalizeSocialItem(
-                item,
-                'telegram',
-                channel
-              )
-            );
-
-        return res.json({
-          ok: true,
-          items,
-          count: items.length,
-          bridge: url
-        });
-
-      } catch (_) {}
-    }
+          thumbnail:
+            item.mediaContent?.$?.url ||
+            item.mediaThumbnail?.$?.url ||
+            ''
+        }));
 
     res.json({
+
+      ok: true,
+
+      items,
+
+      count:
+        items.length
+    });
+
+  } catch (e) {
+
+    res.json({
+
       ok: false,
+
       error:
-        'Tous les bridges Telegram KO',
+        e.message,
+
       items: []
     });
   }
-);
+});
 
 
-/* ════════════════════════════════════════════════════════════════
-   SOCIAL — BATCH
-════════════════════════════════════════════════════════════════ */
+/* ================================================================
+   MASTODON
+================================================================ */
 
-app.post(
-  '/api/social/batch',
-  async (req, res) => {
+app.get('/api/social/mastodon', async (req, res) => {
 
-    const { sources } =
-      req.body;
+  const {
+    handle,
+    hashtag,
+    instance
+  } = req.query;
 
-    if (!Array.isArray(sources)) {
+  let url;
+
+  try {
+
+    if (hashtag) {
+
+      const inst =
+        instance ||
+        'mastodon.social';
+
+      url =
+        `https://${inst}/tags/${hashtag.replace('#', '')}.rss`;
+
+    } else if (handle) {
+
+      const parts =
+        handle
+          .replace('@', '')
+          .split('@');
+
+      const user =
+        parts[0];
+
+      const inst =
+        parts[1] ||
+        instance ||
+        'mastodon.social';
+
+      const apiUrl =
+        `https://${inst}/api/v1/accounts/lookup?acct=${user}`;
+
+      const r =
+        await fetch(
+          apiUrl,
+          {
+            headers: {
+              'User-Agent':
+                'SUPER-ILI-BRAIN/1.0'
+            }
+          }
+        );
+
+      const acct =
+        await r.json();
+
+      if (!acct.id) {
+
+        return res.json({
+          ok: false,
+          error: 'Compte Mastodon introuvable',
+          items: []
+        });
+      }
+
+      url =
+        `https://${inst}/@${user}.rss`;
+
+    } else {
 
       return res.status(400).json({
-        error:
-          'sources must be array'
+        ok: false,
+        error: 'handle ou hashtag requis'
       });
     }
 
-    const results =
-      await Promise.allSettled(
+    const feed =
+      await parser.parseURL(url);
 
-        sources.map(
-          async s => {
-
-            const base = {
-
-              platform:
-                s.platform,
-
-              handle:
-                s.handle || s.id,
-
-              label:
-                s.label
-            };
-
-            try {
-
-              let r;
-
-              switch (s.platform) {
-
-                case 'twitter':
-
-                  r =
-                    await fetchNitterRSS(
-                      s.handle,
-                      s.type || 'user'
-                    );
-
-                  break;
-
-                case 'youtube': {
-
-                  const resp =
-                    await fetch(
-                      `http://localhost:${PORT}/api/social/youtube?${s.channel_id ? 'channel_id=' + s.channel_id : 'handle=' + s.handle}`
-                    );
-
-                  r =
-                    await resp.json();
-
-                  break;
-                }
-
-                case 'mastodon': {
-
-                  const q =
-                    s.hashtag
-                      ? `hashtag=${s.hashtag}&instance=${s.instance || 'mastodon.social'}`
-                      : `handle=${s.handle}`;
-
-                  const resp =
-                    await fetch(
-                      `http://localhost:${PORT}/api/social/mastodon?${q}`
-                    );
-
-                  r =
-                    await resp.json();
-
-                  break;
-                }
-
-                case 'bluesky': {
-
-                  const q =
-                    s.hashtag
-                      ? `hashtag=${s.hashtag}`
-                      : `handle=${s.handle}`;
-
-                  const resp =
-                    await fetch(
-                      `http://localhost:${PORT}/api/social/bluesky?${q}`
-                    );
-
-                  r =
-                    await resp.json();
-
-                  break;
-                }
-
-                case 'reddit': {
-
-                  const q =
-                    s.subreddit
-                      ? `subreddit=${s.subreddit}`
-                      : `search=${encodeURIComponent(s.search)}`;
-
-                  const resp =
-                    await fetch(
-                      `http://localhost:${PORT}/api/social/reddit?${q}`
-                    );
-
-                  r =
-                    await resp.json();
-
-                  break;
-                }
-
-                case 'telegram': {
-
-                  const resp =
-                    await fetch(
-                      `http://localhost:${PORT}/api/social/telegram?channel=${s.handle}`
-                    );
-
-                  r =
-                    await resp.json();
-
-                  break;
-                }
-
-                default:
-
-                  r = {
-                    ok: false,
-                    error:
-                      'Plateforme inconnue',
-                    items: []
-                  };
-              }
-
-              return {
-
-                ...base,
-
-                ok:
-                  r.ok,
-
-                items:
-                  r.items || [],
-
-                count:
-                  (r.items || []).length,
-
-                error:
-                  r.error
-              };
-
-            } catch (e) {
-
-              return {
-
-                ...base,
-
-                ok: false,
-
-                items: [],
-
-                count: 0,
-
-                error:
-                  e.message
-              };
-            }
-          }
-        )
-      );
+    const items =
+      (feed.items || [])
+        .slice(0, 30)
+        .map(item =>
+          normalizeSocialItem(
+            item,
+            'mastodon',
+            handle || hashtag
+          )
+        );
 
     res.json({
 
-      results:
-        results.map(
-          r =>
-            r.status === 'fulfilled'
-              ? r.value
-              : {
-                  ok: false,
-                  items: [],
-                  error:
-                    r.reason?.message
-                }
-        )
+      ok: true,
+
+      items,
+
+      count:
+        items.length,
+
+      url
+    });
+
+  } catch (e) {
+
+    res.json({
+
+      ok: false,
+
+      error:
+        e.message,
+
+      items: []
     });
   }
-);
+});
 
 
-/* ════════════════════════════════════════════════════════════════
+/* ================================================================
+   BLUESKY
+================================================================ */
+
+app.get('/api/social/bluesky', async (req, res) => {
+
+  const {
+    handle,
+    hashtag
+  } = req.query;
+
+  let url;
+
+  try {
+
+    if (hashtag) {
+
+      url =
+        `https://bsky.app/search?q=${encodeURIComponent(
+          '#' + hashtag.replace('#', '')
+        )}&rss=1`;
+
+    } else if (handle) {
+
+      url =
+        `https://bsky.app/profile/${handle}/rss`;
+
+    } else {
+
+      return res.status(400).json({
+        ok: false,
+        error: 'handle ou hashtag requis'
+      });
+    }
+
+    const feed =
+      await parser.parseURL(url);
+
+    const items =
+      (feed.items || [])
+        .slice(0, 30)
+        .map(item =>
+          normalizeSocialItem(
+            item,
+            'bluesky',
+            handle || hashtag
+          )
+        );
+
+    res.json({
+
+      ok: true,
+
+      items,
+
+      count:
+        items.length
+    });
+
+  } catch (e) {
+
+    res.json({
+
+      ok: false,
+
+      error:
+        e.message,
+
+      items: []
+    });
+  }
+});
+
+
+/* ================================================================
+   REDDIT
+================================================================ */
+
+app.get('/api/social/reddit', async (req, res) => {
+
+  const {
+    subreddit,
+    search,
+    sort
+  } = req.query;
+
+  let url;
+
+  if (search) {
+
+    url =
+      `https://www.reddit.com/search.rss?q=${encodeURIComponent(
+        search
+      )}&sort=${sort || 'new'}&limit=25`;
+
+  } else if (subreddit) {
+
+    url =
+      `https://www.reddit.com/r/${subreddit}/${sort || 'new'}.rss?limit=25`;
+
+  } else {
+
+    return res.status(400).json({
+      ok: false,
+      error: 'subreddit ou search requis'
+    });
+  }
+
+  try {
+
+    const feed =
+      await parser.parseURL(url);
+
+    const items =
+      (feed.items || [])
+        .slice(0, 25)
+        .map(item =>
+          normalizeSocialItem(
+            item,
+            'reddit',
+            subreddit || search
+          )
+        );
+
+    res.json({
+
+      ok: true,
+
+      items,
+
+      count:
+        items.length
+    });
+
+  } catch (e) {
+
+    res.json({
+
+      ok: false,
+
+      error:
+        e.message,
+
+      items: []
+    });
+  }
+});
+
+
+/* ================================================================
+   TELEGRAM
+================================================================ */
+
+app.get('/api/social/telegram', async (req, res) => {
+
+  const { channel } =
+    req.query;
+
+  if (!channel) {
+
+    return res.status(400).json({
+      ok: false,
+      error: 'channel requis'
+    });
+  }
+
+  const bridges = [
+
+    `https://rsshub.app/telegram/channel/${channel}`,
+
+    `https://tg.i-c-a.su/rss/${channel}`,
+
+    `https://telegramrss.com/rss/${channel}`
+  ];
+
+  for (
+    const url
+    of bridges
+  ) {
+
+    try {
+
+      const feed =
+        await parser.parseURL(url);
+
+      const items =
+        (feed.items || [])
+          .slice(0, 30)
+          .map(item =>
+            normalizeSocialItem(
+              item,
+              'telegram',
+              channel
+            )
+          );
+
+      return res.json({
+
+        ok: true,
+
+        items,
+
+        count:
+          items.length,
+
+        bridge:
+          url
+      });
+
+    } catch (_) {}
+  }
+
+  res.json({
+
+    ok: false,
+
+    error:
+      'Tous les bridges Telegram KO',
+
+    items: []
+  });
+});
+
+
+/* ================================================================
    PLAYWRIGHT
-════════════════════════════════════════════════════════════════ */
+================================================================ */
 
 let playwrightAvailable = false;
 let chromium;
@@ -2868,17 +2755,13 @@ try {
   playwrightAvailable = true;
 
   console.log(
-    '  ✓ Playwright disponible — scraping avancé activé'
+    '  ✓ Playwright disponible'
   );
 
 } catch (_) {
 
   console.log(
-    '  ⚠ Playwright non installé — scraping avancé désactivé'
-  );
-
-  console.log(
-    '    Pour activer : npm install playwright && npx playwright install chromium'
+    '  ⚠ Playwright non installé'
   );
 }
 
@@ -2923,7 +2806,9 @@ async function withBrowser(fn) {
 }
 
 
-/* Twitter hashtag */
+/* ================================================================
+   SCRAPE TWITTER
+================================================================ */
 
 app.get(
   '/api/scrape/twitter-hashtag',
@@ -2936,8 +2821,7 @@ app.get(
 
       return res.status(400).json({
         ok: false,
-        error:
-          'hashtag requis'
+        error: 'hashtag requis'
       });
     }
 
@@ -3026,13 +2910,13 @@ app.get(
               {
                 waitUntil:
                   'domcontentloaded',
-                timeout:
-                  15000
+                timeout: 15000
               }
             );
 
             return page.evaluate(
               () =>
+
                 Array.from(
                   document.querySelectorAll(
                     '.timeline-item'
@@ -3052,17 +2936,14 @@ app.get(
                     (
                       el.querySelector(
                         'a.tweet-link'
-                      )?.getAttribute(
-                        'href'
-                      ) || ''
+                      )?.getAttribute('href') ||
+                      ''
                     ),
 
                   pubDate:
                     el.querySelector(
                       '.tweet-date a'
-                    )?.getAttribute(
-                      'title'
-                    ) ||
+                    )?.getAttribute('title') ||
                     new Date().toISOString(),
 
                   likes:
@@ -3149,7 +3030,9 @@ app.get(
 );
 
 
-/* YouTube search */
+/* ================================================================
+   SCRAPE YOUTUBE
+================================================================ */
 
 app.get(
   '/api/scrape/youtube-search',
@@ -3210,8 +3093,7 @@ app.get(
               {
                 waitUntil:
                   'networkidle',
-                timeout:
-                  20000
+                timeout: 20000
               }
             );
 
@@ -3226,6 +3108,7 @@ app.get(
 
             return page.evaluate(
               () =>
+
                 Array.from(
                   document.querySelectorAll(
                     'ytd-video-renderer'
@@ -3245,9 +3128,8 @@ app.get(
                     (
                       el.querySelector(
                         '#video-title'
-                      )?.getAttribute(
-                        'href'
-                      ) || ''
+                      )?.getAttribute('href') ||
+                      ''
                     ),
 
                   source:
@@ -3327,7 +3209,9 @@ app.get(
 );
 
 
-/* Reddit search */
+/* ================================================================
+   SCRAPE REDDIT
+================================================================ */
 
 app.get(
   '/api/scrape/reddit-search',
@@ -3347,7 +3231,9 @@ app.get(
     }
 
     const url =
-      `https://www.reddit.com/search.rss?q=${encodeURIComponent(q)}&sort=${sort || 'new'}&limit=25`;
+      `https://www.reddit.com/search.rss?q=${encodeURIComponent(
+        q
+      )}&sort=${sort || 'new'}&limit=25`;
 
     try {
 
@@ -3394,7 +3280,9 @@ app.get(
 );
 
 
-/* Statut Playwright */
+/* ================================================================
+   STATUS PLAYWRIGHT
+================================================================ */
 
 app.get(
   '/api/scrape/status',
@@ -3412,9 +3300,218 @@ app.get(
 );
 
 
-/* ════════════════════════════════════════════════════════════════
+/* ================================================================
+   SOCIAL BATCH
+================================================================ */
+
+app.post(
+  '/api/social/batch',
+  async (req, res) => {
+
+    const { sources } =
+      req.body;
+
+    if (!Array.isArray(sources)) {
+
+      return res.status(400).json({
+        error:
+          'sources must be array'
+      });
+    }
+
+    const results =
+      await Promise.allSettled(
+        sources.map(
+          async s => {
+
+            const base = {
+
+              platform:
+                s.platform,
+
+              handle:
+                s.handle ||
+                s.id,
+
+              label:
+                s.label
+            };
+
+            try {
+
+              let r;
+
+              switch (s.platform) {
+
+                case 'twitter':
+
+                  r =
+                    await fetchNitterRSS(
+                      s.handle,
+                      s.type ||
+                        'user'
+                    );
+
+                  break;
+
+                case 'youtube': {
+
+                  const params =
+                    s.channel_id
+                      ? `channel_id=${s.channel_id}`
+                      : `handle=${s.handle}`;
+
+                  const response =
+                    await fetch(
+                      `http://localhost:${PORT}/api/social/youtube?${params}`
+                    );
+
+                  r =
+                    await response.json();
+
+                  break;
+                }
+
+                case 'mastodon': {
+
+                  const q =
+                    s.hashtag
+                      ? `hashtag=${encodeURIComponent(s.hashtag)}&instance=${s.instance || 'mastodon.social'}`
+                      : `handle=${encodeURIComponent(s.handle)}`;
+
+                  const response =
+                    await fetch(
+                      `http://localhost:${PORT}/api/social/mastodon?${q}`
+                    );
+
+                  r =
+                    await response.json();
+
+                  break;
+                }
+
+                case 'bluesky': {
+
+                  const q =
+                    s.hashtag
+                      ? `hashtag=${encodeURIComponent(s.hashtag)}`
+                      : `handle=${encodeURIComponent(s.handle)}`;
+
+                  const response =
+                    await fetch(
+                      `http://localhost:${PORT}/api/social/bluesky?${q}`
+                    );
+
+                  r =
+                    await response.json();
+
+                  break;
+                }
+
+                case 'reddit': {
+
+                  const q =
+                    s.subreddit
+                      ? `subreddit=${encodeURIComponent(s.subreddit)}`
+                      : `search=${encodeURIComponent(s.search || '')}`;
+
+                  const response =
+                    await fetch(
+                      `http://localhost:${PORT}/api/social/reddit?${q}`
+                    );
+
+                  r =
+                    await response.json();
+
+                  break;
+                }
+
+                case 'telegram': {
+
+                  const response =
+                    await fetch(
+                      `http://localhost:${PORT}/api/social/telegram?channel=${encodeURIComponent(s.handle)}`
+                    );
+
+                  r =
+                    await response.json();
+
+                  break;
+                }
+
+                default:
+
+                  r = {
+
+                    ok: false,
+
+                    error:
+                      'Plateforme inconnue',
+
+                    items: []
+                  };
+              }
+
+              return {
+
+                ...base,
+
+                ok:
+                  r.ok,
+
+                items:
+                  r.items || [],
+
+                count:
+                  (r.items || [])
+                    .length,
+
+                error:
+                  r.error
+              };
+
+            } catch (e) {
+
+              return {
+
+                ...base,
+
+                ok: false,
+
+                items: [],
+
+                count: 0,
+
+                error:
+                  e.message
+              };
+            }
+          }
+        )
+      );
+
+    res.json({
+
+      results:
+        results.map(
+          r =>
+            r.status === 'fulfilled'
+              ? r.value
+              : {
+                  ok: false,
+                  items: [],
+                  error:
+                    r.reason?.message
+                }
+        )
+    });
+  }
+);
+
+
+/* ================================================================
    CATCH-ALL
-════════════════════════════════════════════════════════════════ */
+================================================================ */
 
 app.get(
   '*',
@@ -3438,7 +3535,7 @@ app.listen(
   () => {
 
     console.log(
-      `\n  ◈ SUPER-ILI-BRAIN`
+      '\n  ◈ SUPER-ILI-BRAIN'
     );
 
     console.log(
@@ -3449,16 +3546,20 @@ app.listen(
       `  ▶ Playwright : ${
         playwrightAvailable
           ? 'ACTIVÉ'
-          : 'désactivé (npm install playwright)'
+          : 'désactivé'
       }`
     );
 
     console.log(
-      `  ▶ Sources : ${SOURCE_LIBRARY.length}`
+      `  ▶ Sources : ${
+        SOURCE_LIBRARY.length
+      }`
     );
 
     console.log(
-      `  ▶ Catégories : GI / GC / INFLUENCE / DECEPTION / PSYOPS / COMOPS / STRATCOM / LIO / LID / L2I / ILI`
+      `  ▶ Tags : ${
+        store.tags.length
+      }`
     );
 
     console.log(
