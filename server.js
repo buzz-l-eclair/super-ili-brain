@@ -1017,37 +1017,575 @@ function termMatches(text, term) {
  * NC
  */
 
-function classifyText(text, lang, tags) {
+/* ════════════════════════════════════════════════════════════════
+   CLASSIFICATION ILI — MOTEUR DE CLASSIFICATION ROBUSTE
+   ----------------------------------------------------------------
+   Principes :
+   1. Les catégories ILI sont déterminées par des signaux lexicaux
+      explicites et pondérés.
+   2. Plusieurs formulations synonymes sont reconnues.
+   3. Les langues FR/EN sont prioritaires, mais les autres langues
+      déclarées par la source restent prises en compte.
+   4. Les domaines manifestement hors ILI (sport, météo, finance
+      générale, divertissement, etc.) sont exclus.
+   5. Un simple mot générique ("influence", "communication", etc.)
+      ne suffit PAS à lui seul.
+   6. Plusieurs tags peuvent être attribués à un même signal.
+   7. Si aucun signal suffisamment fort n'est présent => NC.
+════════════════════════════════════════════════════════════════ */
 
-  const matched = [];
-  const L = String(lang || 'FR').toUpperCase();
+/**
+ * Normalisation linguistique légère.
+ * On conserve le texte original mais on normalise les caractères
+ * pour rendre les recherches plus robustes.
+ */
+function normalizeClassificationText(text) {
+  return String(text || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[\u2018\u2019\u201A\u0060]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
-  for (const tag of tags || []) {
 
-    if (!tag || tag.key === 'NC') {
-      continue;
-    }
+/**
+ * Vérifie si une expression existe réellement dans le texte.
+ * Les expressions courtes sont traitées comme des mots et non
+ * comme de simples sous-chaînes.
+ */
+function containsTerm(text, term) {
+  if (!term) return false;
 
-    if (!tag.terms) {
-      continue;
-    }
+  const t = normalizeClassificationText(term);
 
-    const terms = [
-      ...(tag.terms.FR || []),
-      ...(tag.terms[L] || [])
-    ];
+  if (t.length <= 3) {
+    const re = new RegExp(
+      `(^|[^a-z0-9])${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z0-9]|$)`,
+      'i'
+    );
+    return re.test(text);
+  }
 
-    for (const term of terms) {
+  return text.includes(t);
+}
 
-      if (termMatches(text, term)) {
 
-        matched.push(tag.key);
-        break;
-      }
+/**
+ * Signaux négatifs : permettent d'éviter qu'une source sportive,
+ * culturelle, économique, technologique ou généraliste soit
+ * artificiellement classée en ILI à cause d'un mot isolé.
+ */
+const CLASSIFICATION_EXCLUSIONS = [
+  // Sport
+  'football',
+  'soccer',
+  'basketball',
+  'baseball',
+  'tennis',
+  'rugby',
+  'cycling',
+  'cyclisme',
+  'tour de france',
+  'champions league',
+  'premier league',
+  'nba',
+  'nfl',
+  'nhl',
+  'olympics',
+  'olympic games',
+  'olympique',
+  'athletics',
+  'athlete',
+  'athletes',
+  'match',
+  'matches',
+  'score',
+  'scores',
+  'league',
+  'cup',
+  'championship',
+  'championships',
+  'transfer',
+  'transfers',
+  'coach',
+  'coaches',
+  'player',
+  'players',
+  'goal',
+  'goals',
+
+  // Culture / divertissement
+  'movie',
+  'movies',
+  'film review',
+  'cinema',
+  'music',
+  'concert',
+  'celebrity',
+  'celebrities',
+  'actor',
+  'actress',
+  'netflix',
+  'television',
+  'tv show',
+  'gaming',
+  'video game',
+  'videogame',
+
+  // Vie courante / météo
+  'weather',
+  'forecast',
+  'temperature',
+  'meteo',
+  'météo',
+  'horoscope',
+
+  // Finance générale sans dimension stratégique
+  'stock market',
+  'stock price',
+  'share price',
+  'earnings report',
+  'quarterly earnings',
+  'market forecast',
+
+  // Santé générale
+  'medical research',
+  'clinical trial',
+  'hospital',
+  'patients',
+  'disease outbreak',
+
+  // Automobile / consommation
+  'car review',
+  'vehicle review',
+  'new model',
+  'test drive',
+  'smartphone review',
+  'product review',
+];
+
+
+/**
+ * Vérifie si le texte est manifestement hors périmètre ILI.
+ *
+ * Important :
+ * on ne bloque PAS automatiquement un article parce qu'il contient
+ * un terme d'exclusion. On bloque uniquement lorsque ce terme apparaît
+ * sans signal ILI fort.
+ */
+function hasStrongNonILISignal(text) {
+  const normalized = normalizeClassificationText(text);
+
+  let hits = 0;
+
+  for (const term of CLASSIFICATION_EXCLUSIONS) {
+    if (containsTerm(normalized, term)) {
+      hits++;
     }
   }
 
-  return matched;
+  return hits >= 2;
+}
+
+
+/**
+ * Classification sémantique lexicale ILI.
+ *
+ * Chaque signal reçoit un poids :
+ *   5 = expression extrêmement spécifique
+ *   4 = expression forte
+ *   3 = expression pertinente
+ *   2 = expression secondaire
+ *   1 = terme faible
+ *
+ * Le tag n'est retourné que si son score dépasse le seuil.
+ */
+function classifyText(text, lang, tags) {
+
+  const normalized = normalizeClassificationText(text);
+  const L = String(lang || 'EN').toUpperCase();
+
+  if (!normalized) return [];
+
+  /*
+   * --------------------------------------------------------------
+   * 1. Signaux forts par catégorie
+   * --------------------------------------------------------------
+   */
+
+  const SIGNALS = {
+
+    GI: {
+      threshold: 4,
+      terms: [
+
+        // FR
+        ['guerre informationnelle', 5],
+        ["guerre de l'information", 5],
+        ['guerre de linformation', 5],
+        ['lutte informationnelle', 5],
+        ['opération informationnelle', 4],
+        ['operations informationnelles', 4],
+        ['operations d information', 4],
+        ['opération de l information', 4],
+        ['opérations dans le domaine informationnel', 4],
+        ['environnement informationnel', 3],
+        ['campagne informationnelle', 4],
+        ['campagne de désinformation', 4],
+        ['influence informationnelle', 3],
+
+        // EN
+        ['information warfare', 5],
+        ['information war', 5],
+        ['infowar', 5],
+        ['information operations', 5],
+        ['information operation', 5],
+        ['information operations campaign', 5],
+        ['information environment', 3],
+        ['information confrontation', 4],
+        ['information campaign', 4],
+        ['information influence', 3],
+        ['informational warfare', 5],
+
+        // RU
+        ['информационная война', 5],
+        ['информационная операция', 5],
+        ['информационные операции', 5],
+
+        // ZH
+        ['信息战', 5],
+        ['信息作战', 5],
+        ['信息行动', 5],
+      ]
+    },
+
+
+    GC: {
+      threshold: 4,
+      terms: [
+        ['guerre cognitive', 5],
+        ['guerre cognitive', 5],
+        ['domaine cognitif', 4],
+        ['espace cognitif', 4],
+        ['opération cognitive', 4],
+        ['opérations cognitives', 4],
+        ['attaque cognitive', 4],
+        ['menace cognitive', 4],
+        ['supériorité cognitive', 4],
+        ['guerre des cerveaux', 4],
+
+        ['cognitive warfare', 5],
+        ['cognitive war', 5],
+        ['cognitive domain', 4],
+        ['cognitive operations', 5],
+        ['cognitive operation', 5],
+        ['cognitive attack', 4],
+        ['cognitive attacks', 4],
+        ['cognitive threat', 4],
+        ['cognitive superiority', 4],
+        ['cognitive security', 3],
+        ['brain warfare', 4],
+        ['cognitive manipulation', 4],
+
+        ['认知战', 5],
+        ['认知作战', 5],
+      ]
+    },
+
+
+    INFLUENCE: {
+      threshold: 4,
+      terms: [
+
+        ['opération d influence', 5],
+        ["opération d'influence", 5],
+        ['opérations d influence', 5],
+        ["opérations d'influence", 5],
+        ['operation influence', 4],
+        ['operation of influence', 5],
+        ['influence operation', 5],
+        ['influence operations', 5],
+        ['foreign influence operation', 5],
+        ['foreign influence operations', 5],
+        ['foreign interference', 5],
+        ['foreign interference operation', 5],
+        ['influence campaign', 4],
+        ['influence campaigns', 4],
+        ['influence activity', 4],
+        ['influence activities', 4],
+        ['malign influence', 5],
+        ['influence activity', 4],
+        ['information influence operation', 5],
+
+        ['ingérence étrangère', 5],
+        ['ingérence', 3],
+        ['influence étrangère', 4],
+        ['campagne d influence', 4],
+        ["campagne d'influence", 4],
+        ['activité d influence', 4],
+        ["activité d'influence", 4],
+
+        ['операция влияния', 5],
+        ['иностранное вмешательство', 5],
+      ]
+    },
+
+
+    DECEPTION: {
+      threshold: 4,
+      terms: [
+        ['déception militaire', 5],
+        ['opération de déception', 5],
+        ['opérations de déception', 5],
+        ['manoeuvre de déception', 5],
+        ['manœuvre de déception', 5],
+        ['déception', 4],
+
+        ['disinformation', 5],
+        ['disinformation campaign', 5],
+        ['disinformation campaigns', 5],
+        ['misinformation', 5],
+        ['misinformation campaign', 5],
+        ['deception operation', 5],
+        ['deception operations', 5],
+        ['military deception', 5],
+        ['deception campaign', 5],
+        ['deceptive operations', 4],
+
+        ['désinformation', 5],
+        ['campagne de désinformation', 5],
+        ['mésinformation', 5],
+        ['propagande', 4],
+        ['propaganda', 4],
+
+        ['дезинформация', 5],
+        ['дезинформационная кампания', 5],
+      ]
+    },
+
+
+    PSYOPS: {
+      threshold: 4,
+      terms: [
+        ['opération psychologique', 5],
+        ['opérations psychologiques', 5],
+        ['guerre psychologique', 5],
+        ['action psychologique', 4],
+        ['actions psychologiques', 4],
+        ['psyops', 5],
+        ['psyop', 5],
+
+        ['psychological operation', 5],
+        ['psychological operations', 5],
+        ['psychological warfare', 5],
+        ['psychological operation campaign', 5],
+        ['psyops', 5],
+        ['psyop', 5],
+        ['psychological operations campaign', 5],
+        ['psychological influence', 4],
+
+        ['psychologische kriegsführung', 5],
+        ['психологическая операция', 5],
+        ['психологические операции', 5],
+        ['психологическая война', 5],
+      ]
+    },
+
+
+    COMOPS: {
+      threshold: 4,
+      terms: [
+        ['communication opérationnelle', 5],
+        ['communications opérationnelles', 5],
+        ['communication en opération', 4],
+        ['communication des opérations', 4],
+
+        ['operational communication', 5],
+        ['operational communications', 5],
+        ['operations communication', 5],
+        ['communication during operations', 4],
+
+        ['operative kommunikation', 5],
+        ['оперативная коммуникация', 5],
+      ]
+    },
+
+
+    STRATCOM: {
+      threshold: 4,
+      terms: [
+        ['communication stratégique', 5],
+        ['communications stratégiques', 5],
+        ['stratégie de communication', 4],
+
+        ['strategic communication', 5],
+        ['strategic communications', 5],
+        ['strategic communications strategy', 5],
+        ['stratcom', 5],
+        ['strategic messaging', 4],
+        ['strategic narrative', 4],
+        ['strategic narratives', 4],
+
+        ['strategische kommunikation', 5],
+        ['стратегическая коммуникация', 5],
+        ['стратегические коммуникации', 5],
+      ]
+    },
+
+
+    LIO: {
+      threshold: 4,
+      terms: [
+        ['lutte informatique offensive', 5],
+        ['opération cyber offensive', 5],
+        ['opérations cyber offensives', 5],
+        ['opération informatique offensive', 5],
+
+        ['offensive cyber operation', 5],
+        ['offensive cyber operations', 5],
+        ['offensive cyber', 4],
+        ['offensive cyberspace operations', 5],
+        ['cyber attack', 3],
+        ['cyber attacks', 3],
+        ['cyberattack', 3],
+        ['cyber attacks', 3],
+        ['cyber offensive', 5],
+        ['cyber warfare', 4],
+        ['cyberwarfare', 4],
+
+        ['наступательная кибероперация', 5],
+        ['наступательные кибероперации', 5],
+      ]
+    },
+
+
+    LID: {
+      threshold: 4,
+      terms: [
+        ['lutte informatique défensive', 5],
+        ['cyberdéfense', 5],
+        ['cyber defense', 5],
+        ['cyber defence', 5],
+        ['défense cyber', 5],
+        ['défense informatique', 4],
+
+        ['defensive cyber operation', 5],
+        ['defensive cyber operations', 5],
+        ['defensive cyber', 5],
+        ['cyber defense operations', 5],
+        ['cyber defence operations', 5],
+        ['cybersecurity defense', 4],
+        ['cybersecurity', 2],
+        ['cyber security', 2],
+        ['incident response', 3],
+        ['security operations center', 3],
+
+        ['оборонительная кибероперация', 5],
+        ['оборонительные кибероперации', 5],
+      ]
+    },
+
+
+    L2I: {
+      threshold: 4,
+      terms: [
+        ["lutte informatique d'influence", 5],
+        ['lutte informatique d influence', 5],
+        ['opération cyber d influence', 5],
+        ["opération cyber d'influence", 5],
+        ['opérations cybernétiques influence', 5],
+
+        ['cyber influence operation', 5],
+        ['cyber influence operations', 5],
+        ['cyber-enabled influence', 5],
+        ['cyber influence campaign', 5],
+        ['cyber influence campaigns', 5],
+        ['cyber-enabled information operation', 5],
+        ['cyber-enabled influence operation', 5],
+
+        ['кибероперация влияния', 5],
+        ['кибер-операция влияния', 5],
+      ]
+    },
+
+
+    ILI: {
+      threshold: 5,
+      terms: [
+        ['influence et lutte informationnelle', 6],
+        ['influence and information warfare', 6],
+        ['influence and information operations', 6],
+        ['influence informationnelle et lutte', 6],
+        ['influence informationnelle', 4],
+        ['information influence', 4],
+      ]
+    }
+  };
+
+
+  /*
+   * --------------------------------------------------------------
+   * 2. Calcul des scores
+   * --------------------------------------------------------------
+   */
+
+  const scores = {};
+
+  Object.entries(SIGNALS).forEach(([key, config]) => {
+
+    let score = 0;
+
+    for (const [term, weight] of config.terms) {
+      if (containsTerm(normalized, term)) {
+        score += weight;
+      }
+    }
+
+    if (score >= config.threshold) {
+      scores[key] = score;
+    }
+  });
+
+
+  /*
+   * --------------------------------------------------------------
+   * 3. Cas spécial : texte manifestement hors domaine ILI
+   *
+   * On ne supprime pas un résultat ILI fort.
+   * On supprime uniquement les classifications faibles.
+   * --------------------------------------------------------------
+   */
+
+  const nonILI = hasStrongNonILISignal(normalized);
+
+  if (nonILI) {
+
+    Object.keys(scores).forEach(key => {
+
+      /*
+       * Un score >= 8 signifie plusieurs signaux forts :
+       * on conserve malgré la présence d'un terme hors domaine.
+       */
+      if (scores[key] < 8) {
+        delete scores[key];
+      }
+
+    });
+  }
+
+
+  /*
+   * --------------------------------------------------------------
+   * 4. Retour des tags
+   * --------------------------------------------------------------
+   */
+
+  return Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key]) => key);
 }
 
 
