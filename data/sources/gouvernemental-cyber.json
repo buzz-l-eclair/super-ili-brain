@@ -1,0 +1,106 @@
+[
+  {
+    "id": "gcy-001",
+    "name": "CERT-FR — Avis et alertes",
+    "url": "https://www.cert.ssi.gouv.fr/avis/feed/",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gcy-002",
+    "name": "BSI (Allemagne) — Sicherheitswarnungen",
+    "url": "https://www.bsi.bund.de/SiteGlobals/Functions/RSSFeed/RSSNewsfeed/RSSNewsfeed.xml",
+    "language": "DE",
+    "country": "DE",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gcy-003",
+    "name": "ENISA (EU Cybersecurity Agency)",
+    "url": "https://www.enisa.europa.eu/news/RSS",
+    "language": "EN",
+    "country": "EU",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "gcy-004",
+    "name": "Australian Cyber Security Centre (ACSC)",
+    "url": "https://www.cyber.gov.au/rss.xml",
+    "language": "EN",
+    "country": "AU",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gcy-005",
+    "name": "CCCS (Canadian Centre for Cyber Security)",
+    "url": "https://www.cyber.gc.ca/en/rss.xml",
+    "language": "EN",
+    "country": "CA",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gcy-006",
+    "name": "Japan CERT (JPCERT/CC)",
+    "url": "https://www.jpcert.or.jp/rss/jpcert.rdf",
+    "language": "EN",
+    "country": "JP",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gcy-007",
+    "name": "Singapore CSA",
+    "url": "https://www.csa.gov.sg/rss/alerts",
+    "language": "EN",
+    "country": "SG",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gcy-008",
+    "name": "NIST — Cybersecurity Insights",
+    "url": "https://www.nist.gov/blogs/cybersecurity-insights/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

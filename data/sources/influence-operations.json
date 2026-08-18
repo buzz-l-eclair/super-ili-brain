@@ -1,0 +1,305 @@
+[
+  {
+    "id": "inf-001",
+    "name": "DFRLab (Atlantic Council)",
+    "url": "https://www.atlanticcouncil.org/category/dfrlab/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "inf-002",
+    "name": "Atlantic Council — General",
+    "url": "https://www.atlanticcouncil.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-003",
+    "name": "Graphika",
+    "url": "https://graphika.com/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "inf-004",
+    "name": "EU DisinfoLab",
+    "url": "https://www.disinfo.eu/feed/",
+    "language": "EN",
+    "country": "BE",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "inf-005",
+    "name": "EUvsDisinfo (EEAS East StratCom)",
+    "url": "https://euvsdisinfo.eu/feed/",
+    "language": "EN",
+    "country": "EU",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION",
+      "STRATCOM"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "inf-006",
+    "name": "ISD (Institute for Strategic Dialogue)",
+    "url": "https://www.isdglobal.org/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-007",
+    "name": "CEPA — Center for European Policy Analysis",
+    "url": "https://cepa.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-008",
+    "name": "Alliance for Securing Democracy (GMF)",
+    "url": "https://securingdemocracy.gmfus.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-009",
+    "name": "Stanford Internet Observatory",
+    "url": "https://cyber.fsi.stanford.edu/io/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-010",
+    "name": "Oxford Internet Institute",
+    "url": "https://www.oii.ox.ac.uk/news-events/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-011",
+    "name": "Reset.tech",
+    "url": "https://reset.tech/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-012",
+    "name": "Institute for Strategic Dialogue — Digital Dispatches",
+    "url": "https://www.isdglobal.org/digital_dispatches/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-013",
+    "name": "Brookings — Foreign Policy",
+    "url": "https://www.brookings.edu/topic/foreign-policy/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-014",
+    "name": "Carnegie Endowment — Disinformation",
+    "url": "https://carnegieendowment.org/rss/solr/?fa=pubs&maxrows=25",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-015",
+    "name": "Freedom House",
+    "url": "https://freedomhouse.org/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-016",
+    "name": "German Marshall Fund — General",
+    "url": "https://www.gmfus.org/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-017",
+    "name": "Bruegel",
+    "url": "https://www.bruegel.org/rss.xml",
+    "language": "EN",
+    "country": "BE",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-018",
+    "name": "Alliance4Europe",
+    "url": "https://alliance4europe.eu/feed/",
+    "language": "EN",
+    "country": "SE",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-019",
+    "name": "Election Integrity Partnership (Stanford)",
+    "url": "https://www.eipartnership.net/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-020",
+    "name": "Meta Newsroom — Threat Reports",
+    "url": "https://about.fb.com/news/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-021",
+    "name": "Institute for Future of War",
+    "url": "https://www.newamerica.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "inf-022",
+    "name": "V-Dem Institute",
+    "url": "https://v-dem.net/rss.xml",
+    "language": "EN",
+    "country": "SE",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "psy-001",
+    "name": "SOF News (Special Operations)",
+    "url": "https://sof.news/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "PSYOPS",
+      "COMOPS"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "psy-002",
+    "name": "NATO StratCom Centre of Excellence (Riga)",
+    "url": "https://stratcomcoe.org/rss.xml",
+    "language": "EN",
+    "country": "LV",
+    "region": "Europe",
+    "topics": [
+      "STRATCOM",
+      "GI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "psy-003",
+    "name": "EEAS — Actualités",
+    "url": "https://www.eeas.europa.eu/eeas/rss_en",
+    "language": "EN",
+    "country": "EU",
+    "region": "Europe",
+    "topics": [
+      "STRATCOM",
+      "COMOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-004",
+    "name": "NATO — Actualités",
+    "url": "https://www.nato.int/cps/en/natohq/news.rss",
+    "language": "EN",
+    "country": "NATO",
+    "region": "Europe",
+    "topics": [
+      "STRATCOM",
+      "COMOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-005",
+    "name": "NATO SHAPE News",
+    "url": "https://shape.nato.int/rss-feed",
+    "language": "EN",
+    "country": "NATO",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-006",
+    "name": "UK Ministry of Defence — News",
+    "url": "https://www.gov.uk/government/organisations/ministry-of-defence.atom",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-007",
+    "name": "Ministère des Armées (France)",
+    "url": "https://www.defense.gouv.fr/rss.xml",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-008",
+    "name": "SWP — German Institute for International Affairs",
+    "url": "https://www.swp-berlin.org/en/rss",
+    "language": "EN",
+    "country": "DE",
+    "region": "Europe",
+    "topics": [
+      "STRATCOM",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-009",
+    "name": "Swedish Psychological Defence Agency (MPF)",
+    "url": "https://www.mpf.se/rss/",
+    "language": "EN",
+    "country": "SE",
+    "region": "Europe",
+    "topics": [
+      "PSYOPS",
+      "STRATCOM"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "psy-010",
+    "name": "Estonian Ministry of Defence",
+    "url": "https://kaitseministeerium.ee/en/rss.xml",
+    "language": "EN",
+    "country": "EE",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-011",
+    "name": "Latvian Ministry of Defence",
+    "url": "https://www.mod.gov.lv/en/rss.xml",
+    "language": "EN",
+    "country": "LV",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-012",
+    "name": "Lithuanian Ministry of National Defence",
+    "url": "https://kam.lt/en/feed/",
+    "language": "EN",
+    "country": "LT",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-013",
+    "name": "DVIDS (Defense Visual Information Distribution Service)",
+    "url": "https://www.dvidshub.net/rss/news",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "COMOPS",
+      "PSYOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-014",
+    "name": "US DoD Defense Media Activity",
+    "url": "https://www.defense.gov/DesktopModules/ArticleCS/RSS.ashx?ContentType=1&Site=945",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "psy-015",
+    "name": "Finnish Defence Forces",
+    "url": "https://puolustusvoimat.fi/rss",
+    "language": "EN",
+    "country": "FI",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

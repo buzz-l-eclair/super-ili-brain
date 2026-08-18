@@ -1,0 +1,144 @@
+[
+  {
+    "id": "gc-001",
+    "name": "IRSEM — Guerre cognitive",
+    "url": "https://www.irsem.fr/rss.xml",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GC",
+      "GI",
+      "ILI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "gc-002",
+    "name": "NATO ACT Innovation Hub",
+    "url": "https://www.innovationhub-act.org/feed",
+    "language": "EN",
+    "country": "NATO",
+    "region": "Europe",
+    "topics": [
+      "GC"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-003",
+    "name": "Johns Hopkins Applied Physics Laboratory — News",
+    "url": "https://www.jhuapl.edu/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GC",
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-004",
+    "name": "Modern War Institute — Cognitive",
+    "url": "https://mwi.westpoint.edu/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GC",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-005",
+    "name": "Strife Blog — Cognitive/Hybrid",
+    "url": "https://www.strifeblog.org/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "GC",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-006",
+    "name": "RAND — Truth Decay",
+    "url": "https://www.rand.org/topics/disinformation.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GC",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-007",
+    "name": "Sciences Po CERI",
+    "url": "https://www.sciencespo.fr/ceri/fr/rss.xml",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GC",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-008",
+    "name": "NATO Review — Cognitive Domain",
+    "url": "https://www.nato.int/docu/review/rss.xml",
+    "language": "EN",
+    "country": "NATO",
+    "region": "Europe",
+    "topics": [
+      "GC",
+      "GI",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-009",
+    "name": "Center for Strategic Communication (ASU) — Cognitive",
+    "url": "https://csc.asu.edu/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GC",
+      "GI",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gc-010",
+    "name": "Egmont Institute — Security Policy Brief",
+    "url": "https://www.egmontinstitute.be/feed/",
+    "language": "EN",
+    "country": "BE",
+    "region": "Europe",
+    "topics": [
+      "GC",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

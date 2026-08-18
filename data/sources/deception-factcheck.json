@@ -1,0 +1,463 @@
+[
+  {
+    "id": "dec-001",
+    "name": "Bellingcat",
+    "url": "https://www.bellingcat.com/feed/",
+    "language": "EN",
+    "country": "NL",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION",
+      "INFLUENCE"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "dec-002",
+    "name": "NewsGuard — Reality Check",
+    "url": "https://www.newsguardtech.com/misinformation-monitor/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-003",
+    "name": "AFP Factuel",
+    "url": "https://factuel.afp.com/rss.xml",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "dec-004",
+    "name": "CheckNews (Libération)",
+    "url": "https://www.liberation.fr/arc/outboundfeeds/checknews/rss/",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-005",
+    "name": "Les Surligneurs",
+    "url": "https://lessurligneurs.eu/feed/",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-006",
+    "name": "Conspiracy Watch",
+    "url": "https://www.conspiracywatch.info/feed",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION",
+      "GC"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-007",
+    "name": "VoxCheck (Ukraine)",
+    "url": "https://voxukraine.org/feed",
+    "language": "EN",
+    "country": "UA",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-008",
+    "name": "StopFake (Ukraine)",
+    "url": "https://www.stopfake.org/en/feed/",
+    "language": "EN",
+    "country": "UA",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "dec-009",
+    "name": "DebunkEU.org (Lituanie)",
+    "url": "https://debunk.org/feed/",
+    "language": "EN",
+    "country": "LT",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-010",
+    "name": "Poynter / IFCN",
+    "url": "https://www.poynter.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-011",
+    "name": "Snopes",
+    "url": "https://www.snopes.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-012",
+    "name": "FactCheck.org",
+    "url": "https://www.factcheck.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-013",
+    "name": "PolitiFact",
+    "url": "https://www.politifact.com/rss/all/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-014",
+    "name": "Africa Check",
+    "url": "https://africacheck.org/feed",
+    "language": "EN",
+    "country": "ZA",
+    "region": "Africa",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-015",
+    "name": "Chequeado (Argentine)",
+    "url": "https://chequeado.com/feed/",
+    "language": "ES",
+    "country": "AR",
+    "region": "Amérique Latine",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-016",
+    "name": "Rappler (Philippines)",
+    "url": "https://www.rappler.com/feed/",
+    "language": "EN",
+    "country": "PH",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-017",
+    "name": "BOOM Live (Inde)",
+    "url": "https://www.boomlive.in/feed",
+    "language": "EN",
+    "country": "IN",
+    "region": "Asie du Sud",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-018",
+    "name": "Full Fact (UK)",
+    "url": "https://fullfact.org/feed/all/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-019",
+    "name": "Faktograf (Croatie)",
+    "url": "https://faktograf.hr/feed/",
+    "language": "EN",
+    "country": "HR",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-020",
+    "name": "Demagog.cz (Tchéquie)",
+    "url": "https://demagog.cz/rss",
+    "language": "EN",
+    "country": "CZ",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-021",
+    "name": "Maldita.es (Espagne)",
+    "url": "https://maldita.es/feed/",
+    "language": "ES",
+    "country": "ES",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-022",
+    "name": "Pagella Politica (Italie)",
+    "url": "https://pagellapolitica.it/feed",
+    "language": "IT",
+    "country": "IT",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-023",
+    "name": "Correctiv (Allemagne)",
+    "url": "https://correctiv.org/feed/",
+    "language": "DE",
+    "country": "DE",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-024",
+    "name": "Mimikama (Autriche)",
+    "url": "https://www.mimikama.org/feed/",
+    "language": "DE",
+    "country": "AT",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-025",
+    "name": "Faktisk.no (Norvège)",
+    "url": "https://www.faktisk.no/rss",
+    "language": "EN",
+    "country": "NO",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-026",
+    "name": "TjekDet (Danemark)",
+    "url": "https://tjekdet.dk/feed",
+    "language": "EN",
+    "country": "DK",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-027",
+    "name": "Demagog.org.pl (Pologne)",
+    "url": "https://demagog.org.pl/feed/",
+    "language": "EN",
+    "country": "PL",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-028",
+    "name": "Bulgarian Investigative Journalism Center (BIRD)",
+    "url": "https://bird.tools/feed/",
+    "language": "EN",
+    "country": "BG",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-029",
+    "name": "Kloop (Kirghizistan)",
+    "url": "https://kloop.kg/feed/",
+    "language": "EN",
+    "country": "KG",
+    "region": "Asie Centrale",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-030",
+    "name": "Detector Media (Ukraine)",
+    "url": "https://detector.media/rss/",
+    "language": "EN",
+    "country": "UA",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION",
+      "INFLUENCE"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "dec-031",
+    "name": "Res Publica (Lettonie)",
+    "url": "https://www.researchgate.net/",
+    "language": "EN",
+    "country": "LV",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-032",
+    "name": "Media Diversity Institute",
+    "url": "https://www.media-diversity.org/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-033",
+    "name": "First Draft / Information Futures Lab (Brown University)",
+    "url": "https://informationfutures.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-034",
+    "name": "NewsGuard — Special Reports",
+    "url": "https://www.newsguardtech.com/special-reports/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "dec-035",
+    "name": "Lie Detectors",
+    "url": "https://lie-detectors.org/feed/",
+    "language": "EN",
+    "country": "BE",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

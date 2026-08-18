@@ -1,0 +1,212 @@
+[
+  {
+    "id": "def-001",
+    "name": "Bundeswehr — Aktuelles",
+    "url": "https://www.bundeswehr.de/resource/blob/rss.xml",
+    "language": "DE",
+    "country": "DE",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-002",
+    "name": "Polish Armed Forces — News",
+    "url": "https://www.wojsko-polskie.pl/rss/",
+    "language": "PL",
+    "country": "PL",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-003",
+    "name": "Czech Ministry of Defence",
+    "url": "https://www.mocr.army.cz/rss.aspx",
+    "language": "EN",
+    "country": "CZ",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-004",
+    "name": "Romanian Ministry of Defence",
+    "url": "https://www.mapn.ro/rss",
+    "language": "RO",
+    "country": "RO",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-005",
+    "name": "Norwegian Armed Forces",
+    "url": "https://www.forsvaret.no/rss",
+    "language": "EN",
+    "country": "NO",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-006",
+    "name": "Danish Defence",
+    "url": "https://www2.forsvaret.dk/rss",
+    "language": "EN",
+    "country": "DK",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-007",
+    "name": "Dutch Ministry of Defence",
+    "url": "https://www.defensie.nl/rss",
+    "language": "NL",
+    "country": "NL",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-008",
+    "name": "Belgian Defence",
+    "url": "https://www.mil.be/rss",
+    "language": "FR",
+    "country": "BE",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-009",
+    "name": "Italian Ministry of Defence",
+    "url": "https://www.difesa.it/rss",
+    "language": "IT",
+    "country": "IT",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-010",
+    "name": "Spanish Ministry of Defence",
+    "url": "https://www.defensa.gob.es/rss",
+    "language": "ES",
+    "country": "ES",
+    "region": "Europe",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-011",
+    "name": "Canadian Armed Forces — News",
+    "url": "https://www.canada.ca/en/department-national-defence/news.rss",
+    "language": "EN",
+    "country": "CA",
+    "region": "North America",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-012",
+    "name": "Australian Defence — News",
+    "url": "https://www.defence.gov.au/news-events/rss",
+    "language": "EN",
+    "country": "AU",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-013",
+    "name": "Japan Ministry of Defense",
+    "url": "https://www.mod.go.jp/en/rss/press.xml",
+    "language": "EN",
+    "country": "JP",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "def-014",
+    "name": "Taiwan Ministry of National Defense",
+    "url": "https://www.mnd.gov.tw/PublishRSS.aspx",
+    "language": "EN",
+    "country": "TW",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "def-015",
+    "name": "South Korea MND",
+    "url": "https://www.mnd.go.kr/rss",
+    "language": "EN",
+    "country": "KR",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "COMOPS",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

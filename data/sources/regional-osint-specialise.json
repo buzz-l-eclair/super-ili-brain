@@ -1,0 +1,210 @@
+[
+  {
+    "id": "osint-001",
+    "name": "ISS Africa — Peace & Security",
+    "url": "https://issafrica.org/rss/today",
+    "language": "EN",
+    "country": "ZA",
+    "region": "Afrique",
+    "topics": [
+      "GI",
+      "INFLUENCE"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "osint-002",
+    "name": "Timbuktu Institute (Sahel)",
+    "url": "https://timbuktu-institute.org/index.php/component/ninjarsssyndicator/?feed_id=1&format=raw",
+    "language": "FR",
+    "country": "SN",
+    "region": "Afrique",
+    "topics": [
+      "GI",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-003",
+    "name": "Menastream (Sahel/Maghreb OSINT)",
+    "url": "https://menastream.com/feed/",
+    "language": "EN",
+    "country": "TN",
+    "region": "Afrique",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-004",
+    "name": "GNET (Global Network on Extremism and Technology)",
+    "url": "https://gnet-research.org/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "INFLUENCE",
+      "GC"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "osint-005",
+    "name": "ICCT (International Centre for Counter-Terrorism)",
+    "url": "https://www.icct.nl/rss.xml",
+    "language": "EN",
+    "country": "NL",
+    "region": "Europe",
+    "topics": [
+      "PSYOPS",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-006",
+    "name": "Baltic Security Foundation",
+    "url": "https://baltic-security.com/feed/",
+    "language": "EN",
+    "country": "LV",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "STRATCOM"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-007",
+    "name": "International Centre for Defence and Security (ICDS, Estonie)",
+    "url": "https://icds.ee/en/feed/",
+    "language": "EN",
+    "country": "EE",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "osint-008",
+    "name": "Belarusian Investigative Center (BIC)",
+    "url": "https://investigatebelarus.org/feed/",
+    "language": "EN",
+    "country": "BY",
+    "region": "Europe",
+    "topics": [
+      "DECEPTION",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-009",
+    "name": "Balkan Insight (BIRN)",
+    "url": "https://balkaninsight.com/feed/",
+    "language": "EN",
+    "country": "RS",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-010",
+    "name": "Molfar OSINT (Ukraine)",
+    "url": "https://molfar.com/en/blog/rss.xml",
+    "language": "EN",
+    "country": "UA",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-011",
+    "name": "Australian Strategic Policy Institute (ASPI)",
+    "url": "https://www.aspistrategist.org.au/feed/",
+    "language": "EN",
+    "country": "AU",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "GI",
+      "INFLUENCE"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "osint-012",
+    "name": "ASPI — International Cyber Policy Centre",
+    "url": "https://www.aspi.org.au/rss.xml",
+    "language": "EN",
+    "country": "AU",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-013",
+    "name": "Doublethink Lab (Taïwan)",
+    "url": "https://medium.com/feed/doublethinklab",
+    "language": "EN",
+    "country": "TW",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "osint-014",
+    "name": "IORG (Taïwan Information Environment Research Group)",
+    "url": "https://iorg.tw/rss",
+    "language": "EN",
+    "country": "TW",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "INFLUENCE",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "osint-015",
+    "name": "Taiwan FactCheck Center",
+    "url": "https://tfc-taiwan.org.tw/feed",
+    "language": "EN",
+    "country": "TW",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

@@ -1,0 +1,96 @@
+[
+  {
+    "id": "tt-001",
+    "name": "RUSI (Royal United Services Institute)",
+    "url": "https://www.rusi.org/rss",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "ILI",
+      "GI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "tt-002",
+    "name": "Chatham House",
+    "url": "https://www.chathamhouse.org/rss/all",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "tt-003",
+    "name": "IISS (International Institute for Strategic Studies)",
+    "url": "https://www.iiss.org/rss/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "ILI",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "tt-004",
+    "name": "Real Instituto Elcano (Espagne)",
+    "url": "https://www.realinstitutoelcano.org/rss/",
+    "language": "ES",
+    "country": "ES",
+    "region": "Europe",
+    "topics": [
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "tt-005",
+    "name": "Clingendael (Pays-Bas)",
+    "url": "https://www.clingendael.org/rss.xml",
+    "language": "EN",
+    "country": "NL",
+    "region": "Europe",
+    "topics": [
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "tt-007",
+    "name": "CSIS (Center for Strategic and International Studies)",
+    "url": "https://www.csis.org/analysis/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "ILI",
+      "GI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "tt-010",
+    "name": "DGAP (German Council on Foreign Relations)",
+    "url": "https://dgap.org/en/rss.xml",
+    "language": "EN",
+    "country": "DE",
+    "region": "Europe",
+    "topics": [
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

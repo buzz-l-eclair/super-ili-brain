@@ -1,0 +1,127 @@
+[
+  {
+    "id": "ip-001",
+    "name": "The Cipher Brief",
+    "url": "https://www.thecipherbrief.com/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "ip-002",
+    "name": "Just Security",
+    "url": "https://www.justsecurity.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-003",
+    "name": "Lawfare",
+    "url": "https://www.lawfaremedia.org/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "L2I",
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-004",
+    "name": "The Intercept — Security",
+    "url": "https://theintercept.com/feed/?rss",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "INFLUENCE",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-005",
+    "name": "Intelligence Online",
+    "url": "https://www.intelligenceonline.com/rss",
+    "language": "EN",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-006",
+    "name": "Le Monde du Renseignement",
+    "url": "https://lemondedurenseignement.com/feed/",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-007",
+    "name": "Zone Militaire (OPEX360)",
+    "url": "http://www.opex360.com/feed/",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "COMOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-009",
+    "name": "Homeland Security Today",
+    "url": "https://www.hstoday.us/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "ip-010",
+    "name": "The Diplomat — Security",
+    "url": "https://thediplomat.com/topics/security/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

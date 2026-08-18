@@ -1,0 +1,649 @@
+[
+  {
+    "id": "cyb-001",
+    "name": "Krebs on Security",
+    "url": "https://krebsonsecurity.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "cyb-002",
+    "name": "The Record (Recorded Future News)",
+    "url": "https://therecord.media/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LIO",
+      "LID",
+      "L2I"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "cyb-003",
+    "name": "Dark Reading",
+    "url": "https://www.darkreading.com/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-004",
+    "name": "BleepingComputer",
+    "url": "https://www.bleepingcomputer.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-005",
+    "name": "The Hacker News",
+    "url": "https://feeds.feedburner.com/TheHackersNews",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-006",
+    "name": "SecurityWeek",
+    "url": "https://www.securityweek.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-007",
+    "name": "CyberScoop",
+    "url": "https://cyberscoop.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-008",
+    "name": "Citizen Lab (Univ. Toronto)",
+    "url": "https://citizenlab.ca/feed/",
+    "language": "EN",
+    "country": "CA",
+    "region": "North America",
+    "topics": [
+      "L2I",
+      "LID",
+      "INFLUENCE"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "cyb-009",
+    "name": "CISA — Cybersecurity Advisories",
+    "url": "https://www.cisa.gov/cybersecurity-advisories/all.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-010",
+    "name": "NCSC UK — News",
+    "url": "https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-011",
+    "name": "ANSSI — Actualités (France)",
+    "url": "https://www.cert.ssi.gouv.fr/feed/",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-012",
+    "name": "Mandiant (Google Cloud) — Blog",
+    "url": "https://cloud.google.com/blog/topics/threat-intelligence/rss",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LIO",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-013",
+    "name": "CrowdStrike Blog",
+    "url": "https://www.crowdstrike.com/en-us/blog/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-014",
+    "name": "SentinelOne Labs",
+    "url": "https://www.sentinelone.com/labs/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-015",
+    "name": "ESET WeLiveSecurity",
+    "url": "https://www.welivesecurity.com/en/rss/feed/",
+    "language": "EN",
+    "country": "SK",
+    "region": "Europe",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-016",
+    "name": "Kaspersky Securelist",
+    "url": "https://securelist.com/feed/",
+    "language": "EN",
+    "country": "RU",
+    "region": "Europe",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-017",
+    "name": "Check Point Research",
+    "url": "https://research.checkpoint.com/feed/",
+    "language": "EN",
+    "country": "IL",
+    "region": "Moyen-Orient",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-018",
+    "name": "Recorded Future — Blog",
+    "url": "https://www.recordedfuture.com/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "L2I",
+      "LIO",
+      "INFLUENCE"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-019",
+    "name": "Microsoft Security Blog",
+    "url": "https://www.microsoft.com/en-us/security/blog/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-020",
+    "name": "Google Threat Intelligence (Mandiant/TAG)",
+    "url": "https://blog.google/threat-analysis-group/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "L2I",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-021",
+    "name": "Cisco Talos Intelligence",
+    "url": "https://blog.talosintelligence.com/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-022",
+    "name": "Unit 42 (Palo Alto Networks)",
+    "url": "https://unit42.paloaltonetworks.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-023",
+    "name": "Proofpoint — Threat Insight",
+    "url": "https://www.proofpoint.com/us/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-024",
+    "name": "IBM X-Force",
+    "url": "https://www.ibm.com/blog/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-025",
+    "name": "Volexity",
+    "url": "https://www.volexity.com/blog/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-026",
+    "name": "WithSecure Labs (ex-F-Secure)",
+    "url": "https://labs.withsecure.com/rss/blog.rss",
+    "language": "EN",
+    "country": "FI",
+    "region": "Europe",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-027",
+    "name": "Group-IB Blog",
+    "url": "https://www.group-ib.com/blog/rss/",
+    "language": "EN",
+    "country": "SG",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-028",
+    "name": "SANS Internet Storm Center",
+    "url": "https://isc.sans.edu/rssfeed_full.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-029",
+    "name": "GreyNoise Labs",
+    "url": "https://www.greynoise.io/blog/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-030",
+    "name": "Have I Been Pwned — Blog",
+    "url": "https://haveibeenpwned.com/rss",
+    "language": "EN",
+    "country": "AU",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-031",
+    "name": "CERT-EU",
+    "url": "https://cert.europa.eu/publications/threat-intelligence-rss",
+    "language": "EN",
+    "country": "EU",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-032",
+    "name": "Trellix Research",
+    "url": "https://www.trellix.com/blogs/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-033",
+    "name": "Sophos News",
+    "url": "https://news.sophos.com/en-us/feed/",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-034",
+    "name": "Trend Micro Research",
+    "url": "https://www.trendmicro.com/en_us/research.xml",
+    "language": "EN",
+    "country": "JP",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-035",
+    "name": "Fortinet Threat Research",
+    "url": "https://www.fortinet.com/blog/threat-research/rss",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-036",
+    "name": "Rapid7 Blog",
+    "url": "https://www.rapid7.com/blog/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-037",
+    "name": "Tenable Research",
+    "url": "https://www.tenable.com/blog/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-038",
+    "name": "Wiz Research",
+    "url": "https://www.wiz.io/blog/rss.xml",
+    "language": "EN",
+    "country": "IL",
+    "region": "Moyen-Orient",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-039",
+    "name": "Cloudflare Blog — Security",
+    "url": "https://blog.cloudflare.com/tag/security/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-040",
+    "name": "Cofense Threat Intelligence",
+    "url": "https://cofense.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-041",
+    "name": "Zscaler ThreatLabz",
+    "url": "https://www.zscaler.com/blogs/security-research/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-042",
+    "name": "Darktrace Blog",
+    "url": "https://www.darktrace.com/blog/rss.xml",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-043",
+    "name": "Malwarebytes Labs",
+    "url": "https://www.malwarebytes.com/blog/feed/index.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-044",
+    "name": "Akamai Security Research",
+    "url": "https://www.akamai.com/blog/rss/security",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-045",
+    "name": "F5 Labs",
+    "url": "https://www.f5.com/labs/rss-feeds/all.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-046",
+    "name": "Netskope Threat Labs",
+    "url": "https://www.netskope.com/blog/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "cyb-047",
+    "name": "Bitdefender Labs",
+    "url": "https://www.bitdefender.com/blog/feed/",
+    "language": "EN",
+    "country": "RO",
+    "region": "Europe",
+    "topics": [
+      "LID"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

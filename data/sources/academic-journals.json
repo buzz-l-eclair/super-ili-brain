@@ -1,0 +1,115 @@
+[
+  {
+    "id": "acad-001",
+    "name": "Journal of Information Warfare",
+    "url": "https://www.jinfowar.com/feed",
+    "language": "EN",
+    "country": "AU",
+    "region": "Asie-Pacifique",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "acad-002",
+    "name": "Defence Strategic Communications (NATO StratCom COE journal)",
+    "url": "https://stratcomcoe.org/publications/rss.xml",
+    "language": "EN",
+    "country": "LV",
+    "region": "Europe",
+    "topics": [
+      "STRATCOM",
+      "GI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "acad-003",
+    "name": "Journal of Strategic Security",
+    "url": "https://scholarcommons.usf.edu/jss/do/search/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "ILI",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "acad-004",
+    "name": "The Cyber Defense Review (US Army Cyber Institute)",
+    "url": "https://cyberdefensereview.army.mil/CDR-Content/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "LID",
+      "LIO",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "acad-005",
+    "name": "Special Operations Journal",
+    "url": "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=uops20",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "PSYOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "acad-006",
+    "name": "Journal of Cyber Policy",
+    "url": "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=rcyb20",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "LID",
+      "LIO",
+      "L2I"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "acad-007",
+    "name": "Contemporary Security Policy",
+    "url": "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=fcsp20",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "ILI",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "acad-008",
+    "name": "Journal of Strategic Studies",
+    "url": "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=fjss20",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "ILI",
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]

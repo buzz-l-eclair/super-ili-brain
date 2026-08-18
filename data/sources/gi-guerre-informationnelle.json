@@ -1,0 +1,342 @@
+[
+  {
+    "id": "gi-001",
+    "name": "War on the Rocks",
+    "url": "https://warontherocks.com/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "STRATCOM"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "gi-002",
+    "name": "Institute for the Study of War (ISW)",
+    "url": "https://iswresearch.org/feeds/posts/default",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "gi-003",
+    "name": "Small Wars Journal",
+    "url": "https://smallwarsjournal.com/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "PSYOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-005",
+    "name": "Foreign Policy Research Institute",
+    "url": "https://www.fpri.org/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-006",
+    "name": "RealClearDefense",
+    "url": "https://www.realcleardefense.com/index.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-007",
+    "name": "Defense One",
+    "url": "https://www.defenseone.com/rss/all/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "COMOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-008",
+    "name": "USNI News (US Naval Institute)",
+    "url": "https://news.usni.org/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-009",
+    "name": "National Defense Magazine",
+    "url": "https://www.nationaldefensemagazine.org/rss",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-010",
+    "name": "Articles of War (Lieber Institute, West Point)",
+    "url": "https://lieber.westpoint.edu/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-011",
+    "name": "RAND Corporation — National Security",
+    "url": "https://www.rand.org/topics/national-security.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "priority": "high",
+    "type": "specialist"
+  },
+  {
+    "id": "gi-012",
+    "name": "Marine Corps Gazette",
+    "url": "https://mca-marines.org/gazette/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-014",
+    "name": "King's College London War Studies",
+    "url": "https://www.kcl.ac.uk/warstudies/feed",
+    "language": "EN",
+    "country": "UK",
+    "region": "Europe",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-015",
+    "name": "Breaking Defense",
+    "url": "https://breakingdefense.com/feed/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "COMOPS"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-016",
+    "name": "1945 / The National Interest — Security",
+    "url": "https://nationalinterest.org/feed",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-017",
+    "name": "Foreign Affairs",
+    "url": "https://www.foreignaffairs.com/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-019",
+    "name": "IFRI (Institut français des relations internationales)",
+    "url": "https://www.ifri.org/fr/rss.xml",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-020",
+    "name": "Fondation pour la Recherche Stratégique (FRS)",
+    "url": "https://www.frstrategie.org/rss.xml",
+    "language": "FR",
+    "country": "FR",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-021",
+    "name": "Parameters (US Army War College)",
+    "url": "https://press.armywarcollege.edu/parameters/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-022",
+    "name": "Military Review (US Army CAC)",
+    "url": "https://www.armyupress.army.mil/rss/",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-023",
+    "name": "Joint Force Quarterly (NDU Press)",
+    "url": "https://ndupress.ndu.edu/rss.aspx",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-025",
+    "name": "Center for a New American Security (CNAS)",
+    "url": "https://www.cnas.org/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-026",
+    "name": "Hudson Institute",
+    "url": "https://www.hudson.org/rss",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-027",
+    "name": "Wilson Center",
+    "url": "https://www.wilsoncenter.org/rss.xml",
+    "language": "EN",
+    "country": "US",
+    "region": "North America",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-028",
+    "name": "PISM (Polish Institute of International Affairs)",
+    "url": "https://www.pism.pl/rss",
+    "language": "EN",
+    "country": "PL",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "ILI"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  },
+  {
+    "id": "gi-029",
+    "name": "Baltic Center for Media Excellence",
+    "url": "https://bcme.eu/en/feed/",
+    "language": "EN",
+    "country": "LV",
+    "region": "Europe",
+    "topics": [
+      "GI",
+      "DECEPTION"
+    ],
+    "type": "specialist",
+    "priority": "medium"
+  }
+]
