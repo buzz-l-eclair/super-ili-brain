@@ -564,6 +564,7 @@ function hasStrongNonILISignal(text) {
 function classifyText(text, lang, tags) {
   const normalized = normalizeClassificationText(text);
   if (!normalized) return [];
+  const L = String(lang || 'EN').toUpperCase();
 
   const SIGNALS = {
     GI: {
@@ -577,7 +578,8 @@ function classifyText(text, lang, tags) {
         ['information warfare', 5], ['information war', 5], ['infowar', 5], ['information operations', 5],
         ['information operation', 5], ['information operations campaign', 5], ['information environment', 3],
         ['information confrontation', 4], ['information campaign', 4], ['information influence', 3],
-        ['informational warfare', 5],
+        ['informational warfare', 5], ['weaponized information', 4], ['narrative warfare', 4],
+        ['hybrid warfare', 4], ['hybrid threats', 3], ['guerre hybride', 4], ['menaces hybrides', 3],
         ['информационная война', 5], ['информационная операция', 5], ['информационные операции', 5],
         ['信息战', 5], ['信息作战', 5], ['信息行动', 5],
       ]
@@ -592,6 +594,8 @@ function classifyText(text, lang, tags) {
         ['cognitive operations', 5], ['cognitive operation', 5], ['cognitive attack', 4],
         ['cognitive attacks', 4], ['cognitive threat', 4], ['cognitive superiority', 4],
         ['cognitive security', 3], ['brain warfare', 4], ['cognitive manipulation', 4],
+        ['perception management', 4], ['mental domain', 3], ['neurocognitive', 3],
+        ['gestion de la perception', 4], ['domaine mental', 3],
         ['认知战', 5], ['认知作战', 5],
       ]
     },
@@ -607,7 +611,14 @@ function classifyText(text, lang, tags) {
         ['ingérence étrangère', 5], ['ingérence', 3], ['influence étrangère', 4],
         ['campagne d influence', 4], ["campagne d'influence", 4], ['activité d influence', 4],
         ["activité d'influence", 4],
-        ['операция влияния', 5], ['иностранное вмешательство', 5],
+        ['coordinated inauthentic behavior', 6], ['coordinated inauthentic behaviour', 6],
+        ['network of fake accounts', 5], ['fake accounts', 3], ['sockpuppet', 4], ['sockpuppets', 4],
+        ['troll farm', 5], ['troll factory', 5], ['bot farm', 4], ['bot network', 4],
+        ['election interference', 5], ['electoral interference', 5], ['meddling in elections', 5],
+        ['astroturfing', 5], ['amplified pro-kremlin', 4], ['amplify pro-kremlin', 4],
+        ['comportement coordonné inauthentique', 6], ['fermes de trolls', 5], ['ferme de trolls', 5],
+        ['faux comptes', 3], ['ingérence électorale', 5], ['ingérence dans les élections', 5],
+        ['операция влияния', 5], ['иностранное вмешательство', 5], ['фабрика троллей', 5],
       ]
     },
     DECEPTION: {
@@ -621,7 +632,10 @@ function classifyText(text, lang, tags) {
         ['deceptive operations', 4],
         ['désinformation', 5], ['campagne de désinformation', 5], ['mésinformation', 5],
         ['propagande', 4], ['propaganda', 4],
-        ['дезинформация', 5], ['дезинформационная кампания', 5],
+        ['fake news', 4], ['fake video', 4], ['fake videos', 4], ['deepfake', 5], ['deep fake', 5],
+        ['fabricated video', 5], ['manipulated video', 5], ['hoax', 3], ['false claim', 3],
+        ['fausse vidéo', 4], ['vidéo truquée', 5], ['infox', 4], ['intox', 3],
+        ['дезинформация', 5], ['дезинформационная кампания', 5], ['фейк', 4],
       ]
     },
     PSYOPS: {
@@ -631,7 +645,8 @@ function classifyText(text, lang, tags) {
         ['action psychologique', 4], ['actions psychologiques', 4], ['psyops', 5], ['psyop', 5],
         ['psychological operation', 5], ['psychological operations', 5], ['psychological warfare', 5],
         ['psychological operation campaign', 5], ['psychological operations campaign', 5],
-        ['psychological influence', 4],
+        ['psychological influence', 4], ['leaflet drop', 4], ['loudspeaker operations', 5],
+        ['hearts and minds', 4], ['tract aérien', 4], ['opération de tracts', 4],
         ['psychologische kriegsführung', 5],
         ['психологическая операция', 5], ['психологические операции', 5], ['психологическая война', 5],
       ]
@@ -652,6 +667,7 @@ function classifyText(text, lang, tags) {
         ['communication stratégique', 5], ['communications stratégiques', 5], ['stratégie de communication', 4],
         ['strategic communication', 5], ['strategic communications', 5], ['strategic communications strategy', 5],
         ['stratcom', 5], ['strategic messaging', 4], ['strategic narrative', 4], ['strategic narratives', 4],
+        ['public diplomacy', 4], ['messaging strategy', 3], ['diplomatie publique', 4],
         ['strategische kommunikation', 5],
         ['стратегическая коммуникация', 5], ['стратегические коммуникации', 5],
       ]
@@ -664,6 +680,8 @@ function classifyText(text, lang, tags) {
         ['offensive cyber operation', 5], ['offensive cyber operations', 5], ['offensive cyber', 4],
         ['offensive cyberspace operations', 5], ['cyber attack', 3], ['cyber attacks', 3],
         ['cyberattack', 3], ['cyber offensive', 5], ['cyber warfare', 4], ['cyberwarfare', 4],
+        ['state-sponsored hackers', 4], ['state-backed hackers', 4], ['nation-state hackers', 4],
+        ['pirates soutenus par un état', 4], ['hackers étatiques', 4], ['groupe de hackers', 3],
         ['наступательная кибероперация', 5], ['наступательные кибероперации', 5],
       ]
     },
@@ -675,6 +693,9 @@ function classifyText(text, lang, tags) {
         ['defensive cyber operation', 5], ['defensive cyber operations', 5], ['defensive cyber', 5],
         ['cyber defense operations', 5], ['cyber defence operations', 5], ['cybersecurity defense', 4],
         ['cybersecurity', 2], ['cyber security', 2], ['incident response', 3], ['security operations center', 3],
+        ['zero-day', 4], ['zero day exploit', 4], ['ransomware', 3], ['data breach', 3], ['data leak', 3],
+        ['exploited vulnerability', 4], ['critical vulnerability', 3], ['patch now', 2],
+        ['rançongiciel', 3], ['fuite de données', 3], ['vulnérabilité critique', 3], ['faille exploitée', 4],
         ['оборонительная кибероперация', 5], ['оборонительные кибероперации', 5],
       ]
     },
@@ -707,6 +728,18 @@ function classifyText(text, lang, tags) {
       if (containsTerm(normalized, term)) score += weight;
     }
     if (score >= config.threshold) scores[key] = score;
+  });
+
+  // Tags personnalisés (créés via l'interface, stockés dans store.tags) :
+  // ils étaient reçus en paramètre mais jamais exploités — un tag maison
+  // ne classifiait donc jamais rien. On les évalue ici avec leurs propres
+  // termes FR + langue déclarée du flux, seuil fixe à 1 terme trouvé
+  // (l'utilisateur contrôle la précision de ses propres termes).
+  (tags || []).forEach(tag => {
+    if (!tag || tag.builtin || !tag.terms || scores[tag.key] !== undefined) return;
+    const termList = [...(tag.terms.FR || []), ...(L !== 'FR' ? (tag.terms[L] || []) : [])];
+    const hit = termList.some(t => t && containsTerm(normalized, t));
+    if (hit) scores[tag.key] = 5;
   });
 
   const nonILI = hasStrongNonILISignal(normalized);
