@@ -1375,9 +1375,12 @@ function renderCard(it) {
     const m = tagMeta(tk);
     return `<span class="tag-badge" style="background:${m.color}22;color:${m.color};border-color:${m.color}44;">${m.label}</span>`;
   }).join('');
+  const llmBadge = (it.classifiedBy === 'llm' || it.classifiedBy === 'llm-cache')
+    ? `<span class="tag-badge" title="Classifié par le LLM (Gemini)" style="background:var(--violet)22;color:var(--violet);border-color:var(--violet)44;">🤖 LLM</span>`
+    : '';
   return `<div class="card ${cls}" data-id="${it.id}">
     <div class="card-top">
-      <div style="display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">${badges}${llmBadge}</div>
       <span class="card-source">${esc(it.source)}</span>
     </div>
     <div class="card-title">${esc(it.title)}</div>
