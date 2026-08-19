@@ -981,6 +981,165 @@ app.post('/api/source-library/import-all', (req, res) => {
    RÉCUPÉRATION DES FLUX
 ================================================================ */
 
+/* ================================================================
+   CLASSIFICATION LLM (2ᵉ passe, uniquement sur ce que les mots-clés
+   n'ont pas su classer) — Google Gemini API, gratuit, sans CB.
+   ----------------------------------------------------------------
+   Principe :
+   1. La passe mots-clés (classifyText) reste la 1ʳᵉ ligne : rapide,
+      gratuite, déterministe.
+   2. Seuls les articles qui ressortent NC après cette passe sont
+      envoyés au LLM — en LOTS (batch), pas un par un, pour rester
+      largement sous les quotas gratuits (~15 req/min, ~1000-1500
+      req/jour sur gemini-2.5-flash-lite).
+   3. Chaque classification LLM est mise en cache durablement
+      (par URL d'article, dans data/llm-cache.json) : un même article
+      n'est jamais reclassifié deux fois, même si le flux est
+      réactualisé toutes les 10 minutes.
+   4. Si GEMINI_API_KEY n'est pas configurée sur Render, cette passe
+      est simplement ignorée — l'appli continue de fonctionner en
+      mode mots-clés seul (rien ne casse).
+================================================================ */
+
+const GEMINI_API_KEY   = process.env.GEMINI_API_KEY || '';
+const GEMINI_MODEL     = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
+const GEMINI_BATCH_SIZE = 25;   // articles par appel LLM
+const GEMINI_MAX_BATCHES_PER_CYCLE = 12; // plafond de sécurité par cycle de fetch (≈300 articles)
+const GEMINI_DELAY_MS = 4200;   // pause entre lots pour rester sous 15 req/min
+
+const LLM_CACHE_FILE = path.join(DATA_DIR, 'llm-cache.json');
+
+function loadLlmCache() {
+  try {
+    if (fs.existsSync(LLM_CACHE_FILE)) {
+      const raw = JSON.parse(fs.readFileSync(LLM_CACHE_FILE, 'utf8'));
+      return raw && typeof raw === 'object' ? raw : {};
+    }
+  } catch (e) {
+    console.error('⚠ Erreur lecture data/llm-cache.json:', e.message);
+  }
+  return {};
+}
+
+let llmCache = loadLlmCache();
+let llmCacheDirty = false;
+
+function saveLlmCacheIfDirty() {
+  if (!llmCacheDirty) return;
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(LLM_CACHE_FILE, JSON.stringify(llmCache, null, 2), 'utf8');
+    llmCacheDirty = false;
+  } catch (e) {
+    console.error('⚠ Erreur écriture data/llm-cache.json:', e.message);
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+const ILI_TAG_GUIDE = DEFAULT_TAGS
+  .filter(t => t.key !== 'NC')
+  .map(t => `- ${t.key} : ${t.label}`)
+  .join('\n');
+
+async function classifyBatchWithGemini(batch) {
+  // batch: [{ id, title, desc }]
+  const prompt = `Tu es un analyste en guerre informationnelle / influence et lutte informationnelle (ILI) pour l'armée française. Classe chaque article ci-dessous selon la taxonomie suivante (un article peut recevoir plusieurs tags, ou aucun s'il n'a clairement aucun rapport) :
+
+${ILI_TAG_GUIDE}
+
+Règle stricte : n'attribue un tag que si l'article traite RÉELLEMENT de ce sujet (opérations d'influence, désinformation, cyber, communication stratégique/militaire, guerre cognitive/psychologique, etc.), même si le vocabulaire exact diffère de celui ci-dessus (ex: "troll farm", "deepfake", "état-hackers", "coordinated inauthentic behavior" comptent). Un article de sport, météo, économie générale, culture, etc. sans lien avec ces thèmes doit recevoir un tableau vide.
+
+Articles à classer (JSON) :
+${JSON.stringify(batch.map(b => ({ id: b.id, title: b.title, desc: b.desc.slice(0, 300) })))}
+
+Réponds UNIQUEMENT avec un JSON de cette forme, sans aucun texte autour :
+{"results":[{"id":"<id de l'article>","tags":["GI","DECEPTION"]}, ...]}
+Chaque "id" du tableau d'entrée doit apparaître exactement une fois dans "results". "tags" doit être un sous-ensemble des clés listées ci-dessus (tableau vide si aucun rapport).`;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+
+  const body = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0,
+      responseMimeType: 'application/json'
+    }
+  };
+
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if (!r.ok) {
+    const errText = await r.text().catch(() => '');
+    throw new Error(`Gemini API ${r.status}: ${errText.slice(0, 200)}`);
+  }
+
+  const data = await r.json();
+  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+  const parsed = JSON.parse(text);
+
+  const out = {};
+  (parsed.results || []).forEach(entry => {
+    if (!entry || !entry.id) return;
+    const tags = Array.isArray(entry.tags) ? entry.tags.filter(isValidTagKey) : [];
+    out[entry.id] = tags;
+  });
+  return out;
+}
+
+// Classifie via LLM tout item resté NC après la passe mots-clés,
+// en respectant le cache et les plafonds de lots/débit.
+// Modifie `items` en place (matchedTags / tag) et alimente llmCache.
+async function enrichWithLLM(allItemsFlat) {
+  if (!GEMINI_API_KEY) return; // fonctionnalité désactivée si pas de clé
+
+  const toClassify = [];
+  allItemsFlat.forEach(it => {
+    if (it.matchedTags.length > 0) return; // déjà classé par mots-clés
+    const cached = llmCache[it.link];
+    if (cached !== undefined) {
+      it.matchedTags = cached;
+      it.tag = selectPrimaryTag(cached);
+      it.classifiedBy = 'llm-cache';
+      return;
+    }
+    if (it.link) toClassify.push(it);
+  });
+
+  if (toClassify.length === 0) return;
+
+  const batches = [];
+  for (let i = 0; i < toClassify.length; i += GEMINI_BATCH_SIZE) {
+    batches.push(toClassify.slice(i, i + GEMINI_BATCH_SIZE));
+  }
+  const limitedBatches = batches.slice(0, GEMINI_MAX_BATCHES_PER_CYCLE);
+
+  for (let i = 0; i < limitedBatches.length; i++) {
+    const batch = limitedBatches[i].map(it => ({ id: it.link, title: it.title, desc: it.desc }));
+    try {
+      const results = await classifyBatchWithGemini(batch);
+      limitedBatches[i].forEach(it => {
+        const tags = results[it.link] || [];
+        it.matchedTags = tags;
+        it.tag = selectPrimaryTag(tags);
+        it.classifiedBy = 'llm';
+        llmCache[it.link] = tags;
+        llmCacheDirty = true;
+      });
+    } catch (err) {
+      console.error('⚠ Erreur classification Gemini (lot ignoré, reste NC):', err.message);
+    }
+    if (i < limitedBatches.length - 1) await sleep(GEMINI_DELAY_MS);
+  }
+
+  saveLlmCacheIfDirty();
+}
+
+
 app.post('/api/feeds', async (req, res) => {
   const { feeds } = req.body;
   if (!Array.isArray(feeds)) return res.status(400).json({ error: 'feeds must be array' });
@@ -1006,7 +1165,8 @@ app.post('/api/feeds', async (req, res) => {
           sourceTags: Array.isArray(f.tags) ? f.tags : [normalizeSourceTopic(f.tag)],
           lang: f.lang,
           matchedTags,
-          tag: primaryTag
+          tag: primaryTag,
+          classifiedBy: matchedTags.length ? 'keywords' : 'none'
         };
       });
 
@@ -1016,7 +1176,12 @@ app.post('/api/feeds', async (req, res) => {
     }
   }));
 
-  res.json({ results });
+  // 2ᵉ passe optionnelle (si GEMINI_API_KEY configurée) : tout item resté
+  // NC après les mots-clés est envoyé au LLM, en lots, avec cache durable.
+  const allItemsFlat = results.flatMap(r => r.items || []);
+  await enrichWithLLM(allItemsFlat);
+
+  res.json({ results, llmEnabled: !!GEMINI_API_KEY });
 });
 
 
