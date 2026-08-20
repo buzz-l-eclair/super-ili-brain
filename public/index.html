@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUPER-ILI-BRAIN --- Outil de veille de flux RSS</title>
+<style>
+:root{
+  --bg-0:#03050a;--bg-1:#070c14;--bg-2:#0b1120;--bg-3:#0f1728;
+  --line:#1a2840;--line-soft:#111e30;
+  --text-0:#ddeeff;--text-1:#7a9bbf;--text-2:#42607a;
+  --red:#ff3a2e;--red-dim:#6b1a16;
+  --amber:#ffb800;--amber-dim:#6b4c00;
+  --green:#00ffaa;--green-dim:#004d35;
+  --blue:#00aaff;--blue-dim:#00336b;
+  --violet:#c87fff;--violet-dim:#4a2070;
+  --cyan:#00ffee;--cyan-dim:#003d3a;
+  --pink:#ff2d9f;--pink-dim:#6b0040;
+  --orange:#ff6a00;--orange-dim:#6b2c00;
+  --lime:#a0ff00;--lime-dim:#3a5a00;
+  --mono:'JetBrains Mono','SF Mono','IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg-0);color:var(--text-0);font-family:var(--mono);font-size:12px;height:100%;overflow:hidden;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--text-2);}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-columns:280px 1fr;grid-template-rows:44px 1fr 28px;height:100vh;}
+.topbar{grid-column:1/3;background:var(--bg-1);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 16px;gap:12px;}
+.sidebar{grid-column:1;background:var(--bg-1);border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;}
+.center{grid-column:2;background:var(--bg-0);overflow-y:auto;display:flex;flex-direction:column;}
+.statusbar{grid-column:1/3;background:var(--bg-1);border-top:1px solid var(--line);display:flex;align-items:center;padding:0 14px;gap:16px;font-size:9px;color:var(--text-2);letter-spacing:1px;}
+.dot-pulse{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0;box-shadow:0 0 6px var(--green);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ── TOPBAR ── */
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.brand-mark{width:20px;height:20px;border:1px solid var(--red);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--red);font-weight:700;box-shadow:0 0 8px var(--red),inset 0 0 6px rgba(255,58,46,.2);}
+.brand-text{font-weight:700;letter-spacing:3px;font-size:11px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);}
+.brand-sub{font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-left:6px;border-left:1px solid var(--line);padding-left:8px;}
+.zulu{display:flex;flex-direction:column;margin-left:auto;text-align:right;line-height:1.3;}
+.zulu-time{font-size:13px;font-weight:700;letter-spacing:1px;}
+.zulu-sub{font-size:9px;color:var(--text-2);}
+.btn{font-family:var(--mono);font-size:10px;border:none;padding:6px 14px;cursor:pointer;letter-spacing:1.2px;font-weight:700;transition:.12s;}
+.btn-red{background:var(--red);color:#fff;} .btn-red:hover{background:#c83a2e;} .btn-red:disabled{background:var(--red-dim);color:var(--text-2);cursor:default;}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text-1);} .btn-ghost:hover{border-color:var(--text-1);color:var(--text-0);}
+
+/* ── SIDEBAR ── */
+.side-section{padding:10px 0;border-bottom:1px solid var(--line-soft);}
+.side-label{font-size:9px;color:var(--text-2);letter-spacing:1.5px;padding:0 14px 6px;}
+
+/* Feed list */
+.feed-list{overflow-y:auto;flex:1;padding:6px 0;}
+.feed-row{display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;border-left:2px solid transparent;transition:.12s;}
+.feed-row:hover{background:var(--bg-2);}
+.feed-row.active{border-left-color:var(--red);background:var(--bg-2);}
+.feed-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--text-2);}
+.feed-dot.ok{background:var(--green);}
+.feed-dot.err{background:var(--red);}
+.feed-dot.loading{background:var(--amber);animation:pulse 1s infinite;}
+.feed-name{font-size:10px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.feed-count{font-size:9px;color:var(--text-2);flex-shrink:0;}
+.feed-tag{font-size:8px;padding:1px 5px;border:1px solid transparent;flex-shrink:0;}
+
+/* Add feed form */
+.add-feed-form{padding:10px 12px;border-bottom:1px solid var(--line-soft);}
+.add-feed-form input,.add-feed-form select{
+  width:100%;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);
+  font-family:var(--mono);font-size:10px;padding:5px 8px;outline:none;margin-bottom:5px;transition:.12s;
+}
+.add-feed-form input:focus,.add-feed-form select:focus{border-color:var(--blue);}
+.add-feed-form input::placeholder{color:var(--text-2);}
+.add-row{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.btn-sm{font-family:var(--mono);font-size:9px;border:none;padding:4px 10px;cursor:pointer;letter-spacing:1px;font-weight:700;transition:.12s;}
+.btn-sm-blue{background:var(--blue-dim);border:1px solid var(--blue);color:var(--blue);} .btn-sm-blue:hover{background:var(--blue);color:#000;}
+.btn-sm-ghost{background:transparent;border:1px solid var(--line);color:var(--text-2);} .btn-sm-ghost:hover{border-color:var(--text-1);color:var(--text-1);}
+
+/* Packs */
+.packs-area{padding:8px 12px;display:flex;flex-wrap:wrap;gap:5px;}
+.pack-btn{font-family:var(--mono);font-size:8px;background:transparent;border:1px solid var(--line);color:var(--text-2);padding:3px 8px;cursor:pointer;letter-spacing:.5px;transition:.12s;}
+.pack-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+/* ── MAIN AREA ── */
+.toolbar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--line);flex-shrink:0;flex-wrap:wrap;}
+.search-wrap{position:relative;flex:1;min-width:120px;}
+.search-input{width:100%;background:var(--bg-1);border:1px solid var(--line);color:var(--text-0);font-family:var(--mono);font-size:11px;padding:5px 10px 5px 28px;outline:none;transition:.12s;}
+.search-input:focus{border-color:var(--blue);}
+.search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-2);pointer-events:none;}
+.chip{font-family:var(--mono);font-size:9px;background:transparent;border:1px solid var(--line);color:var(--text-2);padding:4px 10px;cursor:pointer;letter-spacing:.8px;transition:.12s;}
+.chip:hover{border-color:var(--text-1);color:var(--text-1);}
+.chip.active{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
+.chip.red.active{border-color:var(--red);color:var(--red);background:var(--red-dim);}
+.meta-count{font-size:9px;color:var(--text-2);letter-spacing:1px;margin-left:auto;white-space:nowrap;}
+
+/* Feed area */
+.feed-area{flex:1;overflow-y:auto;padding:12px 16px;}
+.critical-banner{border:1px solid var(--red);margin-bottom:12px;}
+.critical-banner-head{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--red-dim);font-size:10px;letter-spacing:1.5px;color:var(--red);}
+.critical-banner-head .dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1s infinite;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px;}
+.card{background:var(--bg-1);border:1px solid var(--line-soft);padding:10px 12px;cursor:pointer;transition:.12s;display:flex;flex-direction:column;gap:6px;}
+.card:hover{border-color:var(--line);background:var(--bg-2);}
+.card.crit{border-color:var(--red);background:#160a09;box-shadow:0 0 8px rgba(255,58,46,.15);}
+.card.crit:hover{border-color:var(--red);}
+.card.warn{border-color:var(--amber-dim);}
+.card-top{display:flex;align-items:center;gap:6px;}
+.tag-badge{font-size:8px;padding:2px 6px;border:1px solid transparent;letter-spacing:.6px;flex-shrink:0;}
+.card-source{font-size:9px;color:var(--text-2);margin-left:auto;}
+.card-title{font-size:11px;line-height:1.5;color:var(--text-0);}
+.card-desc{font-size:10px;color:var(--text-2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-bottom{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.score-item{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text-2);}
+.score-bar{width:40px;height:3px;background:var(--bg-3);overflow:hidden;}
+.score-fill{height:100%;transition:.3s;}
+.card-time{margin-left:auto;font-size:9px;color:var(--text-2);}
+.empty-state{text-align:center;color:var(--text-2);font-size:11px;padding:60px 20px;letter-spacing:1px;}
+
+/* ── TICKER ── */
+.ticker{border-top:1px solid var(--line-soft);background:var(--bg-1);overflow:hidden;height:28px;display:flex;align-items:center;flex-shrink:0;}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 90s linear infinite;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 16px;font-size:9px;color:var(--text-2);letter-spacing:.5px;}
+.ticker-sep{color:var(--line);margin:0 4px;}
+.ttag{font-size:8px;padding:1px 5px;border:1px solid var(--line);color:var(--text-2);}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(5,7,10,.85);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--bg-1);border:1px solid var(--line);width:100%;max-width:640px;max-height:85vh;overflow-y:auto;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--bg-2);}
+.modal-title{font-size:10px;letter-spacing:2px;color:var(--text-1);}
+.modal-close{background:transparent;border:none;color:var(--text-2);cursor:pointer;font-size:15px;transition:.12s;}
+.modal-close:hover{color:var(--red);}
+.modal-body{padding:16px;}
+.modal-item-title{font-size:13px;line-height:1.6;margin-bottom:14px;}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.modal-stat{background:var(--bg-2);border:1px solid var(--line-soft);padding:8px 10px;}
+.modal-stat-lbl{font-size:8px;color:var(--text-2);letter-spacing:1px;margin-bottom:4px;}
+.modal-stat-val{font-size:13px;font-weight:700;}
+.modal-desc{font-size:11px;color:var(--text-1);line-height:1.7;border-left:2px solid var(--line);padding-left:10px;margin-bottom:14px;}
+.modal-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--blue);text-decoration:none;border:1px solid var(--blue-dim);padding:6px 12px;transition:.12s;}
+.modal-link:hover{background:var(--blue-dim);}
+
+/* ── TERMS CONFIG ── */
+.terms-panel{padding:10px 12px;border-bottom:1px solid var(--line-soft);}
+.term-row{display:flex;gap:5px;margin-bottom:6px;}
+.term-row input,.term-row select{background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);font-family:var(--mono);font-size:10px;padding:4px 7px;outline:none;}
+.term-row input{flex:1;}
+.term-row input:focus,.term-row select:focus{border-color:var(--blue);}
+.terms-cloud{display:flex;flex-wrap:wrap;gap:4px;}
+.term-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border:1px solid var(--line);background:var(--bg-2);font-size:9px;}
+.term-chip.crit{border-color:var(--red-dim);} .term-chip.crit .tl{background:var(--red);}
+.term-chip.high{border-color:var(--amber-dim);} .term-chip.high .tl{background:var(--amber);}
+.term-chip.mid .tl{background:var(--text-2);}
+
+/* Tag management (taxonomie ILI) */
+.terms-panel input[type=text]{
+  width:100%;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);
+  font-family:var(--mono);font-size:10px;padding:5px 8px;outline:none;transition:.12s;
+}
+.terms-panel input[type=text]:focus{border-color:var(--blue);}
+.terms-panel input[type=text]::placeholder{color:var(--text-2);}
+.tag-manage-row{
+  display:flex;align-items:center;gap:6px;padding:3px 6px;
+  border:1px solid var(--line-soft);background:var(--bg-2);font-size:9px;
+}
+.tag-manage-swatch{width:8px;height:8px;flex-shrink:0;border-radius:50%;}
+.tag-manage-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-1);}
+.tag-manage-del{background:none;border:none;color:var(--text-2);cursor:pointer;font-size:11px;padding:0 2px;}
+.tag-manage-del:hover{color:var(--red);}
+.tag-manage-builtin{font-size:7px;color:var(--text-2);border:1px solid var(--line);padding:0 4px;flex-shrink:0;}
+.tl{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.trem{background:transparent;border:none;color:var(--text-2);cursor:pointer;font-size:10px;line-height:1;} .trem:hover{color:var(--red);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:38px;right:16px;background:var(--bg-2);border:1px solid var(--line);padding:8px 14px;font-size:10px;letter-spacing:.8px;z-index:999;opacity:0;transform:translateY(6px);transition:.2s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.ok{border-color:var(--green);color:var(--green);}
+.toast.err{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--blue);color:var(--blue);}
+
+/* ── SCORING PARAMS ── */
+.score-mini-panel{padding:10px 12px;border-bottom:1px solid var(--line-soft);}
+.slider-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.slider-row label{font-size:9px;color:var(--text-2);width:90px;flex-shrink:0;}
+.slider-row input[type=range]{flex:1;accent-color:var(--blue);height:3px;}
+.slider-val{font-size:10px;font-weight:700;color:var(--text-0);width:18px;text-align:right;}
+
+/* refresh state */
+.refreshing .dot-pulse{background:var(--amber);}
+
+/* ── FRANCE SURVEILLANCE BANNER ── */
+.france-banner{
+  border:1px solid var(--violet);
+  border-left:3px solid var(--violet);
+  background:linear-gradient(90deg,rgba(200,127,255,.06) 0%,transparent 100%);
+  margin-bottom:12px;
+  flex-shrink:0;
+}
+.france-banner-head{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 12px;
+  border-bottom:1px solid rgba(200,127,255,.2);
+  font-size:9px;letter-spacing:1.8px;color:var(--violet);
+  justify-content:space-between;
+}
+.france-banner-head .fb-left{display:flex;align-items:center;gap:8px;}
+.france-banner-scroll{
+  display:flex;gap:6px;padding:6px 10px;overflow-x:auto;
+  scrollbar-width:thin;scrollbar-color:var(--violet-dim) transparent;
+}
+.france-banner-scroll::-webkit-scrollbar{height:3px;}
+.france-banner-scroll::-webkit-scrollbar-thumb{background:var(--violet-dim);}
+.fc{
+  flex-shrink:0;background:rgba(200,127,255,.07);border:1px solid rgba(200,127,255,.25);
+  padding:5px 10px;max-width:360px;cursor:pointer;transition:.12s;
+}
+.fc:hover{border-color:var(--violet);background:rgba(200,127,255,.15);}
+.fc-src{font-size:8px;color:var(--violet);letter-spacing:.8px;margin-bottom:3px;}
+.fc-title{font-size:10px;color:var(--text-0);line-height:1.4;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px;}
+.fc-meta{font-size:8px;color:var(--text-2);margin-top:3px;}
+.fb-count{font-size:9px;background:var(--violet-dim);color:var(--violet);
+  padding:1px 7px;border:1px solid rgba(200,127,255,.3);}
+.fb-toggle{font-size:9px;background:transparent;border:1px solid rgba(200,127,255,.3);
+  color:var(--violet);padding:2px 8px;cursor:pointer;font-family:var(--mono);transition:.12s;}
+.fb-toggle:hover{background:var(--violet-dim);}
+
+/* ══════════════════════════════════════════════
+   ONGLET SOCIAL
+══════════════════════════════════════════════ */
+
+/* Tab switcher dans la topbar */
+.tab-switcher{display:flex;gap:1px;margin-left:10px;flex-shrink:0;}
+.tab-btn{
+  font-family:var(--mono);font-size:9px;padding:5px 14px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);
+  letter-spacing:1.2px;font-weight:700;transition:.12s;
+}
+.tab-btn:hover{border-color:var(--text-1);color:var(--text-1);}
+.tab-btn.active{background:var(--cyan-dim);border-color:var(--cyan);color:var(--cyan);}
+.tab-btn.social.active{background:var(--violet-dim);border-color:var(--violet);color:var(--violet);}
+
+/* Social panel — same slot as .center */
+.social-panel{
+  grid-column:2;background:var(--bg-0);
+  display:none;flex-direction:column;overflow-y:auto;
+}
+.social-panel.visible{display:flex;}
+.center.hidden{display:none;}
+
+/* Social toolbar */
+.social-toolbar{
+  display:flex;align-items:center;gap:8px;padding:10px 16px;
+  border-bottom:1px solid var(--line);flex-shrink:0;flex-wrap:wrap;
+}
+.social-toolbar .search-wrap{flex:1;min-width:140px;}
+.plat-chip{
+  font-family:var(--mono);font-size:9px;padding:4px 10px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);
+  letter-spacing:.8px;transition:.12s;display:inline-flex;align-items:center;gap:5px;
+}
+.plat-chip:hover{border-color:var(--text-1);color:var(--text-1);}
+.plat-chip.active{border-color:var(--violet);color:var(--violet);background:var(--violet-dim);}
+.plat-icon{font-size:11px;}
+
+/* Social source manager */
+.social-config{
+  display:flex;gap:0;height:100%;flex:1;overflow:hidden;
+}
+.social-sources-panel{
+  width:300px;flex-shrink:0;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--bg-1);
+}
+.social-feed-area{
+  flex:1;overflow-y:auto;padding:12px 16px;
+}
+
+/* Add social source form */
+.social-add-form{padding:10px 12px;border-bottom:1px solid var(--line-soft);}
+.social-add-form input,.social-add-form select{
+  width:100%;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);
+  font-family:var(--mono);font-size:10px;padding:5px 8px;outline:none;margin-bottom:5px;
+}
+.social-add-form input:focus,.social-add-form select:focus{border-color:var(--violet);}
+.social-add-form input::placeholder{color:var(--text-2);}
+
+/* Source list */
+.social-source-list{flex:1;overflow-y:auto;padding:4px 0;}
+.social-source-row{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-left:2px solid transparent;transition:.12s;cursor:pointer;
+}
+.social-source-row:hover{background:var(--bg-2);}
+.social-source-row.active{border-left-color:var(--violet);background:var(--bg-2);}
+.src-plat-badge{
+  font-size:7px;padding:1px 5px;border:1px solid transparent;flex-shrink:0;
+  letter-spacing:.5px;font-weight:700;
+}
+.src-handle{font-size:10px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.src-status{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--text-2);}
+.src-status.ok{background:var(--green);}
+.src-status.err{background:var(--red);}
+.src-status.loading{background:var(--amber);animation:pulse 1s infinite;}
+.src-count{font-size:9px;color:var(--text-2);}
+
+/* Hashtag manager */
+.hashtag-panel{padding:8px 12px;border-bottom:1px solid var(--line-soft);}
+.ht-cloud{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+.ht-chip{
+  display:inline-flex;align-items:center;gap:4px;padding:2px 8px;
+  border:1px solid var(--violet-dim);background:rgba(200,127,255,.08);
+  font-size:9px;color:var(--violet);cursor:default;
+}
+.ht-chip .hrem{background:none;border:none;color:var(--text-2);cursor:pointer;font-size:10px;padding:0;}
+.ht-chip .hrem:hover{color:var(--red);}
+
+/* Social cards */
+.social-card{
+  background:var(--bg-1);border:1px solid var(--line-soft);
+  padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:.12s;
+}
+.social-card:hover{border-color:var(--line);background:var(--bg-2);}
+.social-card.viral{border-color:var(--amber-dim);}
+.social-card.critical{border-color:var(--red);background:#160a09;}
+.sc-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.sc-plat{font-size:8px;padding:1px 6px;border:1px solid;letter-spacing:.5px;font-weight:700;flex-shrink:0;}
+.sc-handle{font-size:9px;color:var(--text-2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sc-time{font-size:9px;color:var(--text-2);}
+.sc-title{font-size:11px;line-height:1.5;color:var(--text-0);margin-bottom:6px;}
+.sc-hashtags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.sc-ht{font-size:8px;color:var(--violet);border:1px solid var(--violet-dim);padding:1px 5px;}
+.sc-stats{display:flex;gap:12px;font-size:9px;color:var(--text-2);}
+.sc-stat{display:flex;align-items:center;gap:3px;}
+
+/* Platform color map (used via JS) */
+/* twitter:#1DA1F2  telegram:#2CA5E0  youtube:#FF0000
+   mastodon:#6364FF  bluesky:#0085FF  reddit:#FF4500 */
+
+/* Narrative cluster widget */
+.cluster-area{margin-bottom:16px;}
+.cluster-head{font-size:9px;color:var(--amber);letter-spacing:1.5px;
+  padding:6px 0;border-bottom:1px solid var(--amber-dim);margin-bottom:8px;}
+.cluster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;}
+.cluster-card{
+  background:rgba(255,184,0,.05);border:1px solid var(--amber-dim);
+  padding:8px 10px;cursor:pointer;transition:.12s;
+}
+.cluster-card:hover{border-color:var(--amber);background:rgba(255,184,0,.1);}
+.cc-label{font-size:9px;color:var(--amber);letter-spacing:1px;margin-bottom:4px;}
+.cc-count{font-size:18px;font-weight:700;color:var(--text-0);}
+.cc-terms{font-size:9px;color:var(--text-2);margin-top:3px;line-height:1.4;}
+
+/* IO detection panel */
+.io-panel{
+  background:rgba(255,58,46,.04);border:1px solid var(--red-dim);
+  padding:10px 12px;margin-bottom:12px;
+}
+.io-panel-head{font-size:9px;color:var(--red);letter-spacing:1.5px;margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;}
+.io-signal{
+  display:flex;align-items:flex-start;gap:8px;padding:5px 0;
+  border-bottom:1px solid var(--bg-3);
+}
+.io-signal:last-child{border-bottom:none;}
+.io-ico{font-size:14px;flex-shrink:0;margin-top:1px;}
+.io-txt{font-size:10px;color:var(--text-1);line-height:1.4;}
+.io-score{font-size:8px;color:var(--red);margin-top:2px;}
+
+/* Social stats bar */
+.social-stats-bar{
+  display:flex;gap:16px;padding:8px 16px;border-bottom:1px solid var(--line-soft);
+  background:var(--bg-1);flex-shrink:0;flex-wrap:wrap;
+}
+.ss-stat{display:flex;flex-direction:column;align-items:center;}
+.ss-val{font-size:16px;font-weight:700;}
+.ss-lbl{font-size:8px;color:var(--text-2);letter-spacing:1px;}
+
+/* Mobile social */
+@media(max-width:768px){
+  .social-config{flex-direction:column;}
+  .social-sources-panel{width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);}
+  .social-feed-area{padding:8px 10px;}
+  .cluster-grid{grid-template-columns:1fr 1fr;}
+}
+
+/* ── ANALYTICS PANEL — same slot as .center ── */
+.analytics-panel{
+  grid-column:2;background:var(--bg-0);
+  display:none;flex-direction:column;overflow-y:auto;
+}
+.analytics-panel.visible{display:flex;}
+.tab-btn.analytics.active{background:var(--lime-dim);border-color:var(--lime);color:var(--lime);}
+
+.analytics-toolbar{
+  display:flex;align-items:center;gap:8px;padding:10px 16px;
+  border-bottom:1px solid var(--line);flex-shrink:0;flex-wrap:wrap;
+}
+.range-chip{
+  font-family:var(--mono);font-size:9px;padding:4px 10px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);
+  letter-spacing:.8px;transition:.12s;
+}
+.range-chip:hover{border-color:var(--text-1);color:var(--text-1);}
+.range-chip.active{border-color:var(--lime);color:var(--lime);background:var(--lime-dim);}
+
+.analytics-kpis{
+  display:flex;gap:16px;padding:10px 16px;border-bottom:1px solid var(--line-soft);
+  background:var(--bg-1);flex-shrink:0;flex-wrap:wrap;
+}
+.kpi{display:flex;flex-direction:column;align-items:center;min-width:70px;}
+.kpi-val{font-size:18px;font-weight:700;}
+.kpi-lbl{font-size:8px;color:var(--text-2);letter-spacing:1px;text-align:center;}
+
+.charts-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+  gap:10px;padding:14px 16px;
+}
+.chart-card{
+  background:var(--bg-1);border:1px solid var(--line-soft);padding:10px 12px 6px;
+  display:flex;flex-direction:column;min-height:230px;
+}
+.chart-card.wide{grid-column:1/-1;}
+.chart-card-title{
+  font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.chart-card-body{position:relative;flex:1;min-height:180px;}
+.chart-empty{
+  display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--text-2);font-size:10px;letter-spacing:.5px;text-align:center;padding:10px;
+}
+@media(max-width:768px){
+  .charts-grid{grid-template-columns:1fr;padding:8px 10px;}
+  .analytics-kpis{gap:10px;padding:8px 10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">S</div>
+    <div class="brand-text">SUPER-ILI-BRAIN</div>
+    <div class="brand-sub">SYSTÈME DE VEILLE</div>
+  </div>
+  <button class="btn btn-ghost" id="btnRefresh" style="margin-left:16px;">⟳ ACTUALISER</button>
+  <button class="btn btn-ghost" id="btnExport">⬇ EXPORTER CSV</button>
+  <div class="tab-switcher">
+    <button class="tab-btn active" id="tabRss" onclick="switchTab('rss')">◈ VEILLE RSS</button>
+    <button class="tab-btn social" id="tabSocial" onclick="switchTab('social')">⬡ SOCIAL</button>
+    <button class="tab-btn analytics" id="tabAnalytics" onclick="switchTab('analytics')">📊 GRAPHES</button>
+  </div>
+  <div class="zulu">
+    <div class="zulu-time" id="zuluTime">--:--:--Z</div>
+    <div class="zulu-sub" id="zuluDate">-- --- ----</div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <!-- Add feed -->
+  <div class="add-feed-form">
+    <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:7px;">+ AJOUTER UN FLUX RSS</div>
+    <input type="text" id="inName" placeholder="Nom de la source">
+    <input type="url" id="inUrl" placeholder="https://exemple.com/rss.xml">
+    <div class="add-row">
+      <select id="inTag"></select>
+      <select id="inLang">
+        <option>FR</option><option selected>EN</option><option>DE</option>
+        <option>AR</option><option>RU</option><option>ES</option>
+        <option>ZH</option><option>PT</option><option>IT</option>
+        <option>TR</option><option>FA</option><option>JA</option>
+        <option>HI</option><option>UK</option><option>PL</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:5px;margin-top:5px;">
+      <button class="btn-sm btn-sm-blue" id="btnAdd" style="flex:1;">+ AJOUTER</button>
+      <button class="btn-sm btn-sm-ghost" id="btnTest">TEST</button>
+    </div>
+  </div>
+
+  <!-- Feed packs -->
+  <div class="side-section" style="padding:6px 0;">
+    <div class="side-label">PACKS PRÉDÉFINIS</div>
+    <div class="packs-area" id="packsArea"></div>
+  </div>
+
+  <!-- Feed list -->
+  <div class="side-label" style="padding:8px 14px 4px;">SOURCES ACTIVES (<span id="feedTotal">0</span>)</div>
+  <div class="feed-list" id="feedList"></div>
+
+  <!-- Terms -->
+  <div class="terms-panel">
+    <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:6px;">TERMES DE VEILLE</div>
+    <div class="term-row">
+      <input type="text" id="termInput" placeholder="mot-clé...">
+      <select id="termLevel" style="width:64px;">
+        <option value="crit">CRIT</option>
+        <option value="high">HIGH</option>
+        <option value="mid" selected>MID</option>
+      </select>
+      <button class="btn-sm btn-sm-blue" id="btnAddTerm">+</button>
+    </div>
+    <div class="terms-cloud" id="termCloud"></div>
+  </div>
+
+  <!-- Gestion des tags (taxonomie ILI — durable, base serveur) -->
+  <div class="terms-panel">
+    <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:6px;">
+      TAXONOMIE ILI — TAGS <span style="color:var(--text-2);font-weight:400;">(ajout/retrait durable)</span>
+    </div>
+    <div id="tagManageList" style="display:flex;flex-direction:column;gap:3px;margin-bottom:8px;max-height:180px;overflow-y:auto;"></div>
+    <div style="font-size:8px;color:var(--text-2);margin:6px 0 4px;letter-spacing:.5px;">+ NOUVEAU TAG</div>
+    <input type="text" id="tagNewLabel" placeholder="Libellé (ex: Guerre Électronique)">
+    <div class="add-row">
+      <input type="text" id="tagNewKey" placeholder="Clé courte (ex: GE)" style="text-transform:uppercase;">
+      <input type="color" id="tagNewColor" value="#7a9bbf" style="width:100%;height:28px;padding:2px;background:var(--bg-2);border:1px solid var(--line);">
+    </div>
+    <input type="text" id="tagNewTermsFR" placeholder="Termes FR (virgules) — requis" style="margin-top:5px;">
+    <input type="text" id="tagNewTermsEN" placeholder="Termes EN (virgules) — optionnel" style="margin-top:5px;">
+    <button class="btn-sm btn-sm-blue" id="btnAddTag" style="width:100%;margin-top:5px;">+ CRÉER LE TAG</button>
+  </div>
+
+  <!-- Scoring sliders -->
+  <div class="score-mini-panel">
+    <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:7px;">SEUILS DE SCORING</div>
+    <div class="slider-row">
+      <label>Criticité min</label>
+      <input type="range" min="1" max="10" value="7" id="slCrit" oninput="document.getElementById('svCrit').textContent=this.value;renderAll();">
+      <span class="slider-val" id="svCrit">7</span>
+    </div>
+    <div class="slider-row">
+      <label>Viralité min</label>
+      <input type="range" min="1" max="10" value="6" id="slViral" oninput="document.getElementById('svViral').textContent=this.value;renderAll();">
+      <span class="slider-val" id="svViral">6</span>
+    </div>
+  </div>
+
+</div><!-- /sidebar -->
+
+<!-- CENTER -->
+<div class="center">
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input class="search-input" type="text" id="searchInput" placeholder="Rechercher dans les signaux...">
+    </div>
+    <button class="chip active" data-tag="all">TOUT <span id="cnt-all">0</span></button>
+    <span id="tagChipsArea" style="display:contents;"></span>
+    <span class="chip active" data-sort="time" style="margin-left:8px;">⏱ DATE</span>
+    <span class="chip" data-sort="crit">⚠ CRIT</span>
+    <div class="meta-count" id="metaCount">0 signaux</div>
+  </div>
+
+
+  <!-- France Surveillance Banner -->
+  <div class="france-banner" id="franceBanner" style="display:none;">
+    <div class="france-banner-head">
+      <div class="fb-left">
+        <span class="dot-pulse" style="background:var(--violet);box-shadow:0 0 6px var(--violet);"></span>
+        🇫🇷 ALERTE FRANCE — SIGNAUX CRITIQUES UNIQUEMENT
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="fb-count" id="franceCnt">0 signaux</span>
+        <button class="fb-toggle" id="fbToggle" onclick="toggleFranceBanner()">▼ RÉDUIRE</button>
+      </div>
+    </div>
+    <div class="france-banner-scroll" id="franceScroll"></div>
+  </div>
+
+  <!-- Feed area -->
+  <div class="feed-area" id="mainFeed">
+    <div class="empty-state">Ajoute des flux RSS dans la barre de gauche,<br>puis clique sur <strong>ACTUALISER</strong> ou attends l'auto-refresh.</div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-item"><span class="ttag">SIB</span>SUPER-ILI-BRAIN opérationnel — ajoute des sources à gauche<span class="ticker-sep">//</span></span>
+    </div>
+  </div>
+
+</div><!-- /center -->
+
+<!-- ══════════════════════════════════════════════
+     ONGLET SOCIAL
+══════════════════════════════════════════════ -->
+<div class="social-panel" id="socialPanel">
+
+  <!-- Stats bar -->
+  <div class="social-stats-bar" id="socialStatsBar">
+    <div class="ss-stat"><span class="ss-val" id="ss-total">0</span><span class="ss-lbl">SIGNAUX</span></div>
+    <div class="ss-stat"><span class="ss-val" id="ss-sources">0</span><span class="ss-lbl">SOURCES</span></div>
+    <div class="ss-stat"><span class="ss-val" id="ss-hashtags">0</span><span class="ss-lbl">HASHTAGS</span></div>
+    <div class="ss-stat"><span class="ss-val" id="ss-io">0</span><span class="ss-lbl" style="color:var(--red);">ALERTES IO</span></div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-ghost" style="font-size:9px;padding:4px 10px;" id="btnSocialRefresh">⟳ FETCH</button>
+      <span style="font-size:9px;color:var(--text-2);" id="socialLastUpdate">jamais mis à jour</span>
+    </div>
+  </div>
+
+  <!-- Platform filter chips -->
+  <div class="social-toolbar">
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input class="search-input" type="text" id="socialSearch" placeholder="Rechercher dans les signaux sociaux...">
+    </div>
+    <button class="plat-chip active" data-plat="all"><span class="plat-icon">◈</span>TOUT <span id="sc-all">0</span></button>
+    <button class="plat-chip" data-plat="twitter" style="--pc:#1DA1F2"><span class="plat-icon">𝕏</span>TWITTER <span id="sc-twitter">0</span></button>
+    <button class="plat-chip" data-plat="telegram" style="--pc:#2CA5E0"><span class="plat-icon">✈</span>TELEGRAM <span id="sc-telegram">0</span></button>
+    <button class="plat-chip" data-plat="youtube" style="--pc:#FF0000"><span class="plat-icon">▶</span>YOUTUBE <span id="sc-youtube">0</span></button>
+    <button class="plat-chip" data-plat="mastodon" style="--pc:#6364FF"><span class="plat-icon">⬡</span>MASTODON <span id="sc-mastodon">0</span></button>
+    <button class="plat-chip" data-plat="bluesky" style="--pc:#0085FF"><span class="plat-icon">☁</span>BLUESKY <span id="sc-bluesky">0</span></button>
+    <button class="plat-chip" data-plat="reddit" style="--pc:#FF4500"><span class="plat-icon">◉</span>REDDIT <span id="sc-reddit">0</span></button>
+    <button class="chip" data-social-sort="time" style="margin-left:8px;" id="ssort-time">⏱ DATE</button>
+    <button class="chip" data-social-sort="viral">🔥 VIRAL</button>
+    <button class="chip" data-social-sort="io">⚠ IO</button>
+  </div>
+
+  <div class="social-config">
+
+    <!-- LEFT: Source manager -->
+    <div class="social-sources-panel">
+
+      <!-- Add source form -->
+      <div class="social-add-form">
+        <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:7px;">+ SOURCE SOCIALE</div>
+        <select id="sInPlatform" style="margin-bottom:5px;">
+          <option value="twitter">Twitter/X — compte</option>
+          <option value="twitter-ht">Twitter/X — hashtag</option>
+          <option value="telegram">Telegram — canal</option>
+          <option value="youtube">YouTube — chaîne</option>
+          <option value="mastodon">Mastodon — compte</option>
+          <option value="mastodon-ht">Mastodon — hashtag</option>
+          <option value="bluesky">Bluesky — compte</option>
+          <option value="reddit">Reddit — subreddit</option>
+        </select>
+        <input type="text" id="sInHandle" placeholder="@handle / #hashtag / subreddit">
+        <input type="text" id="sInLabel" placeholder="Étiquette (ex: Pro-RU, VIGINUM...)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:2px;">
+          <button class="btn-sm btn-sm-blue" id="btnSocialAdd">+ AJOUTER</button>
+          <button class="btn-sm btn-sm-ghost" id="btnSocialTest">TEST</button>
+        </div>
+      </div>
+
+      <!-- Hashtag tracker -->
+      <div class="hashtag-panel">
+        <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:5px;"># HASHTAGS SURVEILLÉS</div>
+        <div style="display:flex;gap:5px;">
+          <input type="text" id="htInput" placeholder="#doppelganger" style="flex:1;background:var(--bg-0);border:1px solid var(--line);color:var(--text-0);font-family:var(--mono);font-size:10px;padding:4px 7px;outline:none;">
+          <button class="btn-sm btn-sm-blue" id="btnAddHt" style="white-space:nowrap;padding:4px 8px;">+</button>
+        </div>
+        <div class="ht-cloud" id="htCloud"></div>
+      </div>
+
+      <!-- Packs prédéfinis -->
+      <div style="padding:8px 12px;border-bottom:1px solid var(--line-soft);">
+        <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;margin-bottom:5px;">PACKS</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;" id="socialPacksArea"></div>
+      </div>
+
+      <!-- Source list -->
+      <div style="font-size:9px;color:var(--text-2);letter-spacing:1.5px;padding:8px 14px 4px;">
+        SOURCES (<span id="socialSrcTotal">0</span>)
+      </div>
+      <div class="social-source-list" id="socialSourceList"></div>
+
+    </div><!-- /social-sources-panel -->
+
+    <!-- RIGHT: Social feed -->
+    <div class="social-feed-area" id="socialFeedArea">
+      <div class="empty-state">Ajoute des sources sociales à gauche,<br>puis clique sur <strong>⟳ FETCH</strong>.</div>
+    </div>
+
+  </div><!-- /social-config -->
+
+</div><!-- /social-panel -->
+
+<!-- ══════════════════════════════════════════════
+     ONGLET GRAPHES / ANALYSE
+══════════════════════════════════════════════ -->
+<div class="analytics-panel" id="analyticsPanel">
+
+  <div class="analytics-kpis" id="analyticsKpis">
+    <div class="kpi"><span class="kpi-val" id="kpi-total">0</span><span class="kpi-lbl">SIGNAUX RSS</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-crit" style="color:var(--red);">0</span><span class="kpi-lbl">ALERTES CRIT.</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-avgcrit">0</span><span class="kpi-lbl">CRITICITÉ MOY.</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-srcok" style="color:var(--green);">0</span><span class="kpi-lbl">SOURCES OK</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-srcerr" style="color:var(--amber);">0</span><span class="kpi-lbl">SOURCES EN ERREUR</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-social" style="color:var(--violet);">0</span><span class="kpi-lbl">SIGNAUX SOCIAUX</span></div>
+    <div class="kpi"><span class="kpi-val" id="kpi-io" style="color:var(--red);">0</span><span class="kpi-lbl">ALERTES IO</span></div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-ghost" style="font-size:9px;padding:4px 10px;" onclick="renderAnalytics()">⟳ RECALCULER</button>
+    </div>
+  </div>
+
+  <div class="analytics-toolbar">
+    <span style="font-size:9px;color:var(--text-2);letter-spacing:1px;margin-right:4px;">PÉRIODE</span>
+    <button class="range-chip" data-range="6h">6H</button>
+    <button class="range-chip active" data-range="24h">24H</button>
+    <button class="range-chip" data-range="7j">7J</button>
+    <button class="range-chip" data-range="30j">30J</button>
+    <button class="range-chip" data-range="all">TOUT</button>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card wide">
+      <div class="chart-card-title">SIGNAUX DANS LE TEMPS — VOLUME &amp; ALERTES CRITIQUES <span id="ct-timeline-range"></span></div>
+      <div class="chart-card-body" id="body-chartTimeline"><canvas id="chartTimeline"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">RÉPARTITION PAR THÉMATIQUE</div>
+      <div class="chart-card-body" id="body-chartTag"><canvas id="chartTag"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">CRITICITÉ MOYENNE PAR THÉMATIQUE</div>
+      <div class="chart-card-body" id="body-chartCritByTag"><canvas id="chartCritByTag"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">TOP 10 SOURCES (VOLUME)</div>
+      <div class="chart-card-body" id="body-chartTopSources"><canvas id="chartTopSources"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">RÉPARTITION PAR LANGUE</div>
+      <div class="chart-card-body" id="body-chartLang"><canvas id="chartLang"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">SOCIAL — SIGNAUX PAR PLATEFORME</div>
+      <div class="chart-card-body" id="body-chartSocialPlat"><canvas id="chartSocialPlat"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">SOCIAL — SCORE IO MAX PAR PLATEFORME</div>
+      <div class="chart-card-body" id="body-chartSocialIO"><canvas id="chartSocialIO"></canvas></div>
+    </div>
+  </div>
+
+</div><!-- /analytics-panel -->
+
+<!-- STATUSBAR -->
+<div class="statusbar" id="statusbar">
+  <div class="dot-pulse"></div>
+  <span id="statusText">SYSTÈME PRÊT</span>
+  <span style="margin-left:auto;" id="statusTime"></span>
+</div>
+
+</div><!-- /app -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mob-btn active" id="mobFeed" onclick="mobileTab('Feed');switchTab('rss')">
+    <span class="mob-icon">📡</span>SIGNAUX
+  </button>
+  <button class="mob-btn" id="mobSocial" onclick="mobileTab('Social');switchTab('social')">
+    <span class="mob-icon">⬡</span>SOCIAL
+  </button>
+  <button class="mob-btn" id="mobRefresh" onclick="activeTab==='social'?fetchSocialSources():fetchAllFeeds();toast('Actualisation…','info')">
+    <span class="mob-icon">⟳</span>REFRESH
+  </button>
+  <button class="mob-btn" id="mobConfig" onclick="toggleSidebar()">
+    <span class="mob-icon">⚙</span>CONFIG
+  </button>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ÉTAT
+═══════════════════════════════════════════════════════════════ */
+// THEME_META est désormais alimenté par le serveur (GET /api/store) — la
+// taxonomie ILI officielle (11 tags + NC) et les tags personnalisés y
+// vivent durablement. Ce fallback ne sert qu'en cas d'échec réseau initial.
+let THEME_META = {
+  GI:        {label:'Guerre Informationnelle', color:'#ffb800'},
+  GC:        {label:'Guerre Cognitive',        color:'#c87fff'},
+  INFLUENCE: {label:'Influence',               color:'#00aaff'},
+  DECEPTION: {label:'Déception',               color:'#ff3a2e'},
+  PSYOPS:    {label:'PSYOPS',                  color:'#a0ff00'},
+  COMOPS:    {label:'COMOPS',                  color:'#ff6a00'},
+  STRATCOM:  {label:'STRATCOM',                color:'#00ffee'},
+  LIO:       {label:'Lutte Informatique Offensive (LIO)',   color:'#ff5540'},
+  LID:       {label:'Lutte Informatique Défensive (LID)',   color:'#3ddc84'},
+  L2I:       {label:"Lutte Informatique d'Influence (L2I)", color:'#ff2d9f'},
+  ILI:       {label:'Influence et Lutte Informationnelle (ILI)', color:'#00ffaa'},
+  NC:        {label:'Non Classifié',           color:'#42607a'},
+};
+const BUILTIN_TAG_KEYS = ['GI','GC','INFLUENCE','DECEPTION','PSYOPS','COMOPS','STRATCOM','LIO','LID','L2I','ILI','NC'];
+
+const FEED_PACKS = {
+
+  /* ── AXE 1 : UKRAINE ── */
+  'Ukraine': [
+    {name:'Kyiv Independent',    url:'https://kyivindependent.com/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'Ukrinform',           url:'https://www.ukrinform.net/rss/block-lastnews',             tag:'GI',        lang:'EN'},
+    {name:'Euromaidan Press',    url:'https://euromaidanpress.com/feed/',                        tag:'GI',        lang:'EN'},
+    {name:'CERT-UA',             url:'https://cert.gov.ua/api/articles/rss',                    tag:'L2I',       lang:'UK'},
+    {name:'Ukrainska Pravda EN', url:'https://www.pravda.com.ua/eng/rss/view_news/',             tag:'GI',        lang:'EN'},
+    {name:'Detector Media',      url:'https://detector.media/rss/news.xml',                     tag:'DECEPTION', lang:'UK'},
+    {name:'Suspilne',            url:'https://suspilne.media/rss/all.xml',                      tag:'GI',        lang:'UK'},
+    {name:'Ukraine World',       url:'https://ukraineworld.org/rss.xml',                        tag:'INFLUENCE', lang:'EN'},
+  ],
+
+  /* ── AXE 1 : EUROPE CENTRALE V4 ── */
+  'Europe Centrale': [
+    {name:'VSquare',             url:'https://vsquare.org/feed/',                               tag:'GI',        lang:'EN'},
+    {name:'Notes from Poland',   url:'https://notesfrompoland.com/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'Emerging Europe',     url:'https://emerging-europe.com/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'bne IntelliNews',     url:'https://www.intellinews.com/rss.xml',                     tag:'GI',        lang:'EN'},
+    {name:'Balkan Insight BIRN', url:'https://balkaninsight.com/feed/',                         tag:'DECEPTION', lang:'EN'},
+    {name:'Moldova.org',         url:'https://www.moldova.org/en/feed/',                        tag:'GI',        lang:'EN'},
+    {name:'Coda Story',          url:'https://codastory.com/feed/',                             tag:'GC',        lang:'EN'},
+    {name:'Correctiv EN',        url:'https://correctiv.org/en/feed/',                          tag:'DECEPTION', lang:'EN'},
+  ],
+
+  /* ── AXE 1 : PAYS BALTES ── */
+  'Pays Baltes': [
+    {name:'Baltic Times',        url:'https://www.baltictimes.com/rss/',                        tag:'GI',        lang:'EN'},
+    {name:'LRT English',         url:'https://www.lrt.lt/en/rss',                              tag:'GI',        lang:'EN'},
+    {name:'Delfi Estonia',       url:'https://www.delfi.ee/en/rss',                            tag:'GI',        lang:'EN'},
+    {name:'LSM.lv Lettonie',     url:'https://eng.lsm.lv/rss/',                               tag:'GI',        lang:'EN'},
+    {name:'ERR News Estonie',    url:'https://news.err.ee/rss',                                tag:'GI',        lang:'EN'},
+    {name:'Debunk.eu',           url:'https://debunk.eu/feed/',                                tag:'DECEPTION', lang:'EN'},
+  ],
+
+  /* ── AXE 1 : RUSSIE EN EXIL ── */
+  'Russie (médias exil)': [
+    {name:'Meduza EN',           url:'https://meduza.io/en/rss/all',                           tag:'GI',        lang:'EN'},
+    {name:'iStories',            url:'https://istories.media/en/rss/',                         tag:'GI',        lang:'EN'},
+    {name:'The Insider Russia',  url:'https://theins.ru/en/feed/',                             tag:'DECEPTION', lang:'EN'},
+    {name:'Novaya Gazeta Europe',url:'https://novayagazeta.eu/en/rss',                         tag:'GI',        lang:'EN'},
+    {name:'Moscow Times',        url:'https://www.themoscowtimes.com/rss/news',                tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 2 : FACT-CHECK & DÉTECTION FIMI ── */
+  'Fact-check / FIMI': [
+    {name:'EUvsDisinfo',         url:'https://euvsdisinfo.eu/feed/',                           tag:'GI',        lang:'EN'},
+    {name:'EU DisinfoLab',       url:'https://www.disinfo.eu/feed/',                           tag:'DECEPTION', lang:'EN'},
+    {name:'StopFake',            url:'https://www.stopfake.org/en/feed/',                      tag:'DECEPTION', lang:'EN'},
+    {name:'Polygraph USAGM',     url:'https://www.polygraph.info/feed/',                       tag:'DECEPTION', lang:'EN'},
+    {name:'First Draft',         url:'https://firstdraftnews.org/feed/',                       tag:'GC',        lang:'EN'},
+    {name:'NewsGuard',           url:'https://www.newsguardtech.com/feed/',                    tag:'DECEPTION', lang:'EN'},
+    {name:'HKS Misinformation',  url:'https://misinforeview.hks.harvard.edu/feed/',            tag:'GC',        lang:'EN'},
+  ],
+
+  /* ── AXE 2 : THINK TANKS ── */
+  'Think Tanks Stratégie': [
+    {name:'RAND',                url:'https://www.rand.org/pubs/rss.xml',                      tag:'STRATCOM',  lang:'EN'},
+    {name:'RUSI',                url:'https://rusi.org/rss/commentary',                        tag:'STRATCOM',  lang:'EN'},
+    {name:'Chatham House',       url:'https://www.chathamhouse.org/rss/all',                   tag:'STRATCOM',  lang:'EN'},
+    {name:'ECFR',                url:'https://ecfr.eu/feed/',                                  tag:'STRATCOM',  lang:'EN'},
+    {name:'SIPRI',               url:'https://www.sipri.org/rss',                              tag:'STRATCOM',  lang:'EN'},
+    {name:'IISS',                url:'https://www.iiss.org/rss/iiss-rss',                      tag:'STRATCOM',  lang:'EN'},
+    {name:'Carnegie Europe',     url:'https://carnegieeurope.eu/rss/',                         tag:'STRATCOM',  lang:'EN'},
+    {name:'ISW',                 url:'https://www.understandingwar.org/feeds/latest',           tag:'GI',        lang:'EN'},
+    {name:'Wilson Center',       url:'https://www.wilsoncenter.org/rss.xml',                   tag:'STRATCOM',  lang:'EN'},
+    {name:'CSIS',                url:'https://www.csis.org/rss/csis_reports.xml',              tag:'STRATCOM',  lang:'EN'},
+    {name:'Brookings',           url:'https://www.brookings.edu/feed/',                        tag:'STRATCOM',  lang:'EN'},
+    {name:'USIP',                url:'https://www.usip.org/rss.xml',                           tag:'STRATCOM',  lang:'EN'},
+  ],
+
+  /* ── AXE 2 : PRESSE GÉOPOLITIQUE ── */
+  'Presse Géopolitique': [
+    {name:'Foreign Affairs',     url:'https://www.foreignaffairs.com/rss.xml',                 tag:'STRATCOM',  lang:'EN'},
+    {name:'Foreign Policy',      url:'https://foreignpolicy.com/feed/',                        tag:'GI',        lang:'EN'},
+    {name:'Politico EU Défense', url:'https://www.politico.eu/rss/security-defense/',          tag:'GI',        lang:'EN'},
+    {name:'The Economist Europe',url:'https://www.economist.com/europe/rss.xml',               tag:'GI',        lang:'EN'},
+    {name:'Reuters Tech',        url:'https://feeds.reuters.com/reuters/technologyNews',        tag:'L2I',       lang:'EN'},
+    {name:'BBC Europe',          url:'https://feeds.bbci.co.uk/news/world/europe/rss.xml',     tag:'GI',        lang:'EN'},
+    {name:'Breaking Defense',    url:'https://breakingdefense.com/feed/',                      tag:'COMOPS',    lang:'EN'},
+  ],
+
+  /* ── AXE 2 : OSINT & INVESTIGATION ── */
+  'OSINT / Investigation': [
+    {name:'Bellingcat',          url:'https://www.bellingcat.com/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'DFRLab Atlantic C.',  url:'https://www.atlanticcouncil.org/program/digital-forensic-research-lab/feed/', tag:'GI', lang:'EN'},
+    {name:'ISD Global',          url:'https://www.isdglobal.org/feed/',                        tag:'INFLUENCE', lang:'EN'},
+    {name:'ACLED',               url:'https://acleddata.com/feed/',                            tag:'GI',        lang:'EN'},
+    {name:'Crisis Group',        url:'https://www.crisisgroup.org/rss',                        tag:'GI',        lang:'EN'},
+    {name:'Geopolitical Monitor',url:'https://www.geopoliticalmonitor.com/feed/',              tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 2 : DROIT & GOUVERNANCE INFO ── */
+  'Droit / Gouvernance': [
+    {name:'Just Security',       url:'https://www.justsecurity.org/feed/',                     tag:'GC',        lang:'EN'},
+    {name:'Lawfare',             url:'https://www.lawfaremedia.org/feed',                      tag:'GC',        lang:'EN'},
+    {name:'GNET',                url:'https://gnet-research.org/feed/',                        tag:'PSYOPS',    lang:'EN'},
+    {name:'Lieber Institute WP', url:'https://lieber.westpoint.edu/feed/',                     tag:'GC',        lang:'EN'},
+    {name:'Alliance Sec. Demo.', url:'https://securingdemocracy.gmfus.org/feed/',              tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : CYBER & L2I ── */
+  'Cyber / L2I': [
+    {name:'CERT-EU',             url:'https://cert.europa.eu/publications/rss',                tag:'L2I',       lang:'EN'},
+    {name:'ANSSI Alertes',       url:'https://www.cert.ssi.gouv.fr/alerte/feed/',              tag:'L2I',       lang:'FR'},
+    {name:'ANSSI Actualités',    url:'https://www.ssi.gouv.fr/feed/',                          tag:'L2I',       lang:'FR'},
+    {name:'ENISA',               url:'https://www.enisa.europa.eu/news/enisa-news/RSS',        tag:'L2I',       lang:'EN'},
+    {name:'The Record',          url:'https://therecord.media/feed/',                          tag:'L2I',       lang:'EN'},
+    {name:'Krebs on Security',   url:'https://krebsonsecurity.com/feed/',                      tag:'L2I',       lang:'EN'},
+    {name:'Talos Intelligence',  url:'https://blog.talosintelligence.com/rss',                 tag:'L2I',       lang:'EN'},
+    {name:'Unit 42 Palo Alto',   url:'https://unit42.paloaltonetworks.com/feed/',              tag:'L2I',       lang:'EN'},
+    {name:'SecurityWeek',        url:'https://www.securityweek.com/feed/',                     tag:'L2I',       lang:'EN'},
+    {name:'SANS ISC',            url:'https://isc.sans.edu/rssfeed.xml',                       tag:'L2I',       lang:'EN'},
+    {name:'Bleeping Computer',   url:'https://www.bleepingcomputer.com/feed/',                 tag:'L2I',       lang:'EN'},
+    {name:'Hybrid CoE Helsinki', url:'https://www.hybridcoe.fi/feed/',                         tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : ESPIONNAGE / INGÉRENCE ── */
+  'Espionnage / Ingérence': [
+    {name:'Intelligence Online', url:'https://www.intelligenceonline.com/rss',                 tag:'DECEPTION', lang:'EN'},
+    {name:'VIGINUM / SGDSN',     url:'https://www.sgdsn.gouv.fr/feed',                         tag:'DECEPTION', lang:'FR'},
+    {name:'Spytalk',             url:'https://www.spytalk.co/feed',                            tag:'DECEPTION', lang:'EN'},
+    {name:'The Cipher Brief',    url:'https://www.thecipherbrief.com/feed',                    tag:'DECEPTION', lang:'EN'},
+  ],
+
+  /* ── AXE 3 : GUERRE COGNITIVE / PSYOPS ── */
+  'Guerre Cognitive / PSYOPS': [
+    {name:'NATO StratCom COE',   url:'https://stratcomcoe.org/rss.xml',                        tag:'STRATCOM',  lang:'EN'},
+    {name:'NATO Review',         url:'https://www.nato.int/cps/en/natohq/opinions.xml',        tag:'STRATCOM',  lang:'EN'},
+    {name:'Small Wars Journal',  url:'https://smallwarsjournal.com/rss/combined',              tag:'COMOPS',    lang:'EN'},
+    {name:'Modern War Institute',url:'https://mwi.westpoint.edu/feed/',                        tag:'COMOPS',    lang:'EN'},
+    {name:'War on the Rocks',    url:'https://warontherocks.com/feed/',                        tag:'COMOPS',    lang:'EN'},
+    {name:'CCDCOE Tallinn',      url:'https://ccdcoe.org/news/feed/',                          tag:'L2I',       lang:'EN'},
+    {name:'SSI Army War College',url:'https://ssi.armywarcollege.edu/rss/',                    tag:'STRATCOM',  lang:'EN'},
+    {name:'Internews',           url:'https://internews.org/blog/feed/',                       tag:'GC',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : INFRAS CRITIQUES ── */
+  'Infras Critiques': [
+    {name:'Industrial Cyber',    url:'https://industrialcyber.co/feed/',                       tag:'L2I',       lang:'EN'},
+    {name:'CISA Alerts',         url:'https://www.cisa.gov/uscert/ncas/alerts.xml',            tag:'L2I',       lang:'EN'},
+    {name:'Dragos',              url:'https://www.dragos.com/feed/',                           tag:'L2I',       lang:'EN'},
+  ],
+
+  /* ── PACKS HÉRITÉS ── */
+  'Presse FR': [
+    {name:'Le Monde',            url:'https://www.lemonde.fr/rss/une.xml',                     tag:'GI',        lang:'FR'},
+    {name:'Le Figaro',           url:'https://www.lefigaro.fr/rss/figaro_actualites.xml',      tag:'GI',        lang:'FR'},
+    {name:'France 24 FR',        url:'https://www.france24.com/fr/rss',                        tag:'GI',        lang:'FR'},
+    {name:'Franceinfo',          url:'https://www.francetvinfo.fr/titres.rss',                 tag:'GI',        lang:'FR'},
+    {name:'Ouest-France',        url:'https://www.ouest-france.fr/rss-en-continu.xml',         tag:'GI',        lang:'FR'},
+    {name:'La Dépêche',          url:'https://www.ladepeche.fr/rss.xml',                       tag:'GI',        lang:'FR'},
+    {name:'Mediapart',           url:'https://www.mediapart.fr/articles/feed',                 tag:'INFLUENCE', lang:'FR'},
+    {name:'Ministère des Armées',url:'https://www.defense.gouv.fr/rss.xml',                    tag:'STRATCOM',  lang:'FR'},
+  ],
+  'Sahel / Afrique': [
+    {name:'Jeune Afrique',       url:'https://www.jeuneafrique.com/feed/',                     tag:'INFLUENCE', lang:'FR'},
+    {name:'RFI Afrique',         url:'https://www.rfi.fr/fr/afrique/rss',                      tag:'GC',        lang:'FR'},
+  ],
+
+  /* ── AXE 2 : MONDE ARABE / MENA ── */
+  'Monde Arabe / MENA': [
+    {name:'Al Jazeera English',  url:'https://www.aljazeera.com/xml/rss/all.xml',              tag:'GI',        lang:'EN'},
+    {name:'Middle East Eye',     url:'https://www.middleeasteye.net/rss',                      tag:'GI',        lang:'EN'},
+    {name:'Arab News (Saoudite)',url:'https://www.arabnews.com/rss.xml',                       tag:'GI',        lang:'EN'},
+    {name:'Al-Monitor',          url:'https://www.al-monitor.com/rss',                         tag:'INFLUENCE', lang:'EN'},
+    {name:'The National (UAE)',  url:'https://www.thenationalnews.com/rss',                    tag:'GI',        lang:'EN'},
+    {name:'TRT World (Turquie)', url:'https://www.trtworld.com/rss',                           tag:'INFLUENCE', lang:'EN'},
+    {name:'Anadolu Agency EN',   url:'https://www.aa.com.tr/en/rss/default?cat=guncel',        tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 2 : IRAN / GOLFE ── */
+  'Iran / Golfe': [
+    {name:'Iran International EN',url:'https://www.iranintl.com/en/rss',                       tag:'GI',        lang:'EN'},
+    {name:'ISNA (Iran)',         url:'https://www.isna.ir/rss',                                tag:'GI',        lang:'FA'},
+    {name:'Mehr News (Iran)',    url:'https://www.mehrnews.com/rss',                           tag:'GI',        lang:'FA'},
+    {name:'Tabnak (Iran)',       url:'https://www.tabnak.ir/fa/rss/allnews',                   tag:'DECEPTION', lang:'FA'},
+  ],
+
+  /* ── AXE 2 : TURQUIE / CAUCASE ── */
+  'Turquie / Caucase': [
+    {name:'Hürriyet Daily News', url:'https://www.hurriyetdailynews.com/rss',                  tag:'GI',        lang:'EN'},
+    {name:'Eurasianet',          url:'https://eurasianet.org/feed',                             tag:'GI',        lang:'EN'},
+    {name:'OC Media (Caucase)',  url:'https://oc-media.org/feed/',                              tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : CHINE / INDOPACIFIQUE ── */
+  'Chine / Indopacifique': [
+    {name:'SCMP Chine',          url:'https://www.scmp.com/rss/4/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'SCMP Asie',           url:'https://www.scmp.com/rss/3/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'SCMP Hong Kong',      url:'https://www.scmp.com/rss/91/feed',                       tag:'GI',        lang:'EN'},
+    {name:'The Diplomat',        url:'https://thediplomat.com/feed/',                          tag:'STRATCOM',  lang:'EN'},
+    {name:'Taipei Times',        url:'https://www.taipeitimes.com/xml/index.rss',              tag:'GI',        lang:'EN'},
+    {name:'Radio Free Asia',     url:'https://www.rfa.org/english/rss2.xml',                   tag:'GI',        lang:'EN'},
+    {name:'Global Times (RPC)',  url:'https://www.globaltimes.cn/rss/china.xml',               tag:'DECEPTION', lang:'EN'},
+    {name:'Japan Times',         url:'https://www.japantimes.co.jp/feed/topstories/',          tag:'GI',        lang:'EN'},
+    {name:'Kyodo News',          url:'https://english.kyodonews.net/rss/all.xml',              tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 3 : ASIE DU SUD ── */
+  'Asie du Sud': [
+    {name:'Times of India',      url:'https://timesofindia.indiatimes.com/rssfeedstopstories.cms', tag:'GI',   lang:'EN'},
+    {name:'The Hindu',           url:'https://www.thehindu.com/feeder/default.rss',            tag:'GI',        lang:'EN'},
+    {name:'The Print (Inde)',    url:'https://theprint.in/feed/',                              tag:'GI',        lang:'EN'},
+    {name:'Dawn (Pakistan)',     url:'https://www.dawn.com/feeds/home',                        tag:'GI',        lang:'EN'},
+    {name:'Express Tribune (PK)',url:'https://tribune.com.pk/feed/home',                       tag:'GI',        lang:'EN'},
+    {name:'Daily Star (Bangl.)', url:'https://www.thedailystar.net/frontpage/rss.xml',         tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 4 : AMÉRIQUE LATINE ── */
+  'Amérique Latine': [
+    {name:'Folha de S.Paulo',    url:'https://feeds.folha.uol.com.br/emcimadahora/rss091.xml', tag:'GI',        lang:'PT'},
+    {name:'Reforma (Mexique)',   url:'https://www.reforma.com/rss/portada.xml',                tag:'GI',        lang:'ES'},
+    {name:'Mexico News Daily',   url:'https://mexiconewsdaily.com/feed/',                      tag:'GI',        lang:'EN'},
+    {name:'El País (Global)',    url:'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada', tag:'GI', lang:'ES'},
+    {name:'MercoPress',          url:'https://en.mercopress.com/rss/',                         tag:'GI',        lang:'EN'},
+    {name:'Diálogo Américas',    url:'https://dialogo-americas.com/feed/',                     tag:'STRATCOM',  lang:'EN'},
+  ],
+
+  /* ── AXE 5 : EUROPE GERMANOPHONE (DACH) ── */
+  'Europe Germanophone': [
+    {name:'Tagesschau (ARD)',    url:'http://www.tagesschau.de/xml/rss2',                      tag:'GI',        lang:'DE'},
+    {name:'Zeit Online',         url:'http://newsfeed.zeit.de/index',                          tag:'GI',        lang:'DE'},
+    {name:'FAZ',                 url:'https://www.faz.net/rss/aktuell/',                       tag:'GI',        lang:'DE'},
+    {name:'Focus Online',        url:'https://rss.focus.de/fol/XML/rss_folnews.xml',           tag:'GI',        lang:'DE'},
+    {name:'DW English',          url:'https://rss.dw.com/rdf/rss-en-all',                      tag:'GI',        lang:'EN'},
+    {name:'NZZ (Suisse)',        url:'https://www.nzz.ch/international.rss',                   tag:'GI',        lang:'DE'},
+  ],
+
+  /* ── AXE 5 : EUROPE DU SUD ── */
+  'Europe du Sud': [
+    {name:'ANSA (Italie)',       url:'https://www.ansa.it/sito/ansait_rss.xml',                tag:'GI',        lang:'IT'},
+    {name:'Repubblica (Italie)', url:'https://www.repubblica.it/rss/homepage/rss2.0.xml',      tag:'GI',        lang:'IT'},
+    {name:'El Confidencial (Es)',url:'https://rss.elconfidencial.com/espana/',                 tag:'GI',        lang:'ES'},
+    {name:'ElDiario.es',         url:'https://www.eldiario.es/rss/',                           tag:'GI',        lang:'ES'},
+    {name:'Agencia EFE English', url:'https://www.efe.com/efe/english/4/rss',                  tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 6 : AFRIQUE ÉLARGIE ── */
+  'Afrique élargie': [
+    {name:'Africanews',          url:'https://www.africanews.com/feed/',                       tag:'GI',        lang:'EN'},
+    {name:'AllAfrica',           url:'https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf', tag:'GI', lang:'EN'},
+    {name:'News24 (Afr. du Sud)',url:'http://feeds.news24.com/articles/news24/TopStories/rss', tag:'GI',        lang:'EN'},
+    {name:'Daily Maverick (ZA)', url:'https://www.dailymaverick.co.za/dmrss/',                 tag:'DECEPTION', lang:'EN'},
+    {name:'Guardian Nigeria',    url:'https://guardian.ng/feed/',                              tag:'GI',        lang:'EN'},
+    {name:'Premium Times (NG)',  url:'https://www.premiumtimesng.com/feed',                    tag:'DECEPTION', lang:'EN'},
+    {name:'Sahara Reporters',    url:'http://saharareporters.com/feeds/latest/feed',           tag:'GI',        lang:'EN'},
+  ],
+
+  /* ── AXE 7 : INSTITUTIONS INTERNATIONALES ── */
+  'Institutions Internationales': [
+    {name:'UN News',             url:'https://news.un.org/feed/subscribe/en/news/all/rss.xml', tag:'STRATCOM',  lang:'EN'},
+    {name:'NATO News',           url:'https://www.nato.int/cps/en/natohq/news.rss',            tag:'STRATCOM',  lang:'EN'},
+    {name:'OSCE',                url:'https://www.osce.org/rss',                               tag:'STRATCOM',  lang:'EN'},
+  ],
+
+  /* ── AXE 7 : FACT-CHECK MONDE ── */
+  'Fact-check Monde': [
+    {name:'Africa Check',        url:'https://africacheck.org/feed',                           tag:'DECEPTION', lang:'EN'},
+    {name:'Chequeado (LATAM)',   url:'https://chequeado.com/feed/',                             tag:'DECEPTION', lang:'ES'},
+    {name:'Rappler (Philippines)',url:'https://www.rappler.com/feed/',                          tag:'DECEPTION', lang:'EN'},
+    {name:'BOOM Live (Inde)',    url:'https://www.boomlive.in/feed',                            tag:'DECEPTION', lang:'EN'},
+    {name:'Poynter / IFCN',      url:'https://www.poynter.org/feed/',                           tag:'DECEPTION', lang:'EN'},
+  ],
+
+  /* ── AXE 8 : AGENCES / MÉDIAS D'ÉTAT (surveillance narratives) ── */
+  'Agences / Médias État': [
+    {name:'TASS (Russie)',       url:'http://tass.com/rss/v2.xml',                             tag:'DECEPTION', lang:'RU'},
+    {name:'RT (Russie)',         url:'https://www.rt.com/rss/',                                tag:'DECEPTION', lang:'EN'},
+  ],
+};
+
+const TERM_PACKS = {
+  'Russie / Ukraine': ['hybrid warfare','false flag','deepfake','Wagner','GRU','FSB','mobilisation','narrative collapse'],
+  'Sahel / Afrique':  ['putsch','coup','mercenaires','désinformation','ingérence','présence russe','anti-France'],
+  'Influence / IO':   ['strategic ambiguity','troll farm','IO campaign','Sputnik','Telegram spike','botnet'],
+  'Cyber':            ['APT','phishing','ransomware','malware','C2','exfiltration','spear phishing','watering hole'],
+};
+
+let state = {
+  feeds: [],   // rempli depuis le serveur (GET /api/store) par initApp() — plus de localStorage-only
+  terms: JSON.parse(localStorage.getItem('sib_terms') || '[]'),
+  items: [],
+  feedStatus: {},
+  activeTag: 'all',
+  sortMode: 'time',
+  searchQuery: '',
+  refreshInterval: null,
+  loading: false,
+  analyticsRange: '24h',
+};
+const charts = {}; // instances Chart.js, clés = id canvas
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════════════ */
+function toast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 2400);
+}
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function timeAgo(dateStr) {
+  const d = new Date(dateStr), diff = Math.floor((Date.now()-d)/1000);
+  if(isNaN(diff)) return '?';
+  if(diff<60) return diff+'s'; if(diff<3600) return Math.floor(diff/60)+'min';
+  if(diff<86400) return Math.floor(diff/3600)+'h'; return Math.floor(diff/86400)+'j';
+}
+function scoreColor(s){ return s>=parseInt(document.getElementById('slCrit').value)?'var(--red)':s>=5?'var(--amber)':'var(--green)'; }
+function tagMeta(tag){ return THEME_META[tag] || {label: tag, color:'var(--text-1)'}; }
+function savePersist() {
+  // Les flux sont désormais gérés par le serveur (data/store.json).
+  // On garde un cache local en lecture seule pour la résilience hors-ligne.
+  localStorage.setItem('sib_feeds_cache', JSON.stringify(state.feeds));
+  localStorage.setItem('sib_terms', JSON.stringify(state.terms));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HORLOGE ZULU
+═══════════════════════════════════════════════════════════════ */
+function tickClock() {
+  const n = new Date(), p = x => String(x).padStart(2,'0');
+  const days=['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
+  const months=['JAN','FÉV','MAR','AVR','MAI','JUIN','JUIL','AOÛT','SEP','OCT','NOV','DÉC'];
+  document.getElementById('zuluTime').textContent = `${p(n.getUTCHours())}:${p(n.getUTCMinutes())}:${p(n.getUTCSeconds())}Z`;
+  document.getElementById('zuluDate').textContent = `${days[n.getUTCDay()]} ${p(n.getUTCDate())} ${months[n.getUTCMonth()]} ${n.getUTCFullYear()}`;
+  document.getElementById('statusTime').textContent = `${p(n.getUTCHours())}:${p(n.getUTCMinutes())}Z`;
+}
+setInterval(tickClock, 1000); tickClock();
+
+/* ═══════════════════════════════════════════════════════════════
+   SCORING
+═══════════════════════════════════════════════════════════════ */
+function scoreItem(item) {
+  let crit = 3, viral = 2;
+  const text = (item.title + ' ' + item.desc).toLowerCase();
+  state.terms.forEach(t => {
+    if(text.includes(t.t.toLowerCase())) {
+      if(t.lvl==='crit')  { crit += 4; viral += 2; }
+      else if(t.lvl==='high') { crit += 2; viral += 1; }
+      else                { crit += 1; }
+    }
+  });
+  // recency bonus
+  const age = (Date.now() - new Date(item.pubDate)) / 3600000;
+  if(age < 2) { crit += 1; viral += 2; }
+  else if(age < 6) { viral += 1; }
+  return {
+    criticite: Math.min(10, Math.max(1, crit)),
+    viralite:  Math.min(10, Math.max(1, viral)),
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RSS FETCH
+═══════════════════════════════════════════════════════════════ */
+async function fetchAllFeeds() {
+  if(state.loading || state.feeds.length === 0) {
+    if(state.feeds.length === 0) { document.getElementById('mainFeed').innerHTML = '<div class="empty-state">Ajoute des flux RSS dans la barre de gauche.</div>'; }
+    return;
+  }
+  state.loading = true;
+  document.getElementById('statusbar').classList.add('refreshing');
+  document.getElementById('statusText').textContent = `CHARGEMENT — ${state.feeds.length} flux en cours...`;
+  document.getElementById('btnRefresh').disabled = true;
+
+  try {
+    const res = await fetch('/api/feeds', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ feeds: state.feeds })
+    });
+    const data = await res.json();
+
+    state.items = [];
+    data.results.forEach(r => {
+      state.feedStatus[r.url] = { ok: r.ok, count: r.count || 0, error: r.error };
+      if(r.ok) {
+        r.items.forEach(item => {
+          const scores = scoreItem(item);
+          state.items.push({ ...item, id: Math.random().toString(36).slice(2), ...scores });
+        });
+      }
+    });
+
+    const online = data.results.filter(r=>r.ok).length;
+    document.getElementById('statusText').textContent = `MAJ — ${online}/${state.feeds.length} sources OK · ${state.items.length} signaux`;
+    renderAll();
+    renderFeedList();
+  } catch(err) {
+    document.getElementById('statusText').textContent = 'ERREUR RÉSEAU — serveur inaccessible ?';
+    toast('Erreur réseau : ' + err.message, 'err');
+  }
+
+  state.loading = false;
+  document.getElementById('statusbar').classList.remove('refreshing');
+  document.getElementById('btnRefresh').disabled = false;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR — FEED LIST
+═══════════════════════════════════════════════════════════════ */
+function renderFeedList() {
+  const list = document.getElementById('feedList');
+  document.getElementById('feedTotal').textContent = state.feeds.length;
+  if(state.feeds.length === 0) {
+    list.innerHTML = '<div style="padding:12px 14px;font-size:10px;color:var(--text-2);">Aucune source — ajoute un flux RSS.</div>';
+    return;
+  }
+  list.innerHTML = state.feeds.map((f,i) => {
+    const st = state.feedStatus[f.url];
+    const dotClass = st ? (st.ok ? 'ok' : 'err') : 'loading';
+    const m = tagMeta(f.tag);
+    const tagStyle = `background:${m.color}22;color:${m.color};border-color:${m.color}44;`;
+    return `<div class="feed-row" data-i="${i}">
+      <span class="feed-dot ${dotClass}"></span>
+      <span class="feed-name" title="${esc(f.url)}">${esc(f.name || f.url)}</span>
+      <span class="feed-tag tag-badge" style="${tagStyle}">${m.label.slice(0,6).toUpperCase()}</span>
+      <span class="feed-count">${st ? (st.ok ? st.count : '✕') : '…'}</span>
+      <button onclick="removeFeed(${i})" style="background:none;border:none;color:var(--text-2);cursor:pointer;font-size:11px;padding:0 2px;" title="Supprimer">✕</button>
+    </div>`;
+  }).join('');
+}
+
+async function removeFeed(i) {
+  const f = state.feeds[i];
+  if(!f) return;
+  try {
+    const r = await fetch('/api/store/feed', {
+      method: 'DELETE', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ url: f.url })
+    });
+    const d = await r.json();
+    if(d.ok) {
+      state.feeds = d.feeds;
+      delete state.feedStatus[f.url];
+      state.items = state.items.filter(it => it.source !== f.name);
+      savePersist(); renderFeedList(); renderAll();
+      toast(`Source supprimée (base serveur) : ${f.name}`, 'info');
+    } else {
+      toast('Erreur suppression : ' + (d.error||'?'), 'err');
+    }
+  } catch(e) {
+    toast('Erreur réseau — suppression impossible', 'err');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ADD FEED
+═══════════════════════════════════════════════════════════════ */
+document.getElementById('btnAdd').addEventListener('click', async () => {
+  const name = document.getElementById('inName').value.trim();
+  const url  = document.getElementById('inUrl').value.trim();
+  const tag  = document.getElementById('inTag').value;
+  const lang = document.getElementById('inLang').value;
+  if(!url) { toast('URL requise', 'err'); return; }
+  if(state.feeds.find(f=>f.url===url)) { toast('Flux déjà présent', 'err'); return; }
+  try {
+    const r = await fetch('/api/store/feed', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name: name || url, url, tag, lang })
+    });
+    const d = await r.json();
+    if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+    state.feeds = d.feeds;
+    document.getElementById('inName').value = '';
+    document.getElementById('inUrl').value = '';
+    savePersist(); renderFeedList();
+    toast('Flux ajouté (base serveur) — actualisation…', 'info');
+    await fetchAllFeeds();
+  } catch(e) {
+    toast('Erreur réseau — ajout impossible', 'err');
+  }
+});
+
+document.getElementById('inUrl').addEventListener('keydown', e => {
+  if(e.key==='Enter') document.getElementById('btnAdd').click();
+});
+
+document.getElementById('btnTest').addEventListener('click', async () => {
+  const url = document.getElementById('inUrl').value.trim();
+  if(!url) { toast('Saisis une URL à tester', 'err'); return; }
+  document.getElementById('btnTest').textContent = '…';
+  try {
+    const r = await fetch('/api/test-feed?url=' + encodeURIComponent(url));
+    const d = await r.json();
+    if(d.ok) toast(`✓ "${d.title}" — ${d.count} articles`, 'ok');
+    else toast('Erreur : ' + d.error, 'err');
+  } catch(e) {
+    toast('Erreur réseau', 'err');
+  }
+  document.getElementById('btnTest').textContent = 'TEST';
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   PACKS
+═══════════════════════════════════════════════════════════════ */
+const packsArea = document.getElementById('packsArea');
+Object.entries(FEED_PACKS).forEach(([name, feeds]) => {
+  const btn = document.createElement('button');
+  btn.className = 'pack-btn';
+  btn.textContent = '+ ' + name;
+  btn.addEventListener('click', async () => {
+    const toAdd = feeds.filter(f => !state.feeds.find(x=>x.url===f.url));
+    if(toAdd.length === 0) { toast('Tous ces flux sont déjà présents', 'info'); return; }
+    try {
+      const r = await fetch('/api/store/feeds-bulk', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ feeds: toAdd })
+      });
+      const d = await r.json();
+      if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+      state.feeds = d.feeds;
+      savePersist(); renderFeedList();
+      toast(`Pack "${name}" : ${d.added} flux ajoutés (base serveur)`, 'ok');
+      fetchAllFeeds();
+    } catch(e) {
+      toast('Erreur réseau — ajout du pack impossible', 'err');
+    }
+  });
+  packsArea.appendChild(btn);
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   TERMS
+═══════════════════════════════════════════════════════════════ */
+function renderTerms() {
+  document.getElementById('termCloud').innerHTML = state.terms.map((t,i) =>
+    `<span class="term-chip ${t.lvl}"><span class="tl"></span>${esc(t.t)}<button class="trem" onclick="removeTerm(${i})">✕</button></span>`
+  ).join('');
+}
+function removeTerm(i) { state.terms.splice(i,1); savePersist(); renderTerms(); renderAll(); }
+document.getElementById('btnAddTerm').addEventListener('click', () => {
+  const v = document.getElementById('termInput').value.trim();
+  if(!v) return;
+  if(state.terms.find(t=>t.t===v)) { toast('Terme déjà présent','err'); return; }
+  state.terms.push({ t: v, lvl: document.getElementById('termLevel').value });
+  document.getElementById('termInput').value = '';
+  savePersist(); renderTerms(); renderAll();
+});
+document.getElementById('termInput').addEventListener('keydown', e => {
+  if(e.key==='Enter') document.getElementById('btnAddTerm').click();
+});
+renderTerms();
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDER MAIN FEED
+═══════════════════════════════════════════════════════════════ */
+function getFiltered() {
+  let items = state.items;
+  if(state.activeTag !== 'all') items = items.filter(it => {
+    const tags = (it.matchedTags && it.matchedTags.length) ? it.matchedTags : [it.tag || 'NC'];
+    return tags.includes(state.activeTag);
+  });
+  if(state.searchQuery) {
+    const q = state.searchQuery.toLowerCase();
+    items = items.filter(it => it.title.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q) || it.source.toLowerCase().includes(q));
+  }
+  if(state.sortMode === 'time') items = [...items].sort((a,b) => new Date(b.pubDate)-new Date(a.pubDate));
+  if(state.sortMode === 'crit') items = [...items].sort((a,b) => b.criticite-a.criticite);
+  return items;
+}
+
+function renderCard(it) {
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const cls = it.criticite >= critMin ? 'crit' : it.criticite >= 5 ? 'warn' : '';
+  const tags = (it.matchedTags && it.matchedTags.length) ? it.matchedTags : [it.tag || 'NC'];
+  const badges = tags.map(tk => {
+    const m = tagMeta(tk);
+    return `<span class="tag-badge" style="background:${m.color}22;color:${m.color};border-color:${m.color}44;">${m.label}</span>`;
+  }).join('');
+  const llmBadge = (it.classifiedBy === 'llm' || it.classifiedBy === 'llm-cache')
+    ? `<span class="tag-badge" title="Classifié par le LLM (via OmniRoute)" style="background:var(--violet)22;color:var(--violet);border-color:var(--violet)44;">🤖 LLM</span>`
+    : '';
+  return `<div class="card ${cls}" data-id="${it.id}">
+    <div class="card-top">
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">${badges}${llmBadge}</div>
+      <span class="card-source">${esc(it.source)}</span>
+    </div>
+    <div class="card-title">${esc(it.title)}</div>
+    ${it.desc ? `<div class="card-desc">${esc(it.desc)}</div>` : ''}
+    <div class="card-bottom">
+      <div class="score-item">CRIT <div class="score-bar"><div class="score-fill" style="width:${it.criticite*10}%;background:${scoreColor(it.criticite)}"></div></div>${it.criticite}</div>
+      <div class="score-item" style="margin-left:8px;">VIRAL <div class="score-bar"><div class="score-fill" style="width:${it.viralite*10}%;background:${scoreColor(it.viralite)}"></div></div>${it.viralite}</div>
+      <div class="card-time">${timeAgo(it.pubDate)}</div>
+    </div>
+  </div>`;
+}
+
+function renderAll() {
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const viralMin = parseInt(document.getElementById('slViral').value);
+  const all = Object.values(THEME_META).map(m=>m.label);
+
+  // counts per tag
+  document.getElementById('cnt-all').textContent = state.items.length;
+  Object.keys(THEME_META).forEach(tag => {
+    const el = document.getElementById('cnt-'+tag);
+    if(el) el.textContent = state.items.filter(it=>{
+      const tags = (it.matchedTags && it.matchedTags.length) ? it.matchedTags : [it.tag || 'NC'];
+      return tags.includes(tag);
+    }).length;
+  });
+
+  const filtered = getFiltered();
+  document.getElementById('metaCount').textContent = filtered.length + ' signaux';
+
+  const crit = filtered.filter(it => it.criticite >= critMin);
+  const rest  = filtered.filter(it => it.criticite < critMin);
+
+  const main = document.getElementById('mainFeed');
+  if(filtered.length === 0) {
+    main.innerHTML = state.items.length === 0
+      ? '<div class="empty-state">Aucun signal chargé — ajoute des flux et clique sur Actualiser.</div>'
+      : '<div class="empty-state">Aucun signal ne correspond aux filtres.</div>';
+    return;
+  }
+
+  let html = '';
+  if(crit.length > 0) {
+    html += `<div class="critical-banner">
+      <div class="critical-banner-head"><span class="dot"></span>SIGNAUX CRITIQUES — ${crit.length} signaux au-dessus du seuil</div>
+      <div style="padding:8px;"><div class="cards-grid">${crit.map(renderCard).join('')}</div></div>
+    </div>`;
+  }
+  html += `<div class="cards-grid">${rest.map(renderCard).join('')}</div>`;
+  main.innerHTML = html;
+
+  // click handlers
+  main.querySelectorAll('.card').forEach(c => {
+    c.addEventListener('click', () => {
+      const item = state.items.find(it => it.id === c.dataset.id);
+      if(item) openModal(item);
+    });
+  });
+
+  renderTicker(filtered);
+  renderFranceBanner(state.items);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   FRANCE SURVEILLANCE BANNER
+   Règle : affiché UNIQUEMENT si l'article est critique (≥ seuil)
+   ET contient un terme France/Armées précis (pas juste "france" seul).
+   Max 2 cartes affichées — les 2 plus critiques.
+═══════════════════════════════════════════════════════════════ */
+
+// Termes PRÉCIS uniquement — expressions composées ou entités spécifiques
+// Jamais de mots seuls trop génériques comme "france" ou "french"
+const FRANCE_EXACT = [
+  // Armée / institutions militaires FR
+  'armée de terre','armée française','armées françaises','forces françaises',
+  'forces armées françaises','ministère des armées','état-major des armées',
+  'emat','cemat','sirpa terre','scoat','straterre',
+  'comcyber','dgse','drsd','dpsd',
+  'légion étrangère','bspp','cpco',
+  // Opérations nommées
+  'opération barkhane','opération serval','opération sangaris',
+  'opération chammal','opération takuba','opération atalante',
+  'bande sahélo-saharienne',
+  // Doctrine ILI — termes propres à la note CCF
+  'ili terre','eiho','scorpion 307','persée 25',
+  'mildec france','comops france','psyops france',
+  'l2i france','lutte informationnelle france',
+  'jagic','utmc','dtmc','srge','gcl france',
+  // Personnes liées
+  'lecornu','percie du sert','cemat france',
+  // Cyber France
+  'cyberattaque france','cyberattaque française','anssi alerte',
+  'cyberattaque française','attaque informatique france',
+  'apt28 france','apt29 france','ingérence numérique france',
+  // Narratifs adverses ciblant la France
+  'anti-france','anti-french','sentiment anti-français',
+  'anti-france','influence russe france','ingérence france',
+  'opération anti-france','désinformation anti-france',
+  'campagne anti-france','propagande anti-france',
+  'wagner france','france afrique russe',
+  // OTAN / défense FR
+  'nato france','otan france','france otan',
+  'défense française','armement français',
+];
+
+let franceBannerCollapsed = false;
+
+function norm(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function isFranceCriticalItem(item, critMin) {
+  // Condition 1 : criticité >= seuil utilisateur
+  if (item.criticite < critMin) return false;
+  // Condition 2 : contient au moins un terme France précis
+  const text = norm(item.title + ' ' + item.desc);
+  return FRANCE_EXACT.some(k => text.includes(norm(k)));
+}
+
+function renderFranceBanner(items) {
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  // Filtre strict : critique ET terme précis France/Armées
+  const frItems = items
+    .filter(it => isFranceCriticalItem(it, critMin))
+    .sort((a, b) => b.criticite - a.criticite)
+    .slice(0, 2); // maximum 2 articles
+
+  const banner = document.getElementById('franceBanner');
+  const scroll = document.getElementById('franceScroll');
+  const cnt = document.getElementById('franceCnt');
+
+  if (frItems.length === 0) {
+    banner.style.display = 'none';
+    return;
+  }
+
+  cnt.textContent = frItems.length + ' signal critique' + (frItems.length > 1 ? 's' : '');
+  banner.style.display = 'block';
+
+  scroll.innerHTML = frItems.map(it => {
+    const age = timeAgo(it.pubDate);
+    return `<div class="fc" style="border-color:var(--red);max-width:480px;">
+      <div class="fc-src" style="color:var(--red);">${esc(it.source)} · ${age} · CRIT ${it.criticite}/10</div>
+      <div class="fc-title" title="${esc(it.title)}">${esc(it.title)}</div>
+      <div class="fc-meta">${(THEME_META[it.tag]||{label:it.tag}).label}</div>
+    </div>`;
+  }).join('');
+
+  scroll.querySelectorAll('.fc').forEach((el, i) => {
+    el.onclick = () => openModal(frItems[i]);
+  });
+}
+
+function renderTicker(items) {
+  const track = document.getElementById('tickerTrack');
+  if(items.length === 0) return;
+  const html = items.slice(0,15).map(it => {
+    const m = tagMeta(it.tag);
+    return `<span class="ticker-item"><span class="ttag" style="color:${m.color};border-color:${m.color}44;">${m.label.slice(0,5).toUpperCase()}</span>${esc(it.title)}<span class="ticker-sep">//</span></span>`;
+  }).join('');
+  track.innerHTML = html + html;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════════════════ */
+function openModal(item) {
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const m = tagMeta(item.tag);
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-head">
+      <span class="modal-title">ANALYSE — ${esc(m.label.toUpperCase())}</span>
+      <button class="modal-close" id="mClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-item-title">${esc(item.title)}</div>
+      <div class="modal-grid">
+        <div class="modal-stat"><div class="modal-stat-lbl">SOURCE</div><div class="modal-stat-val" style="font-size:11px;">${esc(item.source)}</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">PUBLIÉ</div><div class="modal-stat-val" style="font-size:11px;">${new Date(item.pubDate).toLocaleString('fr-FR')}</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">CRITICITÉ</div><div class="modal-stat-val" style="color:${scoreColor(item.criticite)}">${item.criticite}/10</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">VIRALITÉ</div><div class="modal-stat-val" style="color:${scoreColor(item.viralite)}">${item.viralite}/10</div></div>
+      </div>
+      ${item.desc ? `<div class="modal-desc">${esc(item.desc)}</div>` : ''}
+      <a class="modal-link" href="${esc(item.link)}" target="_blank" rel="noopener">→ Consulter la source originale</a>
+    </div>
+  `;
+  document.getElementById('mClose').addEventListener('click', () => document.getElementById('modalOverlay').classList.remove('show'));
+  document.getElementById('modalOverlay').classList.add('show');
+}
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if(e.target.id === 'modalOverlay') document.getElementById('modalOverlay').classList.remove('show');
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   FILTRES & TRI (délégation — les chips de tag sont dynamiques)
+═══════════════════════════════════════════════════════════════ */
+document.querySelector('.toolbar').addEventListener('click', e => {
+  const el = e.target.closest('[data-tag]');
+  if(!el) return;
+  document.querySelectorAll('.toolbar [data-tag]').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  state.activeTag = el.dataset.tag;
+  renderAll();
+});
+document.querySelectorAll('[data-sort]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-sort]').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    state.sortMode = el.dataset.sort;
+    renderAll();
+  });
+});
+document.getElementById('searchInput').addEventListener('input', e => {
+  state.searchQuery = e.target.value;
+  renderAll();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   TAGS — RENDU DYNAMIQUE (chips filtre, select ajout flux, gestion)
+═══════════════════════════════════════════════════════════════ */
+function renderTagChips() {
+  const area = document.getElementById('tagChipsArea');
+  area.innerHTML = Object.keys(THEME_META).map(k => {
+    const m = THEME_META[k];
+    const active = state.activeTag === k ? ' active' : '';
+    return `<button class="chip${active}" data-tag="${k}" style="${active?`border-color:${m.color};color:${m.color};`:''}">${esc(m.label.split('(')[0].trim())} <span id="cnt-${k}">0</span></button>`;
+  }).join('');
+}
+
+function renderTagSelectOptions() {
+  const sel = document.getElementById('inTag');
+  const current = sel.value;
+  sel.innerHTML = Object.entries(THEME_META).map(([k,m]) => `<option value="${k}">${esc(m.label)}</option>`).join('');
+  if(Object.keys(THEME_META).includes(current)) sel.value = current;
+}
+
+function renderTagManageList() {
+  const box = document.getElementById('tagManageList');
+  box.innerHTML = Object.entries(THEME_META).map(([k,m]) => {
+    const isBuiltin = BUILTIN_TAG_KEYS.includes(k);
+    return `<div class="tag-manage-row">
+      <span class="tag-manage-swatch" style="background:${m.color};"></span>
+      <span class="tag-manage-label" title="${esc(m.label)}">${esc(m.label)}</span>
+      ${isBuiltin ? '<span class="tag-manage-builtin">ILI</span>' : `<button class="tag-manage-del" data-delkey="${k}" title="Supprimer ce tag">✕</button>`}
+    </div>`;
+  }).join('');
+}
+
+function refreshTagUI() {
+  renderTagChips();
+  renderTagSelectOptions();
+  renderTagManageList();
+}
+
+document.getElementById('tagManageList').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-delkey]');
+  if(!btn) return;
+  const key = btn.dataset.delkey;
+  if(!confirm(`Supprimer durablement le tag "${THEME_META[key]?.label || key}" de la base ?`)) return;
+  try {
+    const r = await fetch('/api/store/tag', {
+      method: 'DELETE', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ key })
+    });
+    const d = await r.json();
+    if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+    applyServerTags(d.tags);
+    if(state.activeTag === key) { state.activeTag = 'all'; }
+    refreshTagUI(); renderFeedList(); renderAll();
+    toast('Tag supprimé (base serveur)', 'info');
+  } catch(err) {
+    toast('Erreur réseau — suppression impossible', 'err');
+  }
+});
+
+document.getElementById('btnAddTag').addEventListener('click', async () => {
+  const label   = document.getElementById('tagNewLabel').value.trim();
+  const key     = document.getElementById('tagNewKey').value.trim();
+  const color   = document.getElementById('tagNewColor').value;
+  const termsFR = document.getElementById('tagNewTermsFR').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const termsEN = document.getElementById('tagNewTermsEN').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(!label || !key) { toast('Libellé et clé requis', 'err'); return; }
+  if(termsFR.length === 0) { toast('Au moins un terme FR est requis pour que le tag soit opérant', 'err'); return; }
+  try {
+    const r = await fetch('/api/store/tag', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ key, label, color, terms: { FR: termsFR, EN: termsEN } })
+    });
+    const d = await r.json();
+    if(!d.ok) { toast('Erreur : ' + (d.error||'?'), 'err'); return; }
+    applyServerTags(d.tags);
+    refreshTagUI();
+    document.getElementById('tagNewLabel').value = '';
+    document.getElementById('tagNewKey').value = '';
+    document.getElementById('tagNewTermsFR').value = '';
+    document.getElementById('tagNewTermsEN').value = '';
+    toast(`Tag "${label}" créé (base serveur) — actualise pour le voir appliqué aux nouveaux signaux`, 'ok');
+  } catch(err) {
+    toast('Erreur réseau — création impossible', 'err');
+  }
+});
+
+function applyServerTags(tags) {
+  THEME_META = {};
+  tags.forEach(t => { THEME_META[t.key] = { label: t.label, color: t.color }; });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EXPORT CSV
+═══════════════════════════════════════════════════════════════ */
+document.getElementById('btnExport').addEventListener('click', () => {
+  if(state.items.length === 0) { toast('Aucun signal à exporter','err'); return; }
+  const rows = [['Titre','Source','Tags','Date','Criticité','Viralité','URL']];
+  getFiltered().forEach(it => {
+    const tagsStr = (it.matchedTags && it.matchedTags.length) ? it.matchedTags.join('|') : (it.tag||'NC');
+    rows.push([`"${(it.title||'').replace(/"/g,'""')}"`, `"${it.source}"`, tagsStr,
+      new Date(it.pubDate).toISOString(), it.criticite, it.viralite, `"${it.link}"`]);
+  });
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'super-ili-brain-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  toast('Export CSV téléchargé');
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   REFRESH BUTTON & AUTO-REFRESH
+═══════════════════════════════════════════════════════════════ */
+document.getElementById('btnRefresh').addEventListener('click', fetchAllFeeds);
+setInterval(fetchAllFeeds, 10 * 60 * 1000);
+
+/* ═══════════════════════════════════════════════════════════════
+   TAB SWITCHER
+═══════════════════════════════════════════════════════════════ */
+let activeTab = 'rss';
+function switchTab(tab) {
+  activeTab = tab;
+  const center     = document.querySelector('.center');
+  const social     = document.getElementById('socialPanel');
+  const analytics  = document.getElementById('analyticsPanel');
+  document.getElementById('tabRss').classList.toggle('active', tab === 'rss');
+  document.getElementById('tabSocial').classList.toggle('active', tab === 'social');
+  document.getElementById('tabAnalytics').classList.toggle('active', tab === 'analytics');
+  center.classList.toggle('hidden', tab !== 'rss');
+  social.classList.toggle('visible', tab === 'social');
+  analytics.classList.toggle('visible', tab === 'analytics');
+  if(tab === 'social')     renderSocialFeed();
+  if(tab === 'analytics')  renderAnalytics();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRAPHES / ANALYSE
+═══════════════════════════════════════════════════════════════ */
+const CHART_COLORS = {
+  text0:'#ddeeff', text1:'#7a9bbf', text2:'#42607a', line:'rgba(122,155,191,.12)',
+  red:'#ff3a2e', amber:'#ffb800', green:'#00ffaa', blue:'#00aaff',
+  violet:'#c87fff', cyan:'#00ffee', pink:'#ff2d9f', orange:'#ff6a00', lime:'#a0ff00',
+};
+const PLAT_COLORS = { twitter:'#1DA1F2', telegram:'#2CA5E0', youtube:'#FF0000', mastodon:'#6364FF', bluesky:'#0085FF', reddit:'#FF4500' };
+
+document.querySelectorAll('.range-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.range-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.analyticsRange = btn.dataset.range;
+    renderAnalytics();
+  });
+});
+
+function upsertChart(canvasId, bodyId, hasData, emptyMsg, config) {
+  const body = document.getElementById(bodyId);
+  if(!body) return;
+  if(!hasData) {
+    if(charts[canvasId]) { charts[canvasId].destroy(); delete charts[canvasId]; }
+    body.innerHTML = `<div class="chart-empty">${emptyMsg}</div>`;
+    return;
+  }
+  if(!document.getElementById(canvasId)) body.innerHTML = `<canvas id="${canvasId}"></canvas>`;
+  if(charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart(document.getElementById(canvasId).getContext('2d'), config);
+}
+
+function bucketizeByTime(items, range) {
+  const now = Date.now();
+  let n, sizeMs, unit;
+  if(range==='6h')       { n=12; sizeMs=30*60*1000;       unit='h30'; }
+  else if(range==='24h') { n=24; sizeMs=60*60*1000;        unit='h';   }
+  else if(range==='7j')  { n=7;  sizeMs=24*60*60*1000;     unit='j';   }
+  else                    { n=30; sizeMs=24*60*60*1000;     unit='j';   } // 30j & all
+
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const buckets = Array(n).fill(0), bucketsCrit = Array(n).fill(0);
+
+  items.forEach(it => {
+    const t = new Date(it.pubDate).getTime();
+    if(isNaN(t)) return;
+    const age = now - t;
+    let idx = n - 1 - Math.floor(age / sizeMs);
+    if(range === 'all' && idx < 0) idx = 0; // regroupe l'historique ancien dans le 1er bucket
+    if(idx < 0 || idx >= n) return;
+    buckets[idx]++;
+    if(it.criticite >= critMin) bucketsCrit[idx]++;
+  });
+
+  const labels = [];
+  for(let i=0;i<n;i++){
+    const stepsAgo = n-1-i;
+    if(unit==='h30') labels.push(stepsAgo===0?'maint.':`-${(stepsAgo*0.5).toFixed(stepsAgo%2?1:0)}h`);
+    else if(unit==='h') labels.push(stepsAgo===0?'maint.':`-${stepsAgo}h`);
+    else labels.push(stepsAgo===0?"auj.":`-${stepsAgo}j`);
+  }
+  return { labels, buckets, bucketsCrit };
+}
+
+function renderAnalytics() {
+  if(typeof Chart === 'undefined') {
+    document.getElementById('analyticsPanel').querySelectorAll('.chart-card-body').forEach(b =>
+      b.innerHTML = '<div class="chart-empty">Chart.js indisponible (hors-ligne ?)</div>');
+    return;
+  }
+  const critMin = parseInt(document.getElementById('slCrit').value);
+  const items = state.items;
+
+  /* ── KPIs ── */
+  const critCount = items.filter(it => it.criticite >= critMin).length;
+  const avgCrit   = items.length ? (items.reduce((s,it)=>s+it.criticite,0)/items.length).toFixed(1) : '0';
+  const srcOk     = Object.values(state.feedStatus).filter(s=>s.ok).length;
+  const srcErr    = Object.values(state.feedStatus).filter(s=>!s.ok).length;
+  document.getElementById('kpi-total').textContent   = items.length;
+  document.getElementById('kpi-crit').textContent    = critCount;
+  document.getElementById('kpi-avgcrit').textContent = avgCrit;
+  document.getElementById('kpi-srcok').textContent   = srcOk;
+  document.getElementById('kpi-srcerr').textContent  = srcErr;
+  document.getElementById('kpi-social').textContent  = socialState.items.length;
+
+  let ioTotal = 0;
+  if(socialState.items.length) {
+    const plats = [...new Set(socialState.items.map(it=>it.platform))];
+    plats.forEach(p => { if(computeIOScore(socialState.items.filter(it=>it.platform===p)).detected > 0) ioTotal++; });
+  }
+  document.getElementById('kpi-io').textContent = ioTotal;
+  document.getElementById('ct-timeline-range').textContent =
+    '(' + {'6h':'6 heures','24h':'24 heures','7j':'7 jours','30j':'30 jours','all':'historique complet'}[state.analyticsRange] + ')';
+
+  /* ── 1. Timeline ── */
+  const { labels, buckets, bucketsCrit } = bucketizeByTime(items, state.analyticsRange);
+  upsertChart('chartTimeline', 'body-chartTimeline', items.length > 0,
+    'Aucun signal — ajoute des flux et actualise.', {
+    type: 'line',
+    data: { labels, datasets: [
+      { label:'Signaux', data: buckets, borderColor: CHART_COLORS.blue, backgroundColor: CHART_COLORS.blue+'22', fill:true, tension:.3, pointRadius:2 },
+      { label:'Alertes critiques', data: bucketsCrit, borderColor: CHART_COLORS.red, backgroundColor: CHART_COLORS.red+'22', fill:true, tension:.3, pointRadius:2 },
+    ]},
+    options: chartBaseOptions({ stacked:false })
+  });
+
+  /* ── 2. Répartition par thématique (doughnut) ── */
+  const tagCounts = {};
+  items.forEach(it => { tagCounts[it.tag] = (tagCounts[it.tag]||0) + 1; });
+  const tagKeys = Object.keys(tagCounts);
+  upsertChart('chartTag', 'body-chartTag', tagKeys.length > 0, 'Aucune donnée.', {
+    type: 'doughnut',
+    data: {
+      labels: tagKeys.map(k => tagMeta(k).label),
+      datasets: [{ data: tagKeys.map(k=>tagCounts[k]), backgroundColor: tagKeys.map(k=>tagMeta(k).color) }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ color: CHART_COLORS.text1, font:{size:9}, boxWidth:10 } } } }
+  });
+
+  /* ── 3. Criticité moyenne par thématique (bar) ── */
+  const critByTag = {};
+  tagKeys.forEach(k => {
+    const arr = items.filter(it=>it.tag===k);
+    critByTag[k] = arr.reduce((s,it)=>s+it.criticite,0) / arr.length;
+  });
+  const sortedTags = [...tagKeys].sort((a,b)=>critByTag[b]-critByTag[a]);
+  upsertChart('chartCritByTag', 'body-chartCritByTag', sortedTags.length > 0, 'Aucune donnée.', {
+    type: 'bar',
+    data: {
+      labels: sortedTags.map(k=>tagMeta(k).label),
+      datasets: [{ data: sortedTags.map(k=>critByTag[k].toFixed(1)), backgroundColor: sortedTags.map(k=>tagMeta(k).color) }]
+    },
+    options: chartBaseOptions({ indexAxis:'x', max:10 })
+  });
+
+  /* ── 4. Top 10 sources ── */
+  const srcCounts = {};
+  items.forEach(it => { srcCounts[it.source] = (srcCounts[it.source]||0) + 1; });
+  const topSrc = Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  upsertChart('chartTopSources', 'body-chartTopSources', topSrc.length > 0, 'Aucune donnée.', {
+    type: 'bar',
+    data: { labels: topSrc.map(([n])=>n), datasets: [{ data: topSrc.map(([,c])=>c), backgroundColor: CHART_COLORS.cyan }] },
+    options: chartBaseOptions({ indexAxis:'y' })
+  });
+
+  /* ── 5. Répartition par langue ── */
+  const langCounts = {};
+  items.forEach(it => { const l = it.lang || '?'; langCounts[l] = (langCounts[l]||0) + 1; });
+  const langKeys = Object.keys(langCounts).sort((a,b)=>langCounts[b]-langCounts[a]);
+  upsertChart('chartLang', 'body-chartLang', langKeys.length > 0, 'Aucune donnée.', {
+    type: 'bar',
+    data: { labels: langKeys, datasets: [{ data: langKeys.map(k=>langCounts[k]), backgroundColor: CHART_COLORS.lime }] },
+    options: chartBaseOptions({})
+  });
+
+  /* ── 6. Social par plateforme ── */
+  const platCounts = {};
+  socialState.items.forEach(it => { platCounts[it.platform] = (platCounts[it.platform]||0) + 1; });
+  const platKeys = Object.keys(platCounts);
+  upsertChart('chartSocialPlat', 'body-chartSocialPlat', platKeys.length > 0,
+    'Aucune donnée sociale — onglet SOCIAL puis ⟳ FETCH.', {
+    type: 'doughnut',
+    data: { labels: platKeys, datasets: [{ data: platKeys.map(k=>platCounts[k]), backgroundColor: platKeys.map(k=>PLAT_COLORS[k]||CHART_COLORS.text1) }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ color: CHART_COLORS.text1, font:{size:9}, boxWidth:10 } } } }
+  });
+
+  /* ── 7. Score IO max par plateforme ── */
+  const ioByPlat = platKeys.map(p => computeIOScore(socialState.items.filter(it=>it.platform===p)).maxScore || 0);
+  upsertChart('chartSocialIO', 'body-chartSocialIO', platKeys.length > 0,
+    'Aucune donnée sociale — onglet SOCIAL puis ⟳ FETCH.', {
+    type: 'bar',
+    data: { labels: platKeys, datasets: [{ data: ioByPlat, backgroundColor: CHART_COLORS.red }] },
+    options: chartBaseOptions({ max:10 })
+  });
+}
+
+function chartBaseOptions(opts) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    indexAxis: opts.indexAxis || 'x',
+    plugins: { legend: { display: (opts.legend !== false) && false } },
+    scales: {
+      x: { ticks:{ color:CHART_COLORS.text2, font:{size:9} }, grid:{ color:CHART_COLORS.line }, max: opts.indexAxis==='y' ? opts.max : undefined },
+      y: { ticks:{ color:CHART_COLORS.text2, font:{size:9} }, grid:{ color:CHART_COLORS.line }, max: opts.indexAxis==='y' ? undefined : opts.max, beginAtZero:true },
+    }
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════════════════════════════ */
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  sb.classList.toggle('mobile-open');
+  document.getElementById('mobConfig').classList.toggle('active', sb.classList.contains('mobile-open'));
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('mobConfig').classList.remove('active');
+}
+function mobileTab(tab) {
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('mob' + tab);
+  if(el) el.classList.add('active');
+}
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if(sb && sb.classList.contains('mobile-open') && !sb.contains(e.target) && e.target.id !== 'mobConfig') {
+    closeSidebar();
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — ÉTAT
+═══════════════════════════════════════════════════════════════ */
+const PLATFORM_META = {
+  twitter:  { label:'TWITTER',  color:'#1DA1F2', icon:'𝕏' },
+  telegram: { label:'TELEGRAM', color:'#2CA5E0', icon:'✈' },
+  youtube:  { label:'YOUTUBE',  color:'#FF0000', icon:'▶' },
+  mastodon: { label:'MASTODON', color:'#6364FF', icon:'⬡' },
+  bluesky:  { label:'BLUESKY',  color:'#0085FF', icon:'☁' },
+  reddit:   { label:'REDDIT',   color:'#FF4500', icon:'◉' },
+};
+
+const SOCIAL_PACKS = {
+  'IO Russe': [
+    { platform:'telegram', handle:'readovkanews',     label:'Readovka (pro-RU)' },
+    { platform:'telegram', handle:'rybar',            label:'Rybar (pro-RU)' },
+    { platform:'telegram', handle:'grey_zone',        label:'Grey Zone' },
+    { platform:'telegram', handle:'Wargonzo',         label:'Wargonzo' },
+    { platform:'twitter',  handle:'EUvsDisinfo',      label:'EUvsDisinfo' },
+  ],
+  'Fact-check': [
+    { platform:'twitter',  handle:'EUvsDisinfo',      label:'EUvsDisinfo' },
+    { platform:'twitter',  handle:'DFRLab',           label:'DFRLab' },
+    { platform:'twitter',  handle:'bellingcat',       label:'Bellingcat' },
+    { platform:'mastodon', handle:'bellingcat@mastodon.social', label:'Bellingcat Mastodon' },
+  ],
+  'OSINT Ukraine': [
+    { platform:'twitter',  handle:'KyivIndependent',  label:'Kyiv Independent' },
+    { platform:'twitter',  handle:'IAPonomarenko',    label:'Illia Ponomarenko' },
+    { platform:'telegram', handle:'UkraineNow',       label:'Ukraine Now' },
+    { platform:'youtube',  handle:'TheKyivIndependent', label:'Kyiv Ind. YT' },
+  ],
+  'Sahel / Afrique': [
+    { platform:'twitter',  handle:'RFI_Afrique',      label:'RFI Afrique' },
+    { platform:'twitter',  handle:'jeune_afrique',    label:'Jeune Afrique' },
+    { platform:'telegram', handle:'AfricaIntelligence', label:'Africa Intel' },
+  ],
+  'Hashtags IO': [
+    { platform:'twitter-ht', handle:'Doppelganger',   label:'#Doppelganger' },
+    { platform:'twitter-ht', handle:'DesinfoFrance',  label:'#DesinfoFrance' },
+    { platform:'twitter-ht', handle:'ProRU',          label:'#ProRU' },
+    { platform:'twitter-ht', handle:'Ukraine',        label:'#Ukraine' },
+  ],
+};
+
+// IO detection patterns
+const IO_PATTERNS = [
+  { id:'coord_timing',  label:'Timing coordonné',     test: items => detectCoordTiming(items) },
+  { id:'narrative_amp', label:'Amplification narrative', test: items => detectNarrativeAmp(items) },
+  { id:'account_farm',  label:'Compte ferme potentiel', test: items => detectAccountFarm(items) },
+];
+
+// Termes narratifs adverses
+const NARRATIVE_CLUSTERS = [
+  { id:'anti_fr',   label:'Anti-France',        terms:['anti-france','antifrench','france quit','france out','francafrique','abandon','base française'] },
+  { id:'nato_weak', label:'OTAN affaiblie',      terms:['nato weak','otan faillit','alliance crack','nato collapse','nato divided'] },
+  { id:'wagnerize', label:'Wagner / Légitim.',   terms:['wagner','africa corps','pmc','mercenaire','mali security','security partner'] },
+  { id:'deepfake',  label:'Deepfake / Synthèse', terms:['deepfake','fake video','manipulated','synthétique','generated image','ai generated'] },
+  { id:'doppelg',   label:'Doppelgänger',        terms:['doppelganger','fake site','copie site','domain spoof','clone officiel','fake government'] },
+];
+
+let socialState = {
+  sources:    JSON.parse(localStorage.getItem('sib_social_sources') || '[]'),
+  hashtags:   JSON.parse(localStorage.getItem('sib_hashtags') || '[]'),
+  items:      [],
+  srcStatus:  {},
+  activePlat: 'all',
+  sortMode:   'time',
+  searchQuery:'',
+  loading:    false,
+};
+
+function saveSocialPersist() {
+  localStorage.setItem('sib_social_sources', JSON.stringify(socialState.sources));
+  localStorage.setItem('sib_hashtags', JSON.stringify(socialState.hashtags));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — IO DETECTION ALGORITHMS
+═══════════════════════════════════════════════════════════════ */
+function detectCoordTiming(items) {
+  // Détecte des posts quasi-simultanés (< 5 min) sur le même sujet
+  if(items.length < 3) return { detected: false, score: 0 };
+  const sorted = [...items].sort((a,b) => new Date(a.pubDate) - new Date(b.pubDate));
+  let bursts = 0;
+  for(let i = 1; i < sorted.length; i++) {
+    const delta = (new Date(sorted[i].pubDate) - new Date(sorted[i-1].pubDate)) / 1000 / 60;
+    if(delta < 5) bursts++;
+  }
+  const score = Math.min(10, bursts * 2);
+  return { detected: score >= 4, score, detail: `${bursts} posts en rafale (< 5 min)` };
+}
+
+function detectNarrativeAmp(items) {
+  // Détecte la répétition de termes narratifs identiques
+  const wordFreq = {};
+  items.forEach(it => {
+    const words = (it.title + ' ' + it.desc).toLowerCase().split(/\s+/);
+    words.forEach(w => { if(w.length > 5) wordFreq[w] = (wordFreq[w]||0) + 1; });
+  });
+  const topWords = Object.entries(wordFreq).filter(([,c]) => c >= 3).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const score    = Math.min(10, topWords.reduce((s,[,c]) => s + c, 0) / items.length * 3);
+  return {
+    detected: score >= 4,
+    score: Math.round(score),
+    detail: topWords.map(([w,c]) => `"${w}" ×${c}`).join(', ')
+  };
+}
+
+function detectAccountFarm(items) {
+  // Détecte des comptes avec patterns similaires (handle court, ratio posts/follows)
+  const handles   = items.map(it => it.handle || it.source);
+  const dupes     = handles.filter((h,i) => handles.indexOf(h) !== i).length;
+  const shortH    = handles.filter(h => h && h.replace('@','').length <= 8).length;
+  const score     = Math.min(10, (dupes + shortH * 0.5));
+  return { detected: score >= 3, score: Math.round(score), detail: `${dupes} doublons, ${shortH} handles courts` };
+}
+
+function computeIOScore(items) {
+  const results = IO_PATTERNS.map(p => ({ ...p, result: p.test(items) }));
+  const maxScore = Math.max(...results.map(r => r.result.score));
+  return { results, maxScore, detected: results.filter(r => r.result.detected).length };
+}
+
+function computeViralScore(item) {
+  const eng = (item.likes||0) + (item.reposts||0)*2 + (item.replies||0)*1.5 + (item.views||0)*0.01;
+  return Math.min(10, Math.max(1, Math.log10(eng + 1) * 2.5));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — FETCH
+═══════════════════════════════════════════════════════════════ */
+async function fetchSocialSources() {
+  if(socialState.loading) return;
+  if(socialState.sources.length === 0 && socialState.hashtags.length === 0) {
+    toast('Aucune source sociale configurée', 'info');
+    return;
+  }
+  socialState.loading = true;
+  document.getElementById('btnSocialRefresh').textContent = '⟳ …';
+  document.getElementById('socialLastUpdate').textContent = 'chargement…';
+
+  // Build batch payload
+  const batchSources = [
+    ...socialState.sources.map(s => ({
+      platform: s.platform.replace('-ht',''),
+      handle:   s.handle,
+      type:     s.platform.endsWith('-ht') ? 'hashtag' : 'user',
+      label:    s.label,
+      hashtag:  s.platform.endsWith('-ht') ? s.handle.replace('#','') : undefined,
+      subreddit:s.platform === 'reddit' ? s.handle : undefined,
+    })),
+    ...socialState.hashtags.map(ht => ({
+      platform: 'twitter',
+      handle:   ht,
+      type:     'hashtag',
+      label:    '#' + ht,
+    })),
+  ];
+
+  try {
+    // 1. Batch RSS-based fetch
+    const res  = await fetch('/api/social/batch', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ sources: batchSources })
+    });
+    const data = await res.json();
+
+    socialState.items = [];
+    data.results.forEach((r, i) => {
+      const src = batchSources[i];
+      socialState.srcStatus[src.handle] = { ok: r.ok, count: r.count||0, error: r.error };
+      if(r.ok) {
+        r.items.forEach(item => {
+          const viralScore = computeViralScore(item);
+          socialState.items.push({
+            ...item,
+            id:        Math.random().toString(36).slice(2),
+            viralite:  Math.round(viralScore),
+            ioScore:   0, // calculé globalement après
+          });
+        });
+      }
+    });
+
+    // 2. Hashtag scraping via endpoint dédié (async, non-bloquant)
+    socialState.hashtags.forEach(ht => {
+      fetch(`/api/scrape/twitter-hashtag?hashtag=${encodeURIComponent(ht)}`)
+        .then(r => r.json())
+        .then(d => {
+          if(d.ok && d.items.length > 0) {
+            const newItems = d.items.filter(ni => !socialState.items.find(ei => ei.link === ni.link));
+            newItems.forEach(item => socialState.items.push({
+              ...item, id: Math.random().toString(36).slice(2),
+              viralite: Math.round(computeViralScore(item)), ioScore: 0,
+            }));
+            renderSocialFeed();
+          }
+        }).catch(() => {});
+    });
+
+    // 3. IO global score
+    const ioAnalysis = computeIOScore(socialState.items);
+    document.getElementById('ss-io').textContent = ioAnalysis.detected;
+
+    document.getElementById('ss-total').textContent  = socialState.items.length;
+    document.getElementById('ss-sources').textContent = socialState.sources.length;
+    document.getElementById('ss-hashtags').textContent = socialState.hashtags.length;
+    document.getElementById('socialLastUpdate').textContent = 'MAJ ' + new Date().toLocaleTimeString('fr-FR');
+
+    renderSocialSourceList();
+    renderSocialFeed();
+    toast(`Social : ${socialState.items.length} signaux`, 'ok');
+  } catch(e) {
+    toast('Erreur réseau social : ' + e.message, 'err');
+    document.getElementById('socialLastUpdate').textContent = 'ERREUR';
+  }
+  socialState.loading = false;
+  document.getElementById('btnSocialRefresh').textContent = '⟳ FETCH';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — RENDER FEED
+═══════════════════════════════════════════════════════════════ */
+function getSocialFiltered() {
+  let items = socialState.items;
+  if(socialState.activePlat !== 'all') items = items.filter(it => it.platform === socialState.activePlat);
+  if(socialState.searchQuery) {
+    const q = socialState.searchQuery.toLowerCase();
+    items = items.filter(it =>
+      (it.title||'').toLowerCase().includes(q) ||
+      (it.desc||'').toLowerCase().includes(q)  ||
+      (it.handle||'').toLowerCase().includes(q) ||
+      (it.hashtags||[]).some(h => h.includes(q))
+    );
+  }
+  if(socialState.sortMode === 'time')  items = [...items].sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+  if(socialState.sortMode === 'viral') items = [...items].sort((a,b) => b.viralite - a.viralite);
+  if(socialState.sortMode === 'io')    items = [...items].sort((a,b) => b.ioScore - a.ioScore);
+  return items;
+}
+
+function renderSocialCard(it) {
+  const pm  = PLATFORM_META[it.platform] || { label: it.platform, color:'#888', icon:'?' };
+  const viral = it.viralite >= 7 ? 'viral' : '';
+  const ht  = (it.hashtags||[]).slice(0,5).map(h => `<span class="sc-ht">${esc(h)}</span>`).join('');
+  return `<div class="social-card ${viral}" data-sid="${it.id}">
+    <div class="sc-top">
+      <span class="sc-plat" style="color:${pm.color};border-color:${pm.color}55;background:${pm.color}15;">${pm.icon} ${pm.label}</span>
+      <span class="sc-handle">${esc(it.handle || it.source)}</span>
+      <span class="sc-time">${timeAgo(it.pubDate)}</span>
+    </div>
+    <div class="sc-title">${esc(it.title || it.desc || '').slice(0, 180)}</div>
+    ${ht ? `<div class="sc-hashtags">${ht}</div>` : ''}
+    <div class="sc-stats">
+      ${it.likes    ? `<span class="sc-stat">♥ ${it.likes}</span>` : ''}
+      ${it.reposts  ? `<span class="sc-stat">↻ ${it.reposts}</span>` : ''}
+      ${it.replies  ? `<span class="sc-stat">💬 ${it.replies}</span>` : ''}
+      ${it.views    ? `<span class="sc-stat">👁 ${it.views}</span>` : ''}
+      ${it.viralite >= 5 ? `<span class="sc-stat" style="color:var(--amber);margin-left:auto;">🔥 VIRAL ${it.viralite}/10</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderNarrativeClusters(items) {
+  if(items.length === 0) return '';
+  const clusters = NARRATIVE_CLUSTERS.map(cl => {
+    const matches = items.filter(it => {
+      const txt = ((it.title||'') + ' ' + (it.desc||'')).toLowerCase();
+      return cl.terms.some(t => txt.includes(t));
+    });
+    return { ...cl, count: matches.length };
+  }).filter(cl => cl.count > 0).sort((a,b) => b.count - a.count);
+
+  if(clusters.length === 0) return '';
+  return `<div class="cluster-area">
+    <div class="cluster-head">⚠ CLUSTERS NARRATIFS DÉTECTÉS</div>
+    <div class="cluster-grid">
+      ${clusters.map(cl => `
+        <div class="cluster-card">
+          <div class="cc-label">${esc(cl.label)}</div>
+          <div class="cc-count">${cl.count}</div>
+          <div class="cc-terms">${cl.terms.slice(0,3).join(' · ')}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderIOPanel(items) {
+  if(items.length < 3) return '';
+  const analysis = computeIOScore(items);
+  if(analysis.detected === 0) return '';
+  return `<div class="io-panel">
+    <div class="io-panel-head"><span class="dot-pulse" style="background:var(--red);box-shadow:0 0 6px var(--red);"></span>SIGNAUX IO DÉTECTÉS — ${analysis.detected} indicateur${analysis.detected>1?'s':''}</div>
+    ${analysis.results.filter(r=>r.result.detected).map(r => `
+      <div class="io-signal">
+        <span class="io-ico">⚠</span>
+        <div>
+          <div class="io-txt">${esc(r.label)}</div>
+          <div class="io-score">Score ${r.result.score}/10 — ${esc(r.result.detail||'')}</div>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function renderSocialFeed() {
+  // Update platform counts
+  const all = socialState.items;
+  document.getElementById('sc-all').textContent = all.length;
+  Object.keys(PLATFORM_META).forEach(p => {
+    const el = document.getElementById('sc-'+p);
+    if(el) el.textContent = all.filter(it => it.platform === p).length;
+  });
+
+  const filtered = getSocialFiltered();
+  const area     = document.getElementById('socialFeedArea');
+
+  if(filtered.length === 0) {
+    area.innerHTML = socialState.items.length === 0
+      ? '<div class="empty-state">Ajoute des sources sociales à gauche, puis clique sur ⟳ FETCH.</div>'
+      : '<div class="empty-state">Aucun signal ne correspond aux filtres.</div>';
+    return;
+  }
+
+  const io       = renderIOPanel(filtered);
+  const clusters = renderNarrativeClusters(filtered);
+  const cards    = filtered.map(renderSocialCard).join('');
+  area.innerHTML = io + clusters + `<div class="cards-grid">${cards}</div>`;
+
+  area.querySelectorAll('.social-card').forEach(c => {
+    c.addEventListener('click', () => {
+      const item = socialState.items.find(it => it.id === c.dataset.sid);
+      if(item) openSocialModal(item);
+    });
+  });
+}
+
+function openSocialModal(item) {
+  const pm = PLATFORM_META[item.platform] || { label: item.platform, color:'#888', icon:'?' };
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-head">
+      <span class="modal-title" style="color:${pm.color};">${pm.icon} ${pm.label} — ANALYSE</span>
+      <button class="modal-close" id="mClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-item-title">${esc(item.title || item.desc || '')}</div>
+      <div class="modal-grid">
+        <div class="modal-stat"><div class="modal-stat-lbl">SOURCE</div><div class="modal-stat-val" style="font-size:10px;">${esc(item.handle||item.source)}</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">PLATEFORME</div><div class="modal-stat-val" style="color:${pm.color};">${pm.label}</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">VIRALITÉ</div><div class="modal-stat-val" style="color:${item.viralite>=7?'var(--amber)':'var(--text-0)'}">${item.viralite}/10</div></div>
+        <div class="modal-stat"><div class="modal-stat-lbl">PUBLIÉ</div><div class="modal-stat-val" style="font-size:10px;">${new Date(item.pubDate).toLocaleString('fr-FR')}</div></div>
+      </div>
+      ${item.desc ? `<div class="modal-desc">${esc(item.desc)}</div>` : ''}
+      ${(item.hashtags||[]).length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;">${item.hashtags.map(h=>`<span class="sc-ht">${esc(h)}</span>`).join('')}</div>` : ''}
+      <div style="display:flex;gap:10px;margin-bottom:12px;font-size:10px;color:var(--text-2);">
+        ${item.likes   ? `<span>♥ ${item.likes} likes</span>` : ''}
+        ${item.reposts ? `<span>↻ ${item.reposts} reposts</span>` : ''}
+        ${item.replies ? `<span>💬 ${item.replies} réponses</span>` : ''}
+        ${item.views   ? `<span>👁 ${item.views} vues</span>` : ''}
+      </div>
+      <a class="modal-link" href="${esc(item.link)}" target="_blank" rel="noopener">→ Voir le post original</a>
+    </div>`;
+  document.getElementById('mClose').addEventListener('click', () => document.getElementById('modalOverlay').classList.remove('show'));
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — SOURCE LIST & HASHTAG MANAGER
+═══════════════════════════════════════════════════════════════ */
+function renderSocialSourceList() {
+  const list = document.getElementById('socialSourceList');
+  document.getElementById('socialSrcTotal').textContent = socialState.sources.length;
+  if(socialState.sources.length === 0) {
+    list.innerHTML = '<div style="padding:12px 14px;font-size:10px;color:var(--text-2);">Aucune source.</div>';
+    return;
+  }
+  list.innerHTML = socialState.sources.map((s, i) => {
+    const pm  = PLATFORM_META[s.platform.replace('-ht','')] || { label: s.platform, color:'#888' };
+    const st  = socialState.srcStatus[s.handle];
+    const dotCls = st ? (st.ok ? 'ok' : 'err') : '';
+    return `<div class="social-source-row">
+      <span class="src-status ${dotCls}"></span>
+      <span class="src-plat-badge" style="color:${pm.color};border-color:${pm.color}44;">${pm.label.slice(0,4)}</span>
+      <span class="src-handle" title="${esc(s.handle)}">${esc(s.label || s.handle)}</span>
+      <span class="src-count">${st ? (st.ok ? st.count : '✕') : '…'}</span>
+      <button onclick="removeSocialSource(${i})" style="background:none;border:none;color:var(--text-2);cursor:pointer;font-size:11px;padding:0 2px;" title="Supprimer">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function removeSocialSource(i) {
+  const s = socialState.sources.splice(i, 1)[0];
+  socialState.items = socialState.items.filter(it => it.handle !== s.handle);
+  saveSocialPersist();
+  renderSocialSourceList();
+  renderSocialFeed();
+  toast(`Source supprimée : ${s.handle}`, 'info');
+}
+
+function renderHashtagCloud() {
+  document.getElementById('htCloud').innerHTML = socialState.hashtags.map((ht, i) =>
+    `<span class="ht-chip">#${esc(ht)}<button class="hrem" onclick="removeHashtag(${i})">✕</button></span>`
+  ).join('');
+}
+
+function removeHashtag(i) {
+  socialState.hashtags.splice(i, 1);
+  saveSocialPersist();
+  renderHashtagCloud();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — PACKS
+═══════════════════════════════════════════════════════════════ */
+const socialPacksArea = document.getElementById('socialPacksArea');
+Object.entries(SOCIAL_PACKS).forEach(([name, srcs]) => {
+  const btn = document.createElement('button');
+  btn.className = 'pack-btn';
+  btn.textContent = '+ ' + name;
+  btn.addEventListener('click', () => {
+    let added = 0;
+    srcs.forEach(s => {
+      if(!socialState.sources.find(x => x.handle === s.handle && x.platform === s.platform)) {
+        socialState.sources.push(s);
+        added++;
+      }
+    });
+    saveSocialPersist();
+    renderSocialSourceList();
+    if(added > 0) { toast(`Pack "${name}" : ${added} sources ajoutées`, 'ok'); }
+    else toast('Toutes ces sources sont déjà présentes', 'info');
+  });
+  socialPacksArea.appendChild(btn);
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SOCIAL — EVENT LISTENERS
+═══════════════════════════════════════════════════════════════ */
+document.getElementById('btnSocialRefresh').addEventListener('click', fetchSocialSources);
+setInterval(() => { if(activeTab === 'social') fetchSocialSources(); }, 10 * 60 * 1000);
+
+document.getElementById('btnSocialAdd').addEventListener('click', () => {
+  const platform = document.getElementById('sInPlatform').value;
+  const handle   = document.getElementById('sInHandle').value.trim();
+  const label    = document.getElementById('sInLabel').value.trim();
+  if(!handle) { toast('Handle requis', 'err'); return; }
+  if(socialState.sources.find(s => s.handle === handle && s.platform === platform)) { toast('Source déjà présente', 'err'); return; }
+  socialState.sources.push({ platform, handle, label: label || handle });
+  document.getElementById('sInHandle').value = '';
+  document.getElementById('sInLabel').value  = '';
+  saveSocialPersist();
+  renderSocialSourceList();
+  toast('Source ajoutée', 'ok');
+});
+
+document.getElementById('btnSocialTest').addEventListener('click', async () => {
+  const platform = document.getElementById('sInPlatform').value;
+  const handle   = document.getElementById('sInHandle').value.trim();
+  if(!handle) { toast('Handle requis', 'err'); return; }
+  document.getElementById('btnSocialTest').textContent = '…';
+  try {
+    let url;
+    const p = platform.replace('-ht','');
+    if(p === 'twitter')  url = `/api/social/twitter?handle=${encodeURIComponent(handle)}&type=${platform.endsWith('-ht')?'hashtag':'user'}`;
+    else if(p === 'telegram') url = `/api/social/telegram?channel=${encodeURIComponent(handle)}`;
+    else if(p === 'youtube')  url = `/api/social/youtube?handle=${encodeURIComponent(handle)}`;
+    else if(p === 'mastodon') url = `/api/social/mastodon?handle=${encodeURIComponent(handle)}`;
+    else if(p === 'bluesky')  url = `/api/social/bluesky?handle=${encodeURIComponent(handle)}`;
+    else if(p === 'reddit')   url = `/api/social/reddit?subreddit=${encodeURIComponent(handle)}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    if(d.ok) toast(`✓ ${d.count || d.items?.length || 0} posts récupérés`, 'ok');
+    else toast('Erreur : ' + (d.error || 'inconnue'), 'err');
+  } catch(e) {
+    toast('Erreur réseau', 'err');
+  }
+  document.getElementById('btnSocialTest').textContent = 'TEST';
+});
+
+document.getElementById('btnAddHt').addEventListener('click', () => {
+  const v = document.getElementById('htInput').value.trim().replace('#','');
+  if(!v) return;
+  if(socialState.hashtags.includes(v)) { toast('Hashtag déjà présent','err'); return; }
+  socialState.hashtags.push(v);
+  document.getElementById('htInput').value = '';
+  saveSocialPersist();
+  renderHashtagCloud();
+  toast('#' + v + ' ajouté', 'ok');
+});
+document.getElementById('htInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') document.getElementById('btnAddHt').click();
+});
+
+// Platform filter chips
+document.querySelectorAll('[data-plat]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-plat]').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    socialState.activePlat = el.dataset.plat;
+    renderSocialFeed();
+  });
+});
+
+// Social sort chips
+document.querySelectorAll('[data-social-sort]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-social-sort]').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    socialState.sortMode = el.dataset.socialSort;
+    renderSocialFeed();
+  });
+});
+document.getElementById('ssort-time').classList.add('active');
+
+document.getElementById('socialSearch').addEventListener('input', e => {
+  socialState.searchQuery = e.target.value;
+  renderSocialFeed();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════ */
+async function initApp() {
+  refreshTagUI(); // affiche d'abord le fallback local, remplacé dès que le serveur répond
+  renderFeedList();
+  renderAll();
+  renderFranceBanner([]);
+  renderSocialSourceList();
+  renderHashtagCloud();
+
+  try {
+    const r = await fetch('/api/store');
+    const d = await r.json();
+    if(d.ok) {
+      applyServerTags(d.tags);
+      if(d.feeds.length > 0) {
+        state.feeds = d.feeds;
+      } else {
+        // Migration : d'anciens flux existaient peut-être en localStorage
+        // (ancienne version, base client uniquement) — on les repousse
+        // vers la base serveur une seule fois, puis on bascule dessus.
+        const legacy = JSON.parse(localStorage.getItem('sib_feeds') || localStorage.getItem('sib_feeds_cache') || '[]');
+        if(Array.isArray(legacy) && legacy.length > 0) {
+          const rb = await fetch('/api/store/feeds-bulk', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ feeds: legacy })
+          });
+          const db = await rb.json();
+          state.feeds = db.ok ? db.feeds : legacy;
+          toast(`${legacy.length} flux migrés vers la base serveur`, 'info');
+        }
+      }
+      savePersist();
+      refreshTagUI();
+      renderFeedList();
+    }
+  } catch(e) {
+    toast('Serveur indisponible — fonctionnement en mode local dégradé', 'err');
+    const legacy = JSON.parse(localStorage.getItem('sib_feeds') || localStorage.getItem('sib_feeds_cache') || '[]');
+    if(Array.isArray(legacy)) { state.feeds = legacy; renderFeedList(); }
+  }
+
+  if(state.feeds.length > 0) fetchAllFeeds();
+}
+initApp();
+</script>
+</body>
+</html>
