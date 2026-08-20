@@ -983,29 +983,41 @@ app.post('/api/source-library/import-all', (req, res) => {
 
 /* ================================================================
    CLASSIFICATION LLM (2ᵉ passe, uniquement sur ce que les mots-clés
-   n'ont pas su classer) — Google Gemini API, gratuit, sans CB.
+   n'ont pas su classer) — via OmniRoute (github.com/diegosouzapw/OmniRoute),
+   une passerelle IA auto-hébergée, compatible OpenAI, qui agrège
+   340+ fournisseurs dont 90+ gratuits derrière un seul endpoint.
+   ----------------------------------------------------------------
+   IMPORTANT : OmniRoute doit tourner quelque part JOIGNABLE PAR RENDER
+   (Docker sur un VPS, ou un second service Render) — pas seulement en
+   local sur ta machine, sinon ce serveur ne peut pas l'atteindre
+   (même contrainte que pour Ollama en local).
    ----------------------------------------------------------------
    Principe :
    1. La passe mots-clés (classifyText) reste la 1ʳᵉ ligne : rapide,
       gratuite, déterministe.
    2. Seuls les articles qui ressortent NC après cette passe sont
       envoyés au LLM — en LOTS (batch), pas un par un, pour rester
-      largement sous les quotas gratuits (~15 req/min, ~1000-1500
-      req/jour sur gemini-2.5-flash-lite).
+      sous les quotas des fournisseurs gratuits connectés à OmniRoute.
    3. Chaque classification LLM est mise en cache durablement
       (par URL d'article, dans data/llm-cache.json) : un même article
       n'est jamais reclassifié deux fois, même si le flux est
       réactualisé toutes les 10 minutes.
-   4. Si GEMINI_API_KEY n'est pas configurée sur Render, cette passe
-      est simplement ignorée — l'appli continue de fonctionner en
-      mode mots-clés seul (rien ne casse).
+   4. Si OMNIROUTE_BASE_URL / OMNIROUTE_API_KEY ne sont pas configurées
+      sur Render, cette passe est simplement ignorée — l'appli continue
+      de fonctionner en mode mots-clés seul (rien ne casse).
 ================================================================ */
 
-const GEMINI_API_KEY   = process.env.GEMINI_API_KEY || '';
-const GEMINI_MODEL     = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
-const GEMINI_BATCH_SIZE = 25;   // articles par appel LLM
-const GEMINI_MAX_BATCHES_PER_CYCLE = 12; // plafond de sécurité par cycle de fetch (≈300 articles)
-const GEMINI_DELAY_MS = 4200;   // pause entre lots pour rester sous 15 req/min
+const OMNIROUTE_BASE_URL = (process.env.OMNIROUTE_BASE_URL || '').replace(/\/+$/, '');
+const OMNIROUTE_API_KEY  = process.env.OMNIROUTE_API_KEY || '';
+// 'auto/cheap' = routage zéro-config d'OmniRoute vers le fournisseur gratuit
+// disponible le moins cher/le plus dispo. Surchargeable par ex. avec
+// 'gemini/gemini-2.0-flash' si tu préfères cibler un fournisseur précis
+// que tu as connecté dans le dashboard OmniRoute.
+const OMNIROUTE_MODEL      = process.env.OMNIROUTE_MODEL || 'auto/cheap';
+const OMNIROUTE_BATCH_SIZE = parseInt(process.env.OMNIROUTE_BATCH_SIZE || '25', 10);
+const OMNIROUTE_MAX_BATCHES_PER_CYCLE = parseInt(process.env.OMNIROUTE_MAX_BATCHES || '12', 10);
+const OMNIROUTE_DELAY_MS   = parseInt(process.env.OMNIROUTE_DELAY_MS || '3000', 10);
+const LLM_ENABLED = !!(OMNIROUTE_BASE_URL && OMNIROUTE_API_KEY);
 
 const LLM_CACHE_FILE = path.join(DATA_DIR, 'llm-cache.json');
 
@@ -1042,7 +1054,8 @@ const ILI_TAG_GUIDE = DEFAULT_TAGS
   .map(t => `- ${t.key} : ${t.label}`)
   .join('\n');
 
-async function classifyBatchWithGemini(batch) {
+// Appel via l'endpoint OpenAI-compatible d'OmniRoute (/v1/chat/completions).
+async function classifyBatchWithOmniRoute(batch) {
   // batch: [{ id, title, desc }]
   const prompt = `Tu es un analyste en guerre informationnelle / influence et lutte informationnelle (ILI) pour l'armée française. Classe chaque article ci-dessous selon la taxonomie suivante (un article peut recevoir plusieurs tags, ou aucun s'il n'a clairement aucun rapport) :
 
@@ -1057,29 +1070,31 @@ Réponds UNIQUEMENT avec un JSON de cette forme, sans aucun texte autour :
 {"results":[{"id":"<id de l'article>","tags":["GI","DECEPTION"]}, ...]}
 Chaque "id" du tableau d'entrée doit apparaître exactement une fois dans "results". "tags" doit être un sous-ensemble des clés listées ci-dessus (tableau vide si aucun rapport).`;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const url = `${OMNIROUTE_BASE_URL}/v1/chat/completions`;
 
   const body = {
-    contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: {
-      temperature: 0,
-      responseMimeType: 'application/json'
-    }
+    model: OMNIROUTE_MODEL,
+    temperature: 0,
+    response_format: { type: 'json_object' },
+    messages: [{ role: 'user', content: prompt }]
   };
 
   const r = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${OMNIROUTE_API_KEY}`
+    },
     body: JSON.stringify(body)
   });
 
   if (!r.ok) {
     const errText = await r.text().catch(() => '');
-    throw new Error(`Gemini API ${r.status}: ${errText.slice(0, 200)}`);
+    throw new Error(`OmniRoute ${r.status}: ${errText.slice(0, 200)}`);
   }
 
   const data = await r.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+  const text = data?.choices?.[0]?.message?.content || '{}';
   const parsed = JSON.parse(text);
 
   const out = {};
@@ -1095,7 +1110,7 @@ Chaque "id" du tableau d'entrée doit apparaître exactement une fois dans "resu
 // en respectant le cache et les plafonds de lots/débit.
 // Modifie `items` en place (matchedTags / tag) et alimente llmCache.
 async function enrichWithLLM(allItemsFlat) {
-  if (!GEMINI_API_KEY) return; // fonctionnalité désactivée si pas de clé
+  if (!LLM_ENABLED) return; // fonctionnalité désactivée tant qu'OmniRoute n'est pas configuré
 
   const toClassify = [];
   allItemsFlat.forEach(it => {
@@ -1113,15 +1128,15 @@ async function enrichWithLLM(allItemsFlat) {
   if (toClassify.length === 0) return;
 
   const batches = [];
-  for (let i = 0; i < toClassify.length; i += GEMINI_BATCH_SIZE) {
-    batches.push(toClassify.slice(i, i + GEMINI_BATCH_SIZE));
+  for (let i = 0; i < toClassify.length; i += OMNIROUTE_BATCH_SIZE) {
+    batches.push(toClassify.slice(i, i + OMNIROUTE_BATCH_SIZE));
   }
-  const limitedBatches = batches.slice(0, GEMINI_MAX_BATCHES_PER_CYCLE);
+  const limitedBatches = batches.slice(0, OMNIROUTE_MAX_BATCHES_PER_CYCLE);
 
   for (let i = 0; i < limitedBatches.length; i++) {
     const batch = limitedBatches[i].map(it => ({ id: it.link, title: it.title, desc: it.desc }));
     try {
-      const results = await classifyBatchWithGemini(batch);
+      const results = await classifyBatchWithOmniRoute(batch);
       limitedBatches[i].forEach(it => {
         const tags = results[it.link] || [];
         it.matchedTags = tags;
@@ -1131,9 +1146,9 @@ async function enrichWithLLM(allItemsFlat) {
         llmCacheDirty = true;
       });
     } catch (err) {
-      console.error('⚠ Erreur classification Gemini (lot ignoré, reste NC):', err.message);
+      console.error('⚠ Erreur classification OmniRoute (lot ignoré, reste NC):', err.message);
     }
-    if (i < limitedBatches.length - 1) await sleep(GEMINI_DELAY_MS);
+    if (i < limitedBatches.length - 1) await sleep(OMNIROUTE_DELAY_MS);
   }
 
   saveLlmCacheIfDirty();
@@ -1143,6 +1158,7 @@ async function enrichWithLLM(allItemsFlat) {
 app.post('/api/feeds', async (req, res) => {
   const { feeds } = req.body;
   if (!Array.isArray(feeds)) return res.status(400).json({ error: 'feeds must be array' });
+
 
   const results = await Promise.all(feeds.map(async f => {
     try {
@@ -1176,12 +1192,13 @@ app.post('/api/feeds', async (req, res) => {
     }
   }));
 
-  // 2ᵉ passe optionnelle (si GEMINI_API_KEY configurée) : tout item resté
+  // 2ᵉ passe optionnelle (si OMNIROUTE_BASE_URL + OMNIROUTE_API_KEY configurées) :
+  // tout item resté
   // NC après les mots-clés est envoyé au LLM, en lots, avec cache durable.
   const allItemsFlat = results.flatMap(r => r.items || []);
   await enrichWithLLM(allItemsFlat);
 
-  res.json({ results, llmEnabled: !!GEMINI_API_KEY });
+  res.json({ results, llmEnabled: LLM_ENABLED });
 });
 
 
